@@ -57,8 +57,7 @@
             height: 100%;
         }
 
-        /* Remueve cualquier estilo relacionado con las esferas que ya no existen */
-        /*
+        /* Estilos para el menú burbuja */
         #main-sphere-container {
             position: fixed;
             bottom: 20px;
@@ -78,12 +77,14 @@
             cursor: pointer;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             overflow: hidden;
+            position: relative; /* Necesario para posicionar las esferas secundarias */
         }
 
         #main-sphere img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%; /* Asegura que la imagen sea circular */
         }
 
         #main-sphere:hover {
@@ -105,47 +106,69 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-            transform: translateY(0) scale(0);
-            z-index: 100;
+            pointer-events: none; /* No interactuable cuando está oculto */
+            transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect */
+            transform: scale(0); /* Empieza muy pequeño */
         }
 
         .secondary-sphere-item.show {
             opacity: 1;
-            pointer-events: auto;
+            pointer-events: auto; /* Interactuable cuando está visible */
+            transform: scale(1); /* Crece a su tamaño normal */
         }
 
-        #secondary-sphere-item-1.show {
-            transform: translateY(-75px) scale(1);
+        /* Posiciones específicas para las burbujas secundarias */
+        #secondary-sphere-whatsapp {
+            bottom: 80px; /* Separación vertical de la principal */
+            left: 0px; /* Alineada verticalmente con la principal */
         }
 
-        #secondary-sphere-item-2.show {
-            transform: translateY(-145px) scale(1);
+        #secondary-sphere-telegram {
+            bottom: 150px; /* Más arriba, separada de la de WhatsApp */
+            left: 0px; /* Alineada verticalmente con la principal */
         }
 
         .secondary-sphere-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
         }
 
         .secondary-sphere-item a {
             display: block;
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        */
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
+
+    <div id="main-sphere-container">
+        <div id="main-sphere">
+            <img src="https://placehold.co/60x60/FFA500/FFFFFF?text=Contáctanos" alt="Logo de Contacto">
+        </div>
+        <div id="secondary-sphere-whatsapp" class="secondary-sphere-item">
+            <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank" aria-label="Contactar por WhatsApp">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            </a>
+        </div>
+        <div id="secondary-sphere-telegram" class="secondary-sphere-item">
+            <a href="https://t.me/TU_USUARIO_TELEGRAM" target="_blank" aria-label="Contactar por Telegram">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+            </a>
+        </div>
+    </div>
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -419,8 +442,6 @@
             easing: 'ease-in-out', /* Función de temporización para la animación */
         });
 
-        /* El script para ocultar el pre-cargador ha sido eliminado */
-
         /* Script para el menú móvil (mostrar/ocultar al hacer clic en el botón de hamburguesa) */
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -439,94 +460,46 @@
             });
         }
 
-        // --- ELIMINADO: JavaScript para la esfera principal y sus esferas secundarias ---
-        /*
+        // --- JavaScript para la esfera principal y sus esferas secundarias (inferior izquierda) ---
         const mainSphereContainer = document.getElementById('main-sphere-container');
         const mainSphere = document.getElementById('main-sphere');
-        const secondarySphereItem1 = document.getElementById('secondary-sphere-item-1');
-        const secondarySphereItem2 = document.getElementById('secondary-sphere-item-2');
+        const secondarySphereWhatsapp = document.getElementById('secondary-sphere-whatsapp');
+        const secondarySphereTelegram = document.getElementById('secondary-sphere-telegram');
 
-        let spheresVisibleMain = false;
+        let spheresVisible = false;
 
-        let bubbleSynth = null;
-
-        function playBubbleSound() {
-            if (bubbleSynth) {
-                bubbleSynth.triggerAttackRelease("C6", "64n", Tone.context.currentTime, 0.8);
-            }
-        }
-
-        async function initAudio() {
-            if (Tone.context.state !== 'running') {
-                await Tone.start();
-                console.log("Contexto de audio iniciado.");
-            }
-            if (!bubbleSynth) {
-                bubbleSynth = new Tone.PluckSynth().toDestination();
-                bubbleSynth.set({
-                    attackNoise: 1,
-                    dampening: 8000,
-                    resonance: 0.7,
-                    release: 0.1
-                });
-                console.log("Sintetizador de burbujas inicializado.");
-            }
-        }
-
-        function setSecondarySphereContent(sphereId, imageUrl, linkUrl) {
-            const sphere = document.getElementById(sphereId);
-            if (sphere) {
-                const imgElement = sphere.querySelector('img');
-                const linkElement = sphere.querySelector('a');
-
-                if (imgElement) imgElement.src = imageUrl;
-                if (linkElement) linkElement.href = linkUrl;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            setSecondarySphereContent('secondary-sphere-item-1', 'https://placehold.co/50x50/FF5733/FFFFFF?text=IG', 'https://www.instagram.com/tu_perfil');
-            setSecondarySphereContent('secondary-sphere-item-2', 'https://placehold.co/50x50/33FF57/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil');
-        });
-
+        // Alternar visibilidad de las esferas secundarias al hacer clic en la principal
         mainSphere.addEventListener('click', (e) => {
-            initAudio();
+            spheresVisible = !spheresVisible;
 
-            spheresVisibleMain = !spheresVisibleMain;
-
-            if (spheresVisibleMain) {
-                secondarySphereItem1.classList.add('show');
-                playBubbleSound();
+            if (spheresVisible) {
+                // Muestra las esferas una por una con un pequeño retraso
+                secondarySphereWhatsapp.classList.add('show');
                 setTimeout(() => {
-                    secondarySphereItem2.classList.add('show');
-                    playBubbleSound();
-                }, 100);
-                mainSphere.classList.add('active');
+                    secondarySphereTelegram.classList.add('show');
+                }, 100); // Retraso de 100ms para la segunda esfera
+                mainSphere.classList.add('active'); // Activa la animación de pulso
             } else {
+                // Oculta las esferas una por una con un pequeño retraso (en orden inverso para el cierre)
                 setTimeout(() => {
-                    secondarySphereItem2.classList.remove('show');
-                    playBubbleSound();
-                }, 50);
-                secondarySphereItem1.classList.remove('show');
-                playBubbleSound();
-                mainSphere.classList.remove('active');
-                spheresVisibleMain = false;
+                    secondarySphereTelegram.classList.remove('show');
+                }, 50); // Retraso para que la segunda desaparezca primero
+                secondarySphereWhatsapp.classList.remove('show');
+                mainSphere.classList.remove('active'); // Desactiva la animación de pulso
             }
         });
 
+        // Opcional: Cerrar las esferas secundarias si se hace clic fuera de ellas
         document.addEventListener('click', (e) => {
-            if (spheresVisibleMain && !mainSphereContainer.contains(e.target)) {
+            if (spheresVisible && !mainSphereContainer.contains(e.target)) {
                 setTimeout(() => {
-                    secondarySphereItem2.classList.remove('show');
-                    playBubbleSound();
+                    secondarySphereTelegram.classList.remove('show');
                 }, 50);
-                secondarySphereItem1.classList.remove('show');
-                playBubbleSound();
+                secondarySphereWhatsapp.classList.remove('show');
                 mainSphere.classList.remove('active');
-                spheresVisibleMain = false;
+                spheresVisible = false;
             }
         });
-        */
     </script>
 
     <chat-bot platform_id="832d1607-677c-4411-a2b7-d106e7204294" user_id="d57dd191-a963-4fc7-80fc-354ee9f53d5c" chatbot_id="e360cb16-3faf-411a-a5d4-6076d42ae79d"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">chatsimple</a></chat-bot><script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
