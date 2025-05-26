@@ -578,7 +578,8 @@
             const mobileMenu = document.getElementById('mobile-menu');
 
             if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
+                mobileMenuButton.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Evita que el clic en el botón se propague al documento
                     const isHidden = mobileMenu.classList.contains('hidden');
                     mobileMenu.classList.toggle('hidden');
                     // Actualizar aria-expanded para accesibilidad
@@ -588,6 +589,7 @@
                 // Modificar el script para el menú móvil para manejar subcategorías
                 mobileMenu.querySelectorAll('.mobile-menu-toggle').forEach(link => {
                     link.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Evita que el clic en el enlace se propague al documento
                         const parentLi = this.closest('li');
                         const subMenu = parentLi.querySelector('ul');
 
@@ -608,6 +610,25 @@
                         mobileMenu.classList.add('hidden');
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                     });
+                });
+
+                // Nueva función para cerrar el menú móvil al hacer clic fuera
+                document.addEventListener('click', (event) => {
+                    // Si el menú móvil está abierto
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        // Comprobar si el clic fue fuera del menú móvil y fuera del botón del menú
+                        const isClickInsideMenu = mobileMenu.contains(event.target);
+                        const isClickOnButton = mobileMenuButton.contains(event.target);
+
+                        if (!isClickInsideMenu && !isClickOnButton) {
+                            mobileMenu.classList.add('hidden');
+                            mobileMenuButton.setAttribute('aria-expanded', 'false');
+                            // Opcional: cerrar también cualquier submenú abierto
+                            mobileMenu.querySelectorAll('ul ul').forEach(subMenu => {
+                                subMenu.classList.add('hidden');
+                            });
+                        }
+                    }
                 });
             }
 
