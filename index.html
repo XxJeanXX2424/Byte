@@ -185,6 +185,16 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #555; /* Color del pulgar al pasar el ratón */
         }
+
+        /* Animación para el texto "Tu visión, nuestra misión" */
+        @keyframes subtle-fade {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        .animate-subtle-fade {
+            animation: subtle-fade 3s infinite alternate ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
@@ -214,9 +224,11 @@
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex items-center justify-between">
-            <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
-                <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
-            </a>
+            <div class="flex items-center space-x-4"> <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
+                    <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
+                </a>
+                <span class="text-gray-300 text-base md:text-lg font-light animate-subtle-fade hidden sm:block">Tu visión, nuestra misión</span>
+            </div>
 
             <nav class="hidden sm:block flex-grow">
                 <ul class="flex justify-center space-x-8 items-center">
@@ -273,11 +285,41 @@
 
     <nav id="mobile-menu" class="sm:hidden bg-byte-secondary-dark shadow-lg py-4 px-4 hidden fixed top-20 w-full z-40">
         <ul class="flex flex-col space-y-4">
-            <li><a href="#inicio" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Inicio</a></li>
-            <li><a href="#servicios" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Servicios</a></li>
-            <li><a href="#portafolio" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Portafolio</a></li>
-            <li><a href="#proceso" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Proceso</a></li>
-            <li><a href="#contacto" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Contacto</a></li>
+            <li class="relative">
+                <a href="#inicio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Inicio</a>
+                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.2</a></li>
+                </ul>
+            </li>
+            <li class="relative">
+                <a href="#servicios" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Servicios</a>
+                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.2</a></li>
+                </ul>
+            </li>
+            <li class="relative">
+                <a href="#portafolio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Portafolio</a>
+                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.2</a></li>
+                </ul>
+            </li>
+            <li class="relative">
+                <a href="#proceso" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Proceso</a>
+                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.2</a></li>
+                </ul>
+            </li>
+            <li class="relative">
+                <a href="#contacto" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Contacto</a>
+                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.2</a></li>
+                </ul>
+            </li>
             <li>
                 <a href="#contacto" class="block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
                                          shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
@@ -484,7 +526,7 @@
                     <div class="space-y-6 text-center text-lg">
                         <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📍</span> Venezuela, Caracas, Plaza Sucre, Calle Bolivia</p>
                         <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📧</span> Bytewebdesign1@gmail.com</p>
-                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📞</span> +584125646508</p>
+                        <p class="flex items-center justify-center text-byte-accent-cyan mr-3">📞 +584125646508</p>
                         <div class="mt-6 flex justify-center space-x-6 text-2xl">
                             <a href="https://facebook.com/tupagina" target="_blank" aria-label="Visitar Facebook" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-facebook-f"></i></a>
                             <a href="https://twitter.com/tucuenta" target="_blank" aria-label="Visitar X (Twitter)" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-x-twitter"></i></a>
@@ -541,9 +583,27 @@
                     // Actualizar aria-expanded para accesibilidad
                     mobileMenuButton.setAttribute('aria-expanded', !isHidden);
                 });
-                // Cerrar menú móvil al hacer clic en un enlace
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', function() {
+
+                // Modificar el script para el menú móvil para manejar subcategorías
+                mobileMenu.querySelectorAll('.mobile-menu-toggle').forEach(link => {
+                    link.addEventListener('click', function(event) {
+                        const parentLi = this.closest('li');
+                        const subMenu = parentLi.querySelector('ul');
+
+                        if (subMenu) {
+                            event.preventDefault(); // Prevenir el salto a la sección si hay submenú
+                            subMenu.classList.toggle('hidden');
+                        } else {
+                            // Si no hay submenú, cerrar el menú móvil principal
+                            mobileMenu.classList.add('hidden');
+                            mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+
+                // Cerrar el menú móvil si se hace clic en una subcategoría (ya que estas no tienen sub-subcategorías)
+                mobileMenu.querySelectorAll('ul ul a').forEach(subLink => {
+                    subLink.addEventListener('click', function() {
                         mobileMenu.classList.add('hidden');
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                     });
