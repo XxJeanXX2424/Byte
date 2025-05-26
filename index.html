@@ -520,6 +520,481 @@
                             <input type="text" id="contact-name" name="name" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent text-lg" placeholder="Tu nombre" required>
                         </div>
                         <div>
+            <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byte - Diseño Web que Impulsa tu Negocio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'byte-dark-bg': '#0A0A1A',
+                        'byte-accent-cyan': '#00FFFF',
+                        'byte-light-bg': '#F8FAFC',
+                        'byte-text-dark': '#374151',
+                        'byte-text-light': '#F9FAFB',
+                        'byte-secondary-dark': '#1A202C',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Importación de fuentes de Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Deshabilita la selección de texto para una experiencia más de "aplicación" */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* Asegura que el body no tenga margen para el posicionamiento fijo */
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Animación de brillo para el logo "Byte" */
+        @keyframes glow {
+            0% {
+                color: #00FFFF;
+                text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
+            }
+            50% {
+                color: #A0FFFF;
+                text-shadow: 0 0 15px #00FFFF, 0 0 25px #00FFFF, 0 0 40px #00FFFF;
+            }
+            100% {
+                color: #00FFFF;
+                text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
+            }
+        }
+
+        #byte-logo-text {
+            animation: glow 1.5s infinite alternate ease-in-out;
+        }
+
+        /* Animación de brillo para los enlaces del menú (más suave) */
+        @keyframes menu-glow {
+            0% {
+                color: #00FFFF;
+                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
+            }
+            50% {
+                color: #80FFFF;
+                text-shadow: 0 0 5px #00FFFF, 0 0 8px #00FFFF;
+            }
+            100% {
+                color: #00FFFF;
+                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
+            }
+        }
+
+        .menu-link-glow {
+            animation: menu-glow 2s infinite alternate ease-in-out;
+        }
+
+        /* Animación de "caída" al hacer scroll para AOS */
+        @keyframes fall-in {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Clase aplicada por AOS.js para animar los elementos */
+        .aos-animate {
+            animation-name: fall-in;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Estilos para la imagen de fondo en la sección de inicio */
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://placehold.co/1920x1080/0A0A1A/00FFFF?text=Background+Image'); /* RUTA DE TU IMAGEN - Usé un placeholder */
+            background-size: cover;
+            background-position: center;
+            z-index: -1; /* Envía la imagen detrás del contenido principal */
+            opacity: 0.6; /* Un poco de transparencia para que el texto sea más legible */
+            filter: brightness(0.6); /* Ajuste de brillo para que el texto resalte más */
+        }
+
+        /* Estilos para el contenedor del mapa de Google Maps (responsive) */
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 (altura / ancho) */
+            height: 0;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Estilos para la esfera principal y secundarias (inferior izquierda) --- */
+        /* El contenedor principal de la esfera */
+        #main-sphere-container {
+            position: fixed;
+            bottom: 20px; /* Posición inicial en la esquina inferior izquierda */
+            left: 20px;
+            z-index: 100; /* Asegúrate de que esté por encima de casi todo */
+        }
+
+        /* La esfera principal */
+        #main-sphere {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 165, 0, 0.8); /* Naranja translúcido */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.9);
+            transition: transform 0.2s ease-in-out; /* Transición suave para el hover */
+            cursor: grab; /* Cursor para indicar que es arrastrable */
+            position: relative; /* Necesario para posicionar las secundarias */
+            z-index: 101; /* Más alto que las esferas secundarias para el clic */
+            overflow: hidden; /* Asegura que la imagen no se desborde del círculo */
+        }
+
+        /* Estilos para la imagen dentro de la esfera principal */
+        #main-sphere img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cubre el área de la burbuja sin distorsionar la imagen */
+            border-radius: 50%; /* Asegura que la imagen también sea circular */
+        }
+
+        #main-sphere:hover {
+            transform: scale(1.1); /* Agranda ligeramente al pasar el mouse */
+        }
+
+        /* Animación de pulso cuando las esferas secundarias están abiertas para la esfera principal */
+        @keyframes pulse-glow-main {
+            0% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
+            50% { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
+            100% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
+        }
+
+        #main-sphere.active {
+            animation: pulse-glow-main 1.5s infinite alternate ease-in-out;
+        }
+
+        /* Estilos base para las esferas secundarias */
+        .secondary-sphere-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9); /* Blanco translúcido */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Para que la imagen respete el border-radius */
+            opacity: 0;
+            pointer-events: none; /* Evita la interacción hasta que sean visibles */
+            /* Transición para el efecto de burbuja (opacidad y escala) y movimiento */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            transform: translateY(0) scale(0); /* Inicia oculto y pequeño para el efecto de burbuja */
+            z-index: 100; /* Asegura que estén detrás de la principal al ocultarse/mostrarse */
+        }
+
+        .secondary-sphere-item.show {
+            opacity: 1;
+            pointer-events: auto; /* Permite la interacción cuando son visibles */
+        }
+
+        /* Posiciones específicas para las esferas secundarias cuando se muestran (despliegue hacia arriba) */
+        #secondary-sphere-item-1.show {
+            transform: translateY(-80px) scale(1); /* Primera esfera, arriba */
+        }
+
+        #secondary-sphere-item-2.show {
+            transform: translateY(-150px) scale(1); /* Segunda esfera, más arriba */
+        }
+
+        .secondary-sphere-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .secondary-sphere-item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
+
+    <div id="main-sphere-container">
+        <div id="main-sphere">
+            <img src="https://placehold.co/60x60/FFA500/FFFFFF?text=TuLogo" alt="Logo Principal">
+        </div>
+        <div id="secondary-sphere-item-1" class="secondary-sphere-item">
+            <a href="https://www.instagram.com/tu_perfil" target="_blank"><img src="https://placehold.co/50x50/FF5733/FFFFFF?text=IG" alt="Instagram"></a>
+        </div>
+        <div id="secondary-sphere-item-2" class="secondary-sphere-item">
+            <a href="https://www.linkedin.com/in/tu_perfil" target="_blank"><img src="https://placehold.co/50x50/33FF57/FFFFFF?text=LI" alt="LinkedIn"></a>
+        </div>
+    </div>
+
+    <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
+            </a>
+
+            <nav class="hidden sm:block flex-grow">
+                <ul class="flex justify-center space-x-8 items-center">
+                    <li><a href="#inicio" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Inicio</a></li>
+                    <li><a href="#servicios" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Servicios</a></li>
+                    <li><a href="#portafolio" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Portafolio</a></li>
+                    <li><a href="#proceso" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Proceso</a></li>
+                    <li><a href="#contacto" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a></li>
+                    <li>
+                        <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                                 shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
+                            ¡Empecemos tu Proyecto!
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-byte-accent-cyan hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <nav id="mobile-menu" class="sm:hidden bg-byte-secondary-dark shadow-lg py-4 px-4 hidden fixed top-20 w-full z-40">
+        <ul class="flex flex-col space-y-4">
+            <li><a href="#inicio" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Inicio</a></li>
+            <li><a href="#servicios" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Servicios</a></li>
+            <li><a href="#portafolio" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Portafolio</a></li>
+            <li><a href="#proceso" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Proceso</a></li>
+            <li><a href="#contacto" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Contacto</a></li>
+            <li>
+                <a href="#contacto" class="block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                        shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
+                    ¡Empecemos tu Proyecto!
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="inicio" class="relative bg-byte-dark-bg text-white py-32 md:py-48 overflow-hidden flex items-center justify-center">
+        <div class="background-image"></div>
+
+        <div class="container mx-auto px-4 relative z-10 text-center"
+             data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-byte-accent-cyan drop-shadow-lg"
+                data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1200">
+                Diseño Web que Impulsa tu Negocio
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-byte-text-light opacity-90"
+               data-aos="fade-up" data-aos-delay="400" data-aos-duration="1200">
+                Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.
+            </p>
+            <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
+                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+               data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
+                ¡Hablemos de tu Proyecto!
+            </a>
+        </div>
+    </section>
+
+    <section id="servicios" class="py-20 bg-byte-light-bg text-byte-text-dark">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-dark-bg mb-16"
+                data-aos="fade-up" data-aos-duration="800">Lo que Hacemos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <a href="diseno-web.html" class="block bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="100" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-6 text-center">✨</div>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">Diseño Web Personalizado</h3>
+                    <p class="text-center text-byte-text-dark leading-relaxed">
+                        Creamos sitios web únicos y visualmente impresionantes que capturan la esencia de tu marca y atraen a tu audiencia.
+                    </p>
+                </a>
+                <div class="bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="200" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-6 text-center">🛍️</div>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">Desarrollo E-commerce</h3>
+                    <p class="text-center text-byte-text-dark leading-relaxed">
+                        Construimos tiendas online seguras, rápidas y optimizadas para la conversión, para que vendas más.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="300" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-6 text-center">🚀</div>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">SEO & Marketing Digital</h3>
+                    <p class="text-center text-byte-text-dark leading-relaxed">
+                        Aumentamos tu visibilidad en buscadores y desarrollamos estrategias de marketing que generan resultados.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="400" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-6 text-center">📱</div>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">Aplicaciones Web</h3>
+                    <p class="text-center text-byte-text-dark leading-relaxed">
+                        Diseñamos y desarrollamos aplicaciones web personalizadas para optimizar tus procesos y ofrecer nuevas experiencias.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="500" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-6 text-center">🛠️</div>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">Mantenimiento y Soporte</h3>
+                    <p class="text-center text-byte-text-dark leading-relaxed">
+                        Garantizamos que tu sitio web esté siempre actualizado, seguro y funcionando a la perfección.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="600" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-6 text-center">💡</div>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">Consultoría Digital</h3>
+                    <p class="text-center text-byte-text-dark leading-relaxed">
+                        Te asesoramos para definir la mejor estrategia digital y alcanzar tus objetivos de negocio.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portafolio" class="py-20 bg-byte-dark-bg text-byte-text-light">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-16"
+                data-aos="fade-up" data-aos-duration="800">Proyectos Recientes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="bg-byte-secondary-dark rounded-xl shadow-2xl overflow-hidden group"
+                    data-aos="zoom-in" data-aos-delay="100" data-aos-duration="800">
+                    <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=E-commerce+Moderno" alt="Proyecto E-commerce Moderno" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
+                    <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
+                        <h3 class="text-2xl font-bold mb-2">Tienda Online de Lujo</h3>
+                        <p class="text-gray-300 text-sm mb-4">Diseño y desarrollo de una plataforma e-commerce con experiencia de usuario premium.</p>
+                        <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
+                    </div>
+                </div>
+                <div class="bg-byte-secondary-dark rounded-xl shadow-2xl overflow-hidden group"
+                    data-aos="zoom-in" data-aos-delay="200" data-aos-duration="800">
+                    <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=Web+Corporativa+Minimalista" alt="Proyecto Web Corporativa Minimalista" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
+                    <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
+                        <h3 class="text-2xl font-bold mb-2">Web Corporativa Minimalista</h3>
+                        <p class="text-gray-300 text-sm mb-4">Sitio web elegante y funcional para una startup tecnológica con enfoque en UX.</p>
+                        <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
+                    </div>
+                </div>
+                <div class="bg-byte-secondary-dark rounded-xl shadow-2xl overflow-hidden group"
+                    data-aos="zoom-in" data-aos-delay="300" data-aos-duration="800">
+                    <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=App+Web+Personalizada" alt="Proyecto Aplicación Web Personalizada" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
+                    <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
+                        <h3 class="text-2xl font-bold mb-2">Aplicación de Gestión de Proyectos</h3>
+                        <p class="text-gray-300 text-sm mb-4">Desarrollo de una herramienta web interna para optimizar la colaboración del equipo.</p>
+                        <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proceso" class="py-20 bg-byte-light-bg text-byte-text-dark">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-dark-bg mb-16"
+                data-aos="fade-up" data-aos-duration="800">Nuestro Proceso Creativo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="100" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-4">1️⃣</div>
+                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Descubrimiento</h3>
+                    <p class="text-byte-text-dark">Entendemos tus objetivos, audiencia y la visión de tu proyecto.</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="200" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-4">2️⃣</div>
+                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Diseño & Planificación</h3>
+                    <p class="text-byte-text-dark">Creamos wireframes, mockups y la estructura visual de tu web.</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="300" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-4">3️⃣</div>
+                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Desarrollo</h3>
+                    <p class="text-byte-text-dark">Convertimos el diseño en un sitio web funcional y optimizado.</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
+                    data-aos="fall-down" data-aos-delay="400" data-aos-duration="1000">
+                    <div class="text-6xl text-byte-accent-cyan mb-4">4️⃣</div>
+                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Lanzamiento & Soporte</h3>
+                    <p class="text-center text-byte-text-dark">Publicamos tu web y ofrecemos soporte continuo para su éxito.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-byte-dark-bg text-byte-text-light">
+        <div class="container mx-auto px-4 text-center max-w-4xl"
+             data-aos="fade-up" data-aos-duration="800">
+             <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-10">
+                ¿Listo para despegar?
+            </h2>
+            <p class="text-lg md:text-xl mb-12 text-gray-300">
+                Contacta con nosotros hoy mismo y convierte tus ideas en una realidad digital impactante.
+            </p>
+            <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
+                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                ¡Solicita tu Presupuesto Gratuito!
+            </a>
+        </div>
+    </section>
+
+    <section id="contacto" class="py-20 bg-byte-light-bg text-byte-text-dark">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-dark-bg mb-16"
+                data-aos="fade-up" data-aos-duration="800">Contáctanos</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
+                    data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
+                    <h3 class="text-3xl font-bold text-center text-byte-dark-bg mb-8">Envíanos un Mensaje</h3>
+                    <form action="#" method="POST" class="space-y-6">
+                        <div>
+                            <label for="contact-name" class="block text-lg font-semibold text-byte-dark-bg mb-2">Nombre Completo</label>
+                            <input type="text" id="contact-name" name="name" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent text-lg" placeholder="Tu nombre" required>
+                        </div>
+                        <div>
                             <label for="contact-email" class="block text-lg font-semibold text-byte-dark-bg mb-2">Correo Electrónico</label>
                             <input type="email" id="contact-email" name="email" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent text-lg" placeholder="tu.correo@ejemplo.com" required>
                         </div>
@@ -534,7 +1009,7 @@
                 </div>
 
                 <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
-                     data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
+                    data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
                     <h3 class="text-3xl font-bold text-center text-byte-dark-bg mb-8">Dónde Encontrarnos</h3>
                     <div class="space-y-6 text-center text-lg">
                         <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📍</span> 123 Calle Ficticia, Ciudad, País</p>
@@ -543,7 +1018,7 @@
                     </div>
 
                     <div class="mt-8 map-container rounded-lg shadow-md">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.545758992161!2d-74.08852338573934!3d4.654318796677941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a7b2b0b0b0b%3A0x7b2b0b0b0b0b0b0b!2sPlaza+de+Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1678886400000!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.364421110756!2d-66.8837330852033!3d10.49071599252329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a5814f9c5b2a5%3A0x7d0a6c0c0b0b0b0!2sCaracas%2C%20Distrito%20Capital%2C%20Venezuela!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -560,21 +1035,17 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+
     <script>
+        // Inicialización de AOS
         AOS.init({
             once: true,      /* Las animaciones ocurren solo una vez al hacer scroll */
             duration: 1000, /* Duración de la animación en milisegundos */
             easing: 'ease-in-out', /* Función de temporización para la animación */
         });
 
-        /* Script para ocultar el pre-cargador una vez que la página ha cargado completamente */
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                /* Añade la clase 'hidden' para ocultarlo (con una transición suave CSS) */
-                preloader.classList.add('hidden');
-            }
-        });
+        /* El script para ocultar el pre-cargador ha sido eliminado */
 
         /* Script para el menú móvil (mostrar/ocultar al hacer clic en el botón de hamburguesa) */
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -594,16 +1065,48 @@
             });
         }
 
-        // --- JavaScript para la esfera movible y sus esferas secundarias ---
+        // --- JavaScript para la esfera movible y sus esferas secundarias (inferior izquierda) ---
+        const mainSphereContainer = document.getElementById('main-sphere-container');
+        const mainSphere = document.getElementById('main-sphere');
+        const secondarySphereItem1 = document.getElementById('secondary-sphere-item-1');
+        const secondarySphereItem2 = document.getElementById('secondary-sphere-item-2');
 
-        const movableSphereContainer = document.getElementById('movable-sphere-container');
-        const movableSphere = document.getElementById('movable-sphere');
-        const secondarySphere1 = document.getElementById('secondary-sphere-1');
-        const secondarySphere2 = document.getElementById('secondary-sphere-2');
+        let isDraggingMain = false;
+        let offsetMain = { x: 0, y: 0 };
+        let spheresVisibleMain = false;
 
-        let isDragging = false;
-        let offset = { x: 0, y: 0 };
-        let spheresVisible = false;
+        // Variable global para el sintetizador de burbujas
+        let bubbleSynth = null;
+
+        // Función para reproducir el sonido de burbuja
+        function playBubbleSound() {
+            if (bubbleSynth) {
+                // Ajusta la nota y la duración para un sonido de "pop"
+                // "C6" para un tono agudo, "64n" para una duración muy corta
+                bubbleSynth.triggerAttackRelease("C6", "64n", Tone.context.currentTime, 0.8); // 0.8 es la velocidad (velocity)
+            }
+        }
+
+        // Función para inicializar el contexto de audio y el sintetizador
+        async function initAudio() {
+            // Solo inicia el contexto de audio si no está en ejecución
+            if (Tone.context.state !== 'running') {
+                await Tone.start();
+                console.log("Contexto de audio iniciado.");
+            }
+            // Solo crea el sintetizador si no ha sido creado ya
+            if (!bubbleSynth) {
+                bubbleSynth = new Tone.PluckSynth().toDestination();
+                // Ajustes para un sonido más de "burbuja reventando"
+                bubbleSynth.set({
+                    attackNoise: 1,      // Máximo ruido de ataque para el "pop" inicial
+                    dampening: 8000,    // Valor más alto para un decaimiento más rápido y seco
+                    resonance: 0.7,     // Un poco de resonancia para darle cuerpo
+                    release: 0.1        // Tiempo de liberación muy corto
+                });
+                console.log("Sintetizador de burbujas inicializado.");
+            }
+        }
 
         // Función para establecer el contenido de las esferas secundarias
         function setSecondarySphereContent(sphereId, imageUrl, linkUrl) {
@@ -617,72 +1120,96 @@
             }
         }
 
-        // Ejemplo de cómo usar la función (puedes cambiar estas URLs y rutas de imagen)
-        // Llama a esta función después de que el DOM esté cargado (por ejemplo, dentro de window.onload o document.addEventListener('DOMContentLoaded'))
+        // Ejemplo de cómo usar la función para la esfera inferior izquierda
         document.addEventListener('DOMContentLoaded', () => {
-            setSecondarySphereContent('secondary-sphere-1', 'https://via.placeholder.com/50/FF0000/FFFFFF?text=IG', 'https://www.instagram.com/tu_perfil'); // Ejemplo Instagram
-            setSecondarySphereContent('secondary-sphere-2', 'https://via.placeholder.com/50/0077B5/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil'); // Ejemplo LinkedIn
-            // Puedes agregar más esferas secundarias si lo deseas, siguiendo el patrón.
+            setSecondarySphereContent('secondary-sphere-item-1', 'https://placehold.co/50x50/FF5733/FFFFFF?text=IG', 'https://www.instagram.com/tu_perfil'); // Ejemplo Instagram
+            setSecondarySphereContent('secondary-sphere-item-2', 'https://placehold.co/50x50/33FF57/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil'); // Ejemplo LinkedIn
         });
 
-
-        // Iniciar el arrastre
-        movableSphere.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            movableSphere.style.cursor = 'grabbing';
-            // Calcular el offset entre el puntero y la esquina superior izquierda del contenedor
-            const containerRect = movableSphereContainer.getBoundingClientRect();
-            offset = {
+        // Iniciar el arrastre para la esfera principal
+        mainSphere.addEventListener('mousedown', (e) => {
+            isDraggingMain = true;
+            mainSphere.style.cursor = 'grabbing';
+            const containerRect = mainSphereContainer.getBoundingClientRect();
+            offsetMain = {
                 x: e.clientX - containerRect.left,
                 y: e.clientY - containerRect.top
             };
+            e.stopPropagation(); // Evitar que el clic se propague si se está arrastrando inmediatamente
         });
 
-        // Mover la esfera mientras se arrastra
+        // Mover la esfera principal mientras se arrastra
         document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
+            if (!isDraggingMain) return;
 
-            // Restringir el movimiento para que no se salga de la ventana
-            let newX = e.clientX - offset.x;
-            let newY = e.clientY - offset.y;
+            let newX = e.clientX - offsetMain.x;
+            let newY = e.clientY - offsetMain.y;
 
-            // Limitar X
+            // Limitar X para la esfera principal
             if (newX < 0) newX = 0;
-            if (newX + movableSphereContainer.offsetWidth > window.innerWidth) {
-                newX = window.innerWidth - movableSphereContainer.offsetWidth;
+            if (newX + mainSphereContainer.offsetWidth > window.innerWidth) {
+                newX = window.innerWidth - mainSphereContainer.offsetWidth;
             }
 
-            // Limitar Y
+            // Limitar Y para la esfera principal
             if (newY < 0) newY = 0;
-            if (newY + movableSphereContainer.offsetHeight > window.innerHeight) {
-                newY = window.innerHeight - movableSphereContainer.offsetHeight;
+            if (newY + mainSphereContainer.offsetHeight > window.innerHeight) {
+                newY = window.innerHeight - mainSphereContainer.offsetHeight;
             }
 
-            movableSphereContainer.style.left = `${newX}px`;
-            movableSphereContainer.style.top = `${newY}px`;
+            mainSphereContainer.style.left = `${newX}px`;
+            mainSphereContainer.style.top = `${newY}px`;
         });
 
-        // Detener el arrastre
+        // Detener el arrastre para la esfera principal
         document.addEventListener('mouseup', () => {
-            isDragging = false;
-            movableSphere.style.cursor = 'grab';
+            isDraggingMain = false;
+            mainSphere.style.cursor = 'grab';
         });
 
         // Alternar visibilidad de las esferas secundarias al hacer clic en la principal
-        movableSphere.addEventListener('click', (e) => {
-            // Prevenir que el evento de clic se propague si se está arrastrando (solo para asegurar)
-            // if (isDragging) return;
+        mainSphere.addEventListener('click', (e) => {
+            // Inicializa el audio al primer clic del usuario
+            initAudio();
 
-            spheresVisible = !spheresVisible;
+            // Si hubo un arrastre reciente, no activamos el clic
+            if (e.detail === 0 && isDraggingMain) return;
 
-            if (spheresVisible) {
-                secondarySphere1.classList.add('show');
-                secondarySphere2.classList.add('show');
-                movableSphere.classList.add('active'); // Activa la animación de pulso
+            spheresVisibleMain = !spheresVisibleMain;
+
+            if (spheresVisibleMain) {
+                // Muestra las esferas una por una con un pequeño retraso
+                secondarySphereItem1.classList.add('show');
+                playBubbleSound(); // Sonido para la primera esfera
+                setTimeout(() => {
+                    secondarySphereItem2.classList.add('show');
+                    playBubbleSound(); // Sonido para la segunda esfera
+                }, 100); // Retraso de 100ms para la segunda esfera
+                mainSphere.classList.add('active'); // Activa la animación de pulso
             } else {
-                secondarySphere1.classList.remove('show');
-                secondarySphere2.classList.remove('show');
-                movableSphere.classList.remove('active'); // Desactiva la animación de pulso
+                // Oculta las esferas una por una con un pequeño retraso (en orden inverso para el cierre)
+                setTimeout(() => {
+                    secondarySphereItem2.classList.remove('show');
+                    playBubbleSound(); // Sonido para la segunda esfera desapareciendo
+                }, 50); // Retraso para que la segunda desaparezca primero
+                secondarySphereItem1.classList.remove('show');
+                playBubbleSound(); // Sonido para la primera esfera desapareciendo
+                mainSphere.classList.remove('active'); // Desactiva la animación de pulso
+            }
+        });
+
+        // Opcional: Cerrar las esferas secundarias si se hace clic fuera de ellas
+        document.addEventListener('click', (e) => {
+            if (spheresVisibleMain && !mainSphereContainer.contains(e.target)) {
+                // Oculta las esferas una por una con un pequeño retraso
+                setTimeout(() => {
+                    secondarySphereItem2.classList.remove('show');
+                    playBubbleSound();
+                }, 50);
+                secondarySphereItem1.classList.remove('show');
+                playBubbleSound();
+                mainSphere.classList.remove('active');
+                spheresVisibleMain = false;
             }
         });
 
