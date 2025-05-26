@@ -51,7 +51,10 @@
         /* Estilos base para el cuerpo y los títulos, asegurando las fuentes definidas en Tailwind */
         body {
             font-family: 'Inter', sans-serif;
-            /* Se eliminó user-select: none; para mejorar la experiencia del usuario al permitir la selección de texto. */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
             margin: 0;
             padding: 0;
             scroll-behavior: smooth; /* Habilita el desplazamiento suave al hacer clic en enlaces de ancla */
@@ -140,13 +143,19 @@
         #terms-modal {
             background-color: rgba(0, 0, 0, 0.75); /* Fondo semitransparente oscuro */
             z-index: 9999; /* Asegura que esté por encima de todo */
-            display: flex;
+            display: none; /* Inicialmente oculto por defecto */
             opacity: 0; /* Inicialmente oculto */
             transition: opacity 0.3s ease-out; /* Transición suave para la aparición */
+            pointer-events: none; /* No permite interacciones cuando está oculto */
         }
 
         #terms-modal.show-modal {
             opacity: 1; /* Hace visible el modal */
+        }
+
+        #terms-modal.show-modal-active {
+            display: flex; /* Muestra el modal */
+            pointer-events: auto; /* Permite interacciones cuando está activo */
         }
 
         #terms-modal > div {
@@ -180,7 +189,7 @@
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
 
-    <div id="terms-modal" class="fixed inset-0 flex items-center justify-center hidden">
+    <div id="terms-modal" class="fixed inset-0 flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-xl max-w-2xl mx-4 my-8 relative transform transition-all sm:w-full sm:mx-auto">
             <h2 class="text-3xl font-bold text-byte-dark-bg mb-6 text-center">Términos y Condiciones</h2>
             <div class="max-h-96 overflow-y-auto text-byte-text-dark mb-6 pr-4 custom-scrollbar">
@@ -211,11 +220,41 @@
 
             <nav class="hidden sm:block flex-grow">
                 <ul class="flex justify-center space-x-8 items-center">
-                    <li><a href="#inicio" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Inicio</a></li>
-                    <li><a href="#servicios" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Servicios</a></li>
-                    <li><a href="#portafolio" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Portafolio</a></li>
-                    <li><a href="#proceso" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Proceso</a></li>
-                    <li><a href="#contacto" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a></li>
+                    <li class="relative group">
+                        <a href="#inicio" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Inicio</a>
+                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.2</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <a href="#servicios" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Servicios</a>
+                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.2</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <a href="#portafolio" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Portafolio</a>
+                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.2</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <a href="#proceso" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Proceso</a>
+                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.2</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <a href="#contacto" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a>
+                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.2</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
 
@@ -250,7 +289,8 @@
 
     <section id="inicio" class="relative bg-byte-dark-bg text-white py-32 md:py-48 overflow-hidden flex items-center justify-center">
         <img src="./images/609.jpg" alt="Imagen de fondo de la sección de inicio que representa un concepto digital"
-             class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 brightness-75" loading="eager"> <div class="container mx-auto px-4 relative z-10 text-center"
+             class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 brightness-75" loading="eager">
+        <div class="container mx-auto px-4 relative z-10 text-center"
              data-aos="fade-up" data-aos-duration="1000">
             <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-byte-accent-cyan drop-shadow-lg"
                 data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1200">
@@ -375,13 +415,13 @@
                 <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
                     data-aos="fall-down" data-aos-delay="200" data-aos-duration="1000">
                     <div class="text-6xl text-byte-accent-cyan mb-4">2️⃣</div>
-                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Diseño & Planificación</h3>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-2">Diseño & Planificación</h3>
                     <p class="text-byte-text-dark">Creamos wireframes, mockups y la estructura visual de tu web.</p>
                 </div>
                 <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
                     data-aos="fall-down" data-aos-delay="300" data-aos-duration="1000">
                     <div class="text-6xl text-byte-accent-cyan mb-4">3️⃣</div>
-                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Desarrollo</h3>
+                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-2">Desarrollo</h3>
                     <p class="text-byte-text-dark">Convertimos el diseño en un sitio web funcional y optimizado.</p>
                 </div>
                 <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
@@ -406,7 +446,7 @@
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
                                          shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
                data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
-                ¡Solicita tu Presupuesto Gratuito!
+                ¡Hablemos de tu Proyecto!
             </a>
         </div>
     </section>
@@ -518,9 +558,9 @@
             const termsAccepted = localStorage.getItem('termsAccepted');
 
             if (!termsAccepted) {
-                termsModal.classList.remove('hidden'); // Muestra el modal
+                termsModal.classList.add('show-modal-active'); // Muestra el modal (display: flex, pointer-events: auto)
                 setTimeout(() => {
-                    termsModal.classList.add('show-modal'); // Activa la transición de aparición
+                    termsModal.classList.add('show-modal'); // Activa la transición de opacidad
                     document.body.classList.add('overflow-hidden'); // Evita el scroll del body principal
                 }, 10); // Pequeño retardo para que la transición CSS funcione
             }
@@ -528,10 +568,10 @@
             if (acceptTermsButton) {
                 acceptTermsButton.addEventListener('click', () => {
                     localStorage.setItem('termsAccepted', 'true'); // Marca los términos como aceptados
-                    termsModal.classList.remove('show-modal'); // Desactiva la transición de ocultación
+                    termsModal.classList.remove('show-modal'); // Desactiva la transición de opacidad
+                    document.body.classList.remove('overflow-hidden'); // Permite el scroll del body
                     setTimeout(() => {
-                        termsModal.classList.add('hidden'); // Oculta el modal después de la transición
-                        document.body.classList.remove('overflow-hidden'); // Permite el scroll del body
+                        termsModal.classList.remove('show-modal-active'); // Oculta el modal (display: none, pointer-events: none)
                     }, 300); // Debe coincidir con la duración de la transición CSS
                 });
             }
@@ -547,9 +587,9 @@
             // Función auxiliar para ocultar el modal (usada también por el click fuera)
             function hideTermsModal() {
                 termsModal.classList.remove('show-modal');
+                document.body.classList.remove('overflow-hidden');
                 setTimeout(() => {
-                    termsModal.classList.add('hidden');
-                    document.body.classList.remove('overflow-hidden');
+                    termsModal.classList.remove('show-modal-active');
                 }, 300);
             }
 
