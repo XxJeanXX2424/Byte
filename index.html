@@ -16,8 +16,8 @@
     <meta property="twitter:description" content="Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.">
     <meta property="twitter:image" content="https://www.tudominio.com/images/social-share.jpg"> <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&family=Lora:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&family=Lora:wght@400;700&display=swap"></noscript>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -33,6 +33,7 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'], // Fuente principal para texto
                         heading: ['Montserrat', 'sans-serif'], // Fuente para títulos
+                        vision: ['Lora', 'serif'], // Nueva fuente para "Tu visión, nuestra misión"
                     },
                     colors: {
                         'byte-dark-bg': '#0A0A1A',        // Fondo oscuro principal
@@ -227,7 +228,7 @@
             <div class="flex items-center space-x-4"> <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
                     <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
                 </a>
-                <span class="text-gray-300 text-base md:text-lg font-light animate-subtle-fade hidden sm:block">Tu visión, nuestra misión</span>
+                <span class="font-vision text-gray-100 text-sm md:text-lg font-light animate-subtle-fade">Tu visión, nuestra misión</span>
             </div>
 
             <nav class="hidden sm:block flex-grow">
@@ -488,7 +489,7 @@
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
                                          shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
                data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
-                ¡Hablemos de tu Proyecto!
+                ¡Solicita tu Presupuesto Gratuito!
             </a>
         </div>
     </section>
