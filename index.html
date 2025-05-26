@@ -188,8 +188,7 @@
             overflow: hidden; /* For image to respect border-radius */
             opacity: 0;
             pointer-events: none; /* Prevent interaction until visible */
-            /* Transition for bubble effect (opacity and scale) and movement */
-            transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect */
+            /* Transition for bubble effect (opacity and scale) and movement - only applies when 'show' is added */
             transform: scale(0); /* Start hidden and small for bubble effect */
             left: 5px; /* Adjust to align with the main sphere's center */
             /* Z-index to ensure correct stacking when deployed */
@@ -201,6 +200,8 @@
             pointer-events: auto; /* Allow interaction when visible */
             transform: scale(1); /* Grow to normal size */
             z-index: 105; /* Higher than main sphere when visible */
+            /* Apply transition only when becoming 'show' */
+            transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         /* Specific positions for secondary spheres when shown (deploy upwards) */
@@ -227,13 +228,78 @@
             justify-content: center;
             align-items: center;
         }
+
+        /* --- Terms and Conditions Modal Styles --- */
+        #terms-modal {
+            /* Using Tailwind classes for most properties, custom Z-index */
+            background-color: rgba(0, 0, 0, 0.75);
+            z-index: 9999; /* Ensures it's on top of everything */
+            display: flex; /* Overrides hidden */
+            opacity: 0; /* Start hidden for transition */
+            transition: opacity 0.3s ease-out;
+        }
+
+        #terms-modal.show-modal {
+            opacity: 1;
+        }
+
+        #terms-modal > div { /* The inner content box */
+            transform: scale(0.9); /* Start slightly smaller for transition */
+            transition: transform 0.3s ease-out;
+        }
+
+        #terms-modal.show-modal > div {
+            transform: scale(1); /* Grow to normal size */
+        }
+
+        /* Custom scrollbar for terms text */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
 
+    <div id="terms-modal" class="fixed inset-0 flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-lg shadow-xl max-w-2xl mx-4 my-8 relative transform transition-all sm:w-full sm:mx-auto">
+            <h2 class="text-3xl font-bold text-byte-dark-bg mb-6 text-center">Términos y Condiciones</h2>
+            <div class="max-h-96 overflow-y-auto text-byte-text-dark mb-6 pr-4 custom-scrollbar">
+                <p class="mb-4">Bienvenido a Byte. Al acceder y utilizar nuestro sitio web, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso. Si no está de acuerdo con alguna parte de estos términos, por favor, no utilice nuestro sitio web.</p>
+                <h3 class="font-semibold text-xl mb-2">1. Uso del Sitio Web</h3>
+                <p class="mb-4">El contenido de las páginas de este sitio web es para su información general y uso exclusivo. Está sujeto a cambios sin previo aviso.</p>
+                <h3 class="font-semibold text-xl mb-2">2. Propiedad Intelectual</h3>
+                <p class="mb-4">Este sitio web contiene material que es propiedad nuestra o está licenciado para nosotros. Este material incluye, pero no se limita a, el diseño, la disposición, el aspecto, los gráficos y el texto. La reproducción está prohibida salvo de conformidad con el aviso de derechos de autor, que forma parte de estos términos y condiciones.</p>
+                <h3 class="font-semibold text-xl mb-2">3. Enlaces a Otros Sitios Web</h3>
+                <p class="mb-4">Nuestro sitio web puede contener enlaces a otros sitios web de interés. Sin embargo, una vez que haya utilizado estos enlaces para salir de nuestro sitio, debe tener en cuenta que no tenemos ningún control sobre ese otro sitio web. Por lo tanto, no podemos ser responsables de la protección y privacidad de cualquier información que proporcione mientras visita dichos sitios y dichos sitios no se rigen por esta declaración de privacidad. Debe tener precaución y consultar la declaración de privacidad aplicable al sitio web en cuestión.</p>
+                <h3 class="font-semibold text-xl mb-2">4. Limitación de Responsabilidad</h3>
+                <p class="mb-4">Ni nosotros ni ningún tercero ofrecemos garantía alguna en cuanto a la exactitud, puntualidad, rendimiento, integridad o idoneidad de la información y los materiales encontrados u ofrecidos en este sitio web para cualquier propósito particular. Usted reconoce que dicha información y materiales pueden contener inexactitudes o errores y excluimos expresamente la responsabilidad por tales inexactitudes o errores en la máxima medida permitida por la ley.</p>
+                <h3 class="font-semibold text-xl mb-2">5. Modificaciones de los Términos</h3>
+                <p class="mb-4">Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Cualquier cambio será efectivo inmediatamente después de su publicación en el sitio web. Su uso continuado del sitio web después de la publicación de los cambios constituirá su aceptación de dichos cambios.</p>
+                <p class="mb-4">Al hacer clic en "Aceptar", usted confirma que ha leído, entendido y aceptado nuestros Términos y Condiciones y nuestra Política de Privacidad.</p>
+            </div>
+            <button id="accept-terms-button" class="w-full bg-byte-accent-cyan text-byte-dark-bg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-400 transition duration-300 transform hover:scale-105 text-lg">
+                Aceptar Términos y Condiciones
+            </button>
+        </div>
+    </div>
+
     <div id="main-sphere-container">
         <div id="main-sphere">
-            <img src="https://placehold.co/60x60/FFA500/FFFFFF?text=💬" alt="Social Media Icon">
+            <img src="./images/images.png" alt="Social Media Icon">
         </div>
         <div id="secondary-sphere-whatsapp" class="secondary-sphere-item">
             <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank" aria-label="Contact via WhatsApp">
@@ -451,7 +517,8 @@
                 Contacta con nosotros hoy mismo y convierte tus ideas en una realidad digital impactante.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+               data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
                 ¡Solicita tu Presupuesto Gratuito!
             </a>
         </div>
@@ -542,7 +609,7 @@
         const mainSphereContainer = document.getElementById('main-sphere-container');
         const mainSphere = document.getElementById('main-sphere');
         const secondarySphereWhatsapp = document.getElementById('secondary-sphere-whatsapp');
-        const secondarySphereInstagram = document.getElementById('secondary-sphere-instagram'); // Changed from Telegram to Instagram
+        const secondarySphereInstagram = document.getElementById('secondary-sphere-instagram');
 
         let spheresVisible = false;
 
@@ -551,31 +618,83 @@
             spheresVisible = !spheresVisible;
 
             if (spheresVisible) {
-                // Show spheres one by one with a small delay
+                // Show spheres: Apply transition first, then add 'show' class
+                secondarySphereWhatsapp.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                secondarySphereInstagram.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+
                 secondarySphereWhatsapp.classList.add('show');
                 setTimeout(() => {
-                    secondarySphereInstagram.classList.add('show'); // Changed to Instagram
+                    secondarySphereInstagram.classList.add('show');
                 }, 100); // 100ms delay for the second sphere
                 mainSphere.classList.add('active'); // Activate pulse animation
             } else {
-                // Hide spheres one by one with a small delay (in reverse order for closing)
-                setTimeout(() => {
-                    secondarySphereInstagram.classList.remove('show'); // Changed to Instagram
-                }, 50); // Delay for the second to disappear first
+                // Hide spheres: Remove 'show' class instantly by setting transition to 'none'
+                secondarySphereWhatsapp.style.transition = 'none';
+                secondarySphereInstagram.style.transition = 'none';
+
                 secondarySphereWhatsapp.classList.remove('show');
+                secondarySphereInstagram.classList.remove('show');
+
                 mainSphere.classList.remove('active'); // Deactivate pulse animation
+
+                // Re-apply transition after a small delay to ensure it's ready for the next 'show'
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => { // Double rAF for reliable reflow
+                        secondarySphereWhatsapp.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                        secondarySphereInstagram.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                    });
+                });
             }
         });
 
         // Optional: Close secondary spheres if clicked outside them
         document.addEventListener('click', (e) => {
             if (spheresVisible && !mainSphereContainer.contains(e.target)) {
-                setTimeout(() => {
-                    secondarySphereInstagram.classList.remove('show'); // Changed to Instagram
-                }, 50);
+                // Hide spheres instantly
+                secondarySphereWhatsapp.style.transition = 'none';
+                secondarySphereInstagram.style.transition = 'none';
+
                 secondarySphereWhatsapp.classList.remove('show');
+                secondarySphereInstagram.classList.remove('show');
+
                 mainSphere.classList.remove('active');
                 spheresVisible = false;
+
+                // Re-apply transition after a small delay to ensure it's ready for the next 'show'
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        secondarySphereWhatsapp.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                        secondarySphereInstagram.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                    });
+                });
+            }
+        });
+
+        // Terms and Conditions Modal Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const termsModal = document.getElementById('terms-modal');
+            const acceptTermsButton = document.getElementById('accept-terms-button');
+
+            // Check if terms have already been accepted
+            const termsAccepted = localStorage.getItem('termsAccepted');
+
+            if (!termsAccepted) {
+                termsModal.classList.remove('hidden');
+                // Use a small timeout to allow CSS transition to apply
+                setTimeout(() => {
+                    termsModal.classList.add('show-modal');
+                }, 10); // Small delay to trigger transition
+            }
+
+            if (acceptTermsButton) {
+                acceptTermsButton.addEventListener('click', () => {
+                    localStorage.setItem('termsAccepted', 'true');
+                    termsModal.classList.remove('show-modal');
+                    // Hide the modal completely after transition
+                    setTimeout(() => {
+                        termsModal.classList.add('hidden');
+                    }, 300); // Match CSS transition duration
+                });
             }
         });
     </script>
