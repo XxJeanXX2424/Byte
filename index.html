@@ -4,119 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Byte - Diseño Web que Impulsa tu Negocio</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Montserrat', 'sans-serif'],
-                    },
-                    colors: {
-                        'byte-dark-bg': '#0A0A1A',
-                        'byte-accent-cyan': '#00FFFF',
-                        'byte-light-bg': '#F8FAFC',
-                        'byte-text-dark': '#374151',
-                        'byte-text-light': '#F9FAFB',
-                        'byte-secondary-dark': '#1A202C',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
     <style>
-        /* Importación de fuentes de Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap');
+        /* Definición de la paleta de colores personalizada de Tailwind CSS */
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
 
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Deshabilita la selección de texto para una experiencia más de "aplicación" */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            /* Asegura que el body no tenga margen para el posicionamiento fijo */
-            margin: 0;
-            padding: 0;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* Animación de brillo para el logo "Byte" */
-        @keyframes glow {
-            0% {
-                color: #00FFFF;
-                text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
-            }
-            50% {
-                color: #A0FFFF;
-                text-shadow: 0 0 15px #00FFFF, 0 0 25px #00FFFF, 0 0 40px #00FFFF;
-            }
-            100% {
-                color: #00FFFF;
-                text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
-            }
+        :root {
+            --byte-dark-bg: #0A0A1A; /* Negro azulado oscuro */
+            --byte-secondary-dark: #1F2937; /* Gris oscuro para elementos secundarios */
+            --byte-light-bg: #F3F4F6; /* Gris muy claro para fondos */
+            --byte-text-light: #E5E7EB; /* Gris claro para texto sobre fondos oscuros */
+            --byte-text-dark: #1F2937; /* Gris oscuro para texto sobre fondos claros */
+            --byte-accent-cyan: #00FFFF; /* Cian brillante para acentos */
+            --byte-accent-orange: #FFA500; /* Naranja brillante para acentos */
+            --byte-shadow-light: rgba(0, 0, 0, 0.2);
+            --byte-shadow-dark: rgba(0, 0, 0, 0.5);
         }
 
-        #byte-logo-text {
-            animation: glow 1.5s infinite alternate ease-in-out;
-        }
+        .bg-byte-dark-bg { background-color: var(--byte-dark-bg); }
+        .bg-byte-secondary-dark { background-color: var(--byte-secondary-dark); }
+        .bg-byte-light-bg { background-color: var(--byte-light-bg); }
+        .text-byte-text-light { color: var(--byte-text-light); }
+        .text-byte-text-dark { color: var(--byte-text-dark); }
+        .text-byte-accent-cyan { color: var(--byte-accent-cyan); }
+        .text-byte-accent-orange { color: var(--byte-accent-orange); }
+        .border-byte-accent-cyan { border-color: var(--byte-accent-cyan); }
 
-        /* Animación de brillo para los enlaces del menú (más suave) */
-        @keyframes menu-glow {
-            0% {
-                color: #00FFFF;
-                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
-            }
-            50% {
-                color: #80FFFF;
-                text-shadow: 0 0 5px #00FFFF, 0 0 8px #00FFFF;
-            }
-            100% {
-                color: #00FFFF;
-                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
-            }
-        }
-
+        /* Estilo para el brillo en los enlaces del menú */
         .menu-link-glow {
-            animation: menu-glow 2s infinite alternate ease-in-out;
+            text-shadow: 0 0 5px var(--byte-accent-cyan), 0 0 10px var(--byte-accent-cyan);
+        }
+        .menu-link-glow:hover {
+            text-shadow: 0 0 8px var(--byte-accent-cyan), 0 0 15px var(--byte-accent-cyan);
         }
 
-        /* Animación de "caída" al hacer scroll para AOS */
-        @keyframes fall-in {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* Clase aplicada por AOS.js para animar los elementos */
-        .aos-animate {
-            animation-name: fall-in;
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-
-        /* Estilos para el contenedor del mapa de Google Maps (responsive) */
+        /* Estilo para el mapa incrustado */
         .map-container {
             position: relative;
-            overflow: hidden;
-            padding-bottom: 56.25%; /* Relación de aspecto 16:9 (altura / ancho) */
+            padding-bottom: 75%; /* Proporción 4:3 */
             height: 0;
+            overflow: hidden;
         }
-
         .map-container iframe {
             position: absolute;
             top: 0;
@@ -125,45 +57,39 @@
             height: 100%;
         }
 
-        /* --- Estilos para la esfera principal y secundarias (inferior izquierda) --- */
-        /* El contenedor principal de la esfera */
+        /* Remueve cualquier estilo relacionado con las esferas que ya no existen */
+        /*
         #main-sphere-container {
             position: fixed;
-            bottom: 20px; /* Posición inicial en la esquina inferior izquierda */
+            bottom: 20px;
             left: 20px;
-            z-index: 100; /* Asegúrate de que esté por encima de casi todo */
+            z-index: 1000;
         }
 
-        /* La esfera principal */
         #main-sphere {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 165, 0, 0.8); /* Naranja translúcido */
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
+            background-color: var(--byte-accent-orange);
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.9);
-            transition: transform 0.2s ease-in-out; /* Transición suave para el hover */
-            /* Se ha eliminado 'cursor: grab' para que no sea arrastrable */
-            position: relative; /* Necesario para posicionar las secundarias */
-            z-index: 101; /* Más alto que las esferas secundarias para el clic */
-            overflow: hidden; /* Asegura que la imagen no se desborde del círculo */
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            overflow: hidden;
         }
 
-        /* Estilos para la imagen dentro de la esfera principal */
         #main-sphere img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Cubre el área de la burbuja sin distorsionar la imagen */
-            border-radius: 50%; /* Asegura que la imagen también sea circular */
+            object-fit: cover;
         }
 
         #main-sphere:hover {
-            transform: scale(1.1); /* Agranda ligeramente al pasar el mouse */
+            transform: scale(1.1);
         }
 
-        /* Animación de pulso cuando las esferas secundarias están abiertas para la esfera principal */
         @keyframes pulse-glow-main {
             0% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
             50% { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
@@ -174,38 +100,35 @@
             animation: pulse-glow-main 1.5s infinite alternate ease-in-out;
         }
 
-        /* Estilos base para las esferas secundarias */
         .secondary-sphere-item {
             position: absolute;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9); /* Blanco translúcido */
+            background-color: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Para que la imagen respete el border-radius */
+            overflow: hidden;
             opacity: 0;
-            pointer-events: none; /* Evita la interacción hasta que sean visibles */
-            /* Transición para el efecto de burbuja (opacidad y escala) y movimiento */
+            pointer-events: none;
             transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-            transform: translateY(0) scale(0); /* Inicia oculto y pequeño para el efecto de burbuja */
-            z-index: 100; /* Asegura que estén detrás de la principal al ocultarse/mostrarse */
+            transform: translateY(0) scale(0);
+            z-index: 100;
         }
 
         .secondary-sphere-item.show {
             opacity: 1;
-            pointer-events: auto; /* Permite la interacción cuando son visibles */
+            pointer-events: auto;
         }
 
-        /* Posiciones específicas para las esferas secundarias cuando se muestran (despliegue hacia arriba) */
         #secondary-sphere-item-1.show {
-            transform: translateY(-75px) scale(1); /* Primera esfera, arriba */
+            transform: translateY(-75px) scale(1);
         }
 
         #secondary-sphere-item-2.show {
-            transform: translateY(-145px) scale(1); /* Segunda esfera, más arriba, con mayor separación */
+            transform: translateY(-145px) scale(1);
         }
 
         .secondary-sphere-item img {
@@ -219,21 +142,10 @@
             width: 100%;
             height: 100%;
         }
+        */
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
-
-    <div id="main-sphere-container">
-        <div id="main-sphere">
-            <img src="https://placehold.co/60x60/FFA500/FFFFFF?text=TuLogo" alt="Logo Principal">
-        </div>
-        <div id="secondary-sphere-item-1" class="secondary-sphere-item">
-            <a href="https://www.instagram.com/tu_perfil" target="_blank"><img src="https://placehold.co/50x50/FF5733/FFFFFF?text=IG" alt="Instagram"></a>
-        </div>
-        <div id="secondary-sphere-item-2" class="secondary-sphere-item">
-            <a href="https://www.linkedin.com/in/tu_perfil" target="_blank"><img src="https://placehold.co/50x50/33FF57/FFFFFF?text=LI" alt="LinkedIn"></a>
-        </div>
-    </div>
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -250,7 +162,7 @@
                     <li><a href="#contacto" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a></li>
                     <li>
                         <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                                 shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
+                                                    shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
                             ¡Empecemos tu Proyecto!
                         </a>
                     </li>
@@ -296,7 +208,7 @@
                 Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+                                             shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
                data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
                 ¡Hablemos de tu Proyecto!
             </a>
@@ -439,7 +351,7 @@
                 Contacta con nosotros hoy mismo y convierte tus ideas en una realidad digital impactante.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                                             shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
                 ¡Solicita tu Presupuesto Gratuito!
             </a>
         </div>
@@ -499,8 +411,6 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
-
     <script>
         // Inicialización de AOS
         AOS.init({
@@ -529,48 +439,40 @@
             });
         }
 
-        // --- JavaScript para la esfera principal y sus esferas secundarias (inferior izquierda) ---
+        // --- ELIMINADO: JavaScript para la esfera principal y sus esferas secundarias ---
+        /*
         const mainSphereContainer = document.getElementById('main-sphere-container');
         const mainSphere = document.getElementById('main-sphere');
         const secondarySphereItem1 = document.getElementById('secondary-sphere-item-1');
         const secondarySphereItem2 = document.getElementById('secondary-sphere-item-2');
 
-        let spheresVisibleMain = false; // Ya no necesitamos isDraggingMain ni offsetMain
+        let spheresVisibleMain = false;
 
-        // Variable global para el sintetizador de burbujas
         let bubbleSynth = null;
 
-        // Función para reproducir el sonido de burbuja
         function playBubbleSound() {
             if (bubbleSynth) {
-                // Ajusta la nota y la duración para un sonido de "pop"
-                // "C6" para un tono agudo, "64n" para una duración muy corta
-                bubbleSynth.triggerAttackRelease("C6", "64n", Tone.context.currentTime, 0.8); // 0.8 es la velocidad (velocity)
+                bubbleSynth.triggerAttackRelease("C6", "64n", Tone.context.currentTime, 0.8);
             }
         }
 
-        // Función para inicializar el contexto de audio y el sintetizador
         async function initAudio() {
-            // Solo inicia el contexto de audio si no está en ejecución
             if (Tone.context.state !== 'running') {
                 await Tone.start();
                 console.log("Contexto de audio iniciado.");
             }
-            // Solo crea el sintetizador si no ha sido creado ya
             if (!bubbleSynth) {
                 bubbleSynth = new Tone.PluckSynth().toDestination();
-                // Ajustes para un sonido más de "burbuja reventando"
                 bubbleSynth.set({
-                    attackNoise: 1,      // Máximo ruido de ataque para el "pop" inicial
-                    dampening: 8000,    // Valor más alto para un decaimiento más rápido y seco
-                    resonance: 0.7,     // Un poco de resonancia para darle cuerpo
-                    release: 0.1        // Tiempo de liberación muy corto
+                    attackNoise: 1,
+                    dampening: 8000,
+                    resonance: 0.7,
+                    release: 0.1
                 });
                 console.log("Sintetizador de burbujas inicializado.");
             }
         }
 
-        // Función para establecer el contenido de las esferas secundarias
         function setSecondarySphereContent(sphereId, imageUrl, linkUrl) {
             const sphere = document.getElementById(sphereId);
             if (sphere) {
@@ -582,44 +484,25 @@
             }
         }
 
-        // Ejemplo de cómo usar la función para la esfera inferior izquierda
         document.addEventListener('DOMContentLoaded', () => {
-            setSecondarySphereContent('secondary-sphere-item-1', 'https://placehold.co/50x50/FF5733/FFFFFF?text=IG', 'https://www.instagram.com/tu_perfil'); // Ejemplo Instagram
-            setSecondarySphereContent('secondary-sphere-item-2', 'https://placehold.co/50x50/33FF57/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil'); // Ejemplo LinkedIn
+            setSecondarySphereContent('secondary-sphere-item-1', 'https://placehold.co/50x50/FF5733/FFFFFF?text=IG', 'https://www.instagram.com/tu_perfil');
+            setSecondarySphereContent('secondary-sphere-item-2', 'https://placehold.co/50x50/33FF57/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil');
         });
 
-        // Alternar visibilidad de las esferas secundarias al hacer clic en la principal
         mainSphere.addEventListener('click', (e) => {
-            // Inicializa el audio al primer clic del usuario
             initAudio();
 
             spheresVisibleMain = !spheresVisibleMain;
 
             if (spheresVisibleMain) {
-                // Muestra las esferas una por una con un pequeño retraso
                 secondarySphereItem1.classList.add('show');
-                playBubbleSound(); // Sonido para la primera esfera
+                playBubbleSound();
                 setTimeout(() => {
                     secondarySphereItem2.classList.add('show');
-                    playBubbleSound(); // Sonido para la segunda esfera
-                }, 100); // Retraso de 100ms para la segunda esfera
-                mainSphere.classList.add('active'); // Activa la animación de pulso
+                    playBubbleSound();
+                }, 100);
+                mainSphere.classList.add('active');
             } else {
-                // Oculta las esferas una por una con un pequeño retraso (en orden inverso para el cierre)
-                setTimeout(() => {
-                    secondarySphereItem2.classList.remove('show');
-                    playBubbleSound(); // Sonido para la segunda esfera desapareciendo
-                }, 50); // Retraso para que la segunda desaparezca primero
-                secondarySphereItem1.classList.remove('show');
-                playBubbleSound(); // Sonido para la primera esfera desapareciendo
-                mainSphere.classList.remove('active'); // Desactiva la animación de pulso
-            }
-        });
-
-        // Opcional: Cerrar las esferas secundarias si se hace clic fuera de ellas
-        document.addEventListener('click', (e) => {
-            if (spheresVisibleMain && !mainSphereContainer.contains(e.target)) {
-                // Oculta las esferas una por una con un pequeño retraso
                 setTimeout(() => {
                     secondarySphereItem2.classList.remove('show');
                     playBubbleSound();
@@ -631,6 +514,19 @@
             }
         });
 
+        document.addEventListener('click', (e) => {
+            if (spheresVisibleMain && !mainSphereContainer.contains(e.target)) {
+                setTimeout(() => {
+                    secondarySphereItem2.classList.remove('show');
+                    playBubbleSound();
+                }, 50);
+                secondarySphereItem1.classList.remove('show');
+                playBubbleSound();
+                mainSphere.classList.remove('active');
+                spheresVisibleMain = false;
+            }
+        });
+        */
     </script>
 
     <chat-bot platform_id="832d1607-677c-4411-a2b7-d106e7204294" user_id="d57dd191-a963-4fc7-80fc-354ee9f53d5c" chatbot_id="e360cb16-3faf-411a-a5d4-6076d42ae79d"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">chatsimple</a></chat-bot><script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
