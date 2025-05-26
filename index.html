@@ -145,7 +145,7 @@
             align-items: center;
             box-shadow: 0 0 10px rgba(255, 165, 0, 0.9);
             transition: transform 0.2s ease-in-out; /* Transición suave para el hover */
-            cursor: grab; /* Cursor para indicar que es arrastrable */
+            /* Se ha eliminado 'cursor: grab' para que no sea arrastrable */
             position: relative; /* Necesario para posicionar las secundarias */
             z-index: 101; /* Más alto que las esferas secundarias para el clic */
             overflow: hidden; /* Asegura que la imagen no se desborde del círculo */
@@ -201,11 +201,11 @@
 
         /* Posiciones específicas para las esferas secundarias cuando se muestran (despliegue hacia arriba) */
         #secondary-sphere-item-1.show {
-            transform: translateY(-80px) scale(1); /* Primera esfera, arriba */
+            transform: translateY(-75px) scale(1); /* Primera esfera, arriba */
         }
 
         #secondary-sphere-item-2.show {
-            transform: translateY(-150px) scale(1); /* Segunda esfera, más arriba */
+            transform: translateY(-145px) scale(1); /* Segunda esfera, más arriba, con mayor separación */
         }
 
         .secondary-sphere-item img {
@@ -478,7 +478,7 @@
                     <div class="space-y-6 text-center text-lg">
                         <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📍</span> 123 Calle Ficticia, Ciudad, País</p>
                         <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📧</span> info@byte.com</p>
-                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📞</span> +123 456 7890</p>
+                        <p class="flex items-center justify-center text-byte-accent-cyan mr-3">📞 +123 456 7890</p>
                     </div>
 
                     <div class="mt-8 map-container rounded-lg shadow-md">
@@ -529,15 +529,13 @@
             });
         }
 
-        // --- JavaScript para la esfera movible y sus esferas secundarias (inferior izquierda) ---
+        // --- JavaScript para la esfera principal y sus esferas secundarias (inferior izquierda) ---
         const mainSphereContainer = document.getElementById('main-sphere-container');
         const mainSphere = document.getElementById('main-sphere');
         const secondarySphereItem1 = document.getElementById('secondary-sphere-item-1');
         const secondarySphereItem2 = document.getElementById('secondary-sphere-item-2');
 
-        let isDraggingMain = false;
-        let offsetMain = { x: 0, y: 0 };
-        let spheresVisibleMain = false;
+        let spheresVisibleMain = false; // Ya no necesitamos isDraggingMain ni offsetMain
 
         // Variable global para el sintetizador de burbujas
         let bubbleSynth = null;
@@ -590,54 +588,10 @@
             setSecondarySphereContent('secondary-sphere-item-2', 'https://placehold.co/50x50/33FF57/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil'); // Ejemplo LinkedIn
         });
 
-        // Iniciar el arrastre para la esfera principal
-        mainSphere.addEventListener('mousedown', (e) => {
-            isDraggingMain = true;
-            mainSphere.style.cursor = 'grabbing';
-            const containerRect = mainSphereContainer.getBoundingClientRect();
-            offsetMain = {
-                x: e.clientX - containerRect.left,
-                y: e.clientY - containerRect.top
-            };
-            e.stopPropagation(); // Evitar que el clic se propague si se está arrastrando inmediatamente
-        });
-
-        // Mover la esfera principal mientras se arrastra
-        document.addEventListener('mousemove', (e) => {
-            if (!isDraggingMain) return;
-
-            let newX = e.clientX - offsetMain.x;
-            let newY = e.clientY - offsetMain.y;
-
-            // Limitar X para la esfera principal
-            if (newX < 0) newX = 0;
-            if (newX + mainSphereContainer.offsetWidth > window.innerWidth) {
-                newX = window.innerWidth - mainSphereContainer.offsetWidth;
-            }
-
-            // Limitar Y para la esfera principal
-            if (newY < 0) newY = 0;
-            if (newY + mainSphereContainer.offsetHeight > window.innerHeight) {
-                newY = window.innerHeight - mainSphereContainer.offsetHeight;
-            }
-
-            mainSphereContainer.style.left = `${newX}px`;
-            mainSphereContainer.style.top = `${newY}px`;
-        });
-
-        // Detener el arrastre para la esfera principal
-        document.addEventListener('mouseup', () => {
-            isDraggingMain = false;
-            mainSphere.style.cursor = 'grab';
-        });
-
         // Alternar visibilidad de las esferas secundarias al hacer clic en la principal
         mainSphere.addEventListener('click', (e) => {
             // Inicializa el audio al primer clic del usuario
             initAudio();
-
-            // Si hubo un arrastre reciente, no activamos el clic
-            if (e.detail === 0 && isDraggingMain) return;
 
             spheresVisibleMain = !spheresVisibleMain;
 
