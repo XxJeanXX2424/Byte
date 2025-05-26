@@ -126,26 +126,6 @@
             font-size: 2rem;
             animation: glow 2s infinite alternate ease-in-out;
         }
-
-        /* *** CSS para intentar corregir la burbuja del chatbot en móvil (Tidio) *** */
-        @media (max-width: 768px) {
-            /* Tidio suele ser bastante responsivo, pero si la burbuja se ve mal,
-               puedes intentar ajustar su posición.
-               Inspecciona el elemento en el móvil para encontrar las clases/IDs exactas de Tidio.
-               A menudo, Tidio usa un div con la clase .tidio-chat-widget-container o similar. */
-            .tidio-chat-widget-container { /* Esta es una suposición de clase, verifica la real */
-                right: 15px !important; /* Ajusta la distancia desde la derecha */
-                bottom: 15px !important; /* Ajusta la distancia desde abajo */
-                left: auto !important;   /* Asegura que no haya un 'left' que lo empuje */
-                transform: none !important; /* Resetea cualquier posible transformación */
-            }
-            /* Si necesitas OCULTAR el chatbot en móvil, descomenta la siguiente regla: */
-            /*
-            .tidio-chat-widget-container {
-                display: none !important;
-            }
-            */
-        }
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
@@ -400,7 +380,8 @@
         </div>
     </footer>
 
-    <script src="//code.tidio.co/w13zrk047fonmhxdgivfpkkzulmarto7.js" async></script>
+    <chat-bot platform_id="832d1607-677c-4411-a2b7-d106e7204294" user_id="d57dd191-a963-4fc7-80fc-354ee9f53d5c" chatbot_id="e360cb16-3faf-411a-a5d4-6076d42ae79d"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">chatsimple</a></chat-bot>
+    <script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
