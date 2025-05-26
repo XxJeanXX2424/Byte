@@ -136,42 +136,6 @@
             height: 100%;
         }
 
-        /* --- Estilos para el botón flotante de WhatsApp (reemplaza el menú burbuja) --- */
-        #whatsapp-float-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: #25D366; /* Color de marca de WhatsApp */
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 32px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
-            z-index: 1000;
-            cursor: pointer;
-        }
-
-        #whatsapp-float-button:hover {
-            transform: scale(1.1);
-            background-color: #1DA851; /* Un tono más oscuro al pasar el ratón */
-        }
-
-        /* Animación de pulso para el botón de WhatsApp */
-        @keyframes whatsapp-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        #whatsapp-float-button {
-            animation: whatsapp-pulse 2s infinite;
-        }
-
         /* --- Estilos del Modal de Términos y Condiciones --- */
         #terms-modal {
             background-color: rgba(0, 0, 0, 0.75); /* Fondo semitransparente oscuro */
@@ -238,10 +202,6 @@
             </button>
         </div>
     </div>
-
-    <a href="https://w.app/bytewebdesign" target="_blank" id="whatsapp-float-button" aria-label="Contactar vía WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -597,6 +557,18 @@
             // Actualizar el año en el footer automáticamente
             document.getElementById('current-year').textContent = new Date().getFullYear();
         });
+    </script>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            (function(d, script) {
+                script = d.createElement('script');
+                script.type = 'text/javascript';
+                script.async = true;
+                script.src = 'https://w.app/widget-v1/qwZ6ka.js';
+                d.getElementsByTagName('head')[0].appendChild(script);
+            }(document));
+        };
     </script>
 
     <chat-bot platform_id="832d1607-677c-4411-a2b7-d106e7204294" user_id="d57dd191-a963-4fc7-80fc-354ee9f53d5c" chatbot_id="e360cb16-3faf-411a-a5d4-6076d42ae79d"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">chatsimple</a></chat-bot><script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
