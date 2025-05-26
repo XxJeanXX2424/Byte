@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Byte - Diseño Web que Impulsa tu Negocio</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -33,7 +33,7 @@
     <style>
         /* Importación de fuentes de Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
             /* Deshabilita la selección de texto para una experiencia más de "aplicación" */
@@ -41,6 +41,9 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            /* Asegura que el body no tenga margen para el posicionamiento fijo */
+            margin: 0;
+            padding: 0;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
@@ -84,50 +87,6 @@
 
         .menu-link-glow {
             animation: menu-glow 2s infinite alternate ease-in-out;
-        }
-
-        /* Animación para el movimiento de la pelota flotante */
-        @keyframes float-in-section {
-            0% {
-                transform: translate(-50%, -50%) translate(-150%, -100%);
-            }
-            25% {
-                transform: translate(-50%, -50%) translate(150%, -100%);
-            }
-            50% {
-                transform: translate(-50%, -50%) translate(150%, 100%);
-            }
-            75% {
-                transform: translate(-50%, -50%) translate(-150%, 100%);
-            }
-            100% {
-                transform: translate(-50%, -50%) translate(-150%, -100%);
-            }
-        }
-
-        /* Estilos para la pelota flotante */
-        .floating-ball {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 50px;
-            height: 50px;
-            background-color: transparent;
-            border: 3px solid #00FFFF; /* Color del borde de la pelota */
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            z-index: 10;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Sombra de brillo para la pelota */
-            animation: float-in-section 15s infinite alternate ease-in-out;
-        }
-
-        #floating-ball-text {
-            color: #00FFFF; /* Color del texto 'B' dentro de la pelota */
-            font-size: 2rem;
-            animation: glow 2s infinite alternate ease-in-out; /* Misma animación de brillo que el logo */
         }
 
         /* Animación de "caída" al hacer scroll para AOS */
@@ -227,9 +186,107 @@
             width: 100%;
             height: 100%;
         }
+
+        /* --- Estilos para la esfera principal y secundarias --- */
+
+        #movable-sphere-container {
+            position: fixed;
+            top: 20px; /* Posición inicial en la esquina superior izquierda */
+            left: 20px;
+            z-index: 100; /* Asegúrate de que esté por encima de casi todo */
+        }
+
+        #movable-sphere {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 255, 255, 0.8); /* Cian translúcido */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0A0A1A; /* Texto oscuro */
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+            transition: transform 0.2s ease-in-out; /* Transición suave para el hover */
+            cursor: grab; /* Cursor para indicar que es arrastrable */
+            position: relative; /* Necesario para posicionar las secundarias */
+            z-index: 101; /* Más alto que las esferas secundarias para el clic */
+        }
+
+        #movable-sphere:hover {
+            transform: scale(1.1); /* Agranda ligeramente al pasar el mouse */
+        }
+
+        /* Animación de pulso cuando las esferas secundarias están abiertas */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.9); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 255, 1); }
+            100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.9); }
+        }
+
+        #movable-sphere.active {
+            animation: pulse-glow 1.5s infinite alternate ease-in-out;
+        }
+
+
+        .secondary-sphere {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9); /* Blanco translúcido */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Para que la imagen respete el border-radius */
+            opacity: 0;
+            pointer-events: none; /* Evita la interacción hasta que sean visibles */
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            z-index: 100; /* Asegura que estén detrás de la principal al ocultarse/mostrarse */
+        }
+
+        .secondary-sphere.show {
+            opacity: 1;
+            pointer-events: auto; /* Permite la interacción cuando son visibles */
+        }
+
+        /* Posiciones específicas para las esferas secundarias cuando se muestran */
+        #secondary-sphere-1.show {
+            transform: translate(-100px, -20px); /* Ejemplo: se mueve a la izquierda */
+        }
+
+        #secondary-sphere-2.show {
+            transform: translate(-20px, 100px); /* Ejemplo: se mueve hacia abajo */
+        }
+
+        .secondary-sphere img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .secondary-sphere a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
+
+    <div id="movable-sphere-container">
+        <div id="movable-sphere">
+            +
+        </div>
+        <div id="secondary-sphere-1" class="secondary-sphere">
+            <a href="#" target="_blank"><img src="" alt="Enlace 1"></a>
+        </div>
+        <div id="secondary-sphere-2" class="secondary-sphere">
+            <a href="#" target="_blank"><img src="" alt="Enlace 2"></a>
+        </div>
+    </div>
 
     <div id="preloader" class="fixed inset-0 bg-byte-dark-bg flex items-center justify-center z-[9999]">
         <div class="loader-container">
@@ -255,7 +312,7 @@
                     <li><a href="#contacto" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a></li>
                     <li>
                         <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                                   shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
+                                                    shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
                             ¡Empecemos tu Proyecto!
                         </a>
                     </li>
@@ -279,7 +336,7 @@
             <li><a href="#contacto" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Contacto</a></li>
             <li>
                 <a href="#contacto" class="block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                           shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
+                                            shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
                     ¡Empecemos tu Proyecto!
                 </a>
             </li>
@@ -300,14 +357,10 @@
                 Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                       shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
-                                       data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
+                                        shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+               data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
                 ¡Hablemos de tu Proyecto!
             </a>
-        </div>
-
-        <div class="floating-ball">
-            <span id="floating-ball-text">B</span>
         </div>
     </section>
 
@@ -317,7 +370,7 @@
                 data-aos="fade-up" data-aos-duration="800">Lo que Hacemos</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <a href="diseno-web.html" class="block bg-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-byte-accent-cyan"
-                     data-aos="fall-down" data-aos-delay="100" data-aos-duration="1000">
+                   data-aos="fall-down" data-aos-delay="100" data-aos-duration="1000">
                     <div class="text-6xl text-byte-accent-cyan mb-6 text-center">✨</div>
                     <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-4">Diseño Web Personalizado</h3>
                     <p class="text-center text-byte-text-dark leading-relaxed">
@@ -447,7 +500,7 @@
                 Contacta con nosotros hoy mismo y convierte tus ideas en una realidad digital impactante.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                       shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                                        shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
                 ¡Solicita tu Presupuesto Gratuito!
             </a>
         </div>
@@ -490,7 +543,8 @@
                     </div>
 
                     <div class="mt-8 map-container rounded-lg shadow-md">
-                        </div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.545758992161!2d-74.08852338573934!3d4.654318796677941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a7b2b0b0b0b%3A0x7b2b0b0b0b0b0b0b!2sPlaza+de+Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1678886400000!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -508,7 +562,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
-            once: true,     /* Las animaciones ocurren solo una vez al hacer scroll */
+            once: true,      /* Las animaciones ocurren solo una vez al hacer scroll */
             duration: 1000, /* Duración de la animación en milisegundos */
             easing: 'ease-in-out', /* Función de temporización para la animación */
         });
@@ -539,6 +593,99 @@
                 });
             });
         }
+
+        // --- JavaScript para la esfera movible y sus esferas secundarias ---
+
+        const movableSphereContainer = document.getElementById('movable-sphere-container');
+        const movableSphere = document.getElementById('movable-sphere');
+        const secondarySphere1 = document.getElementById('secondary-sphere-1');
+        const secondarySphere2 = document.getElementById('secondary-sphere-2');
+
+        let isDragging = false;
+        let offset = { x: 0, y: 0 };
+        let spheresVisible = false;
+
+        // Función para establecer el contenido de las esferas secundarias
+        function setSecondarySphereContent(sphereId, imageUrl, linkUrl) {
+            const sphere = document.getElementById(sphereId);
+            if (sphere) {
+                const imgElement = sphere.querySelector('img');
+                const linkElement = sphere.querySelector('a');
+
+                if (imgElement) imgElement.src = imageUrl;
+                if (linkElement) linkElement.href = linkUrl;
+            }
+        }
+
+        // Ejemplo de cómo usar la función (puedes cambiar estas URLs y rutas de imagen)
+        // Llama a esta función después de que el DOM esté cargado (por ejemplo, dentro de window.onload o document.addEventListener('DOMContentLoaded'))
+        document.addEventListener('DOMContentLoaded', () => {
+            setSecondarySphereContent('secondary-sphere-1', 'https://via.placeholder.com/50/FF0000/FFFFFF?text=IG', 'https://www.instagram.com/tu_perfil'); // Ejemplo Instagram
+            setSecondarySphereContent('secondary-sphere-2', 'https://via.placeholder.com/50/0077B5/FFFFFF?text=LI', 'https://www.linkedin.com/in/tu_perfil'); // Ejemplo LinkedIn
+            // Puedes agregar más esferas secundarias si lo deseas, siguiendo el patrón.
+        });
+
+
+        // Iniciar el arrastre
+        movableSphere.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            movableSphere.style.cursor = 'grabbing';
+            // Calcular el offset entre el puntero y la esquina superior izquierda del contenedor
+            const containerRect = movableSphereContainer.getBoundingClientRect();
+            offset = {
+                x: e.clientX - containerRect.left,
+                y: e.clientY - containerRect.top
+            };
+        });
+
+        // Mover la esfera mientras se arrastra
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            // Restringir el movimiento para que no se salga de la ventana
+            let newX = e.clientX - offset.x;
+            let newY = e.clientY - offset.y;
+
+            // Limitar X
+            if (newX < 0) newX = 0;
+            if (newX + movableSphereContainer.offsetWidth > window.innerWidth) {
+                newX = window.innerWidth - movableSphereContainer.offsetWidth;
+            }
+
+            // Limitar Y
+            if (newY < 0) newY = 0;
+            if (newY + movableSphereContainer.offsetHeight > window.innerHeight) {
+                newY = window.innerHeight - movableSphereContainer.offsetHeight;
+            }
+
+            movableSphereContainer.style.left = `${newX}px`;
+            movableSphereContainer.style.top = `${newY}px`;
+        });
+
+        // Detener el arrastre
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            movableSphere.style.cursor = 'grab';
+        });
+
+        // Alternar visibilidad de las esferas secundarias al hacer clic en la principal
+        movableSphere.addEventListener('click', (e) => {
+            // Prevenir que el evento de clic se propague si se está arrastrando (solo para asegurar)
+            // if (isDragging) return;
+
+            spheresVisible = !spheresVisible;
+
+            if (spheresVisible) {
+                secondarySphere1.classList.add('show');
+                secondarySphere2.classList.add('show');
+                movableSphere.classList.add('active'); // Activa la animación de pulso
+            } else {
+                secondarySphere1.classList.remove('show');
+                secondarySphere2.classList.remove('show');
+                movableSphere.classList.remove('active'); // Desactiva la animación de pulso
+            }
+        });
+
     </script>
 
     <chat-bot platform_id="832d1607-677c-4411-a2b7-d106e7204294" user_id="d57dd191-a963-4fc7-80fc-354ee9f53d5c" chatbot_id="e360cb16-3faf-411a-a5d4-6076d42ae79d"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">chatsimple</a></chat-bot><script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
