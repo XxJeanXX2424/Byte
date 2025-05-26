@@ -4,51 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Byte - Diseño Web que Impulsa tu Negocio</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+
+    <script>
+        // Tailwind CSS configuration for custom theme colors and fonts
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'byte-dark-bg': '#0A0A1A',
+                        'byte-accent-cyan': '#00FFFF',
+                        'byte-light-bg': '#F8FAFC',
+                        'byte-text-dark': '#374151',
+                        'byte-text-light': '#F9FAFB',
+                        'byte-secondary-dark': '#1A202C',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* Definición de la paleta de colores personalizada de Tailwind CSS */
-        @tailwind base;
-        @tailwind components;
-        @tailwind utilities;
+        /* Google Fonts Import */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap');
 
-        :root {
-            --byte-dark-bg: #0A0A1A; /* Negro azulado oscuro */
-            --byte-secondary-dark: #1F2937; /* Gris oscuro para elementos secundarios */
-            --byte-light-bg: #F3F4F6; /* Gris muy claro para fondos */
-            --byte-text-light: #E5E7EB; /* Gris claro para texto sobre fondos oscuros */
-            --byte-text-dark: #1F2937; /* Gris oscuro para texto sobre fondos claros */
-            --byte-accent-cyan: #00FFFF; /* Cian brillante para acentos */
-            --byte-accent-orange: #FFA500; /* Naranja brillante para acentos */
-            --byte-shadow-light: rgba(0, 0, 0, 0.2);
-            --byte-shadow-dark: rgba(0, 0, 0, 0.5);
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Disable text selection for an "app-like" experience */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* Ensure body has no margin for fixed positioning */
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .bg-byte-dark-bg { background-color: var(--byte-dark-bg); }
-        .bg-byte-secondary-dark { background-color: var(--byte-secondary-dark); }
-        .bg-byte-light-bg { background-color: var(--byte-light-bg); }
-        .text-byte-text-light { color: var(--byte-text-light); }
-        .text-byte-text-dark { color: var(--byte-text-dark); }
-        .text-byte-accent-cyan { color: var(--byte-accent-cyan); }
-        .text-byte-accent-orange { color: var(--byte-accent-orange); }
-        .border-byte-accent-cyan { border-color: var(--byte-accent-cyan); }
+        /* Glow animation for "Byte" logo */
+        @keyframes glow {
+            0% {
+                color: #00FFFF;
+                text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
+            }
+            50% {
+                color: #A0FFFF;
+                text-shadow: 0 0 15px #00FFFF, 0 0 25px #00FFFF, 0 0 40px #00FFFF;
+            }
+            100% {
+                color: #00FFFF;
+                text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
+            }
+        }
 
-        /* Estilo para el brillo en los enlaces del menú */
+        #byte-logo-text {
+            animation: glow 1.5s infinite alternate ease-in-out;
+        }
+
+        /* Softer glow animation for menu links */
+        @keyframes menu-glow {
+            0% {
+                color: #00FFFF;
+                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
+            }
+            50% {
+                color: #80FFFF;
+                text-shadow: 0 0 5px #00FFFF, 0 0 8px #00FFFF;
+            }
+            100% {
+                color: #00FFFF;
+                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
+            }
+        }
+
         .menu-link-glow {
-            text-shadow: 0 0 5px var(--byte-accent-cyan), 0 0 10px var(--byte-accent-cyan);
-        }
-        .menu-link-glow:hover {
-            text-shadow: 0 0 8px var(--byte-accent-cyan), 0 0 15px var(--byte-accent-cyan);
+            animation: menu-glow 2s infinite alternate ease-in-out;
         }
 
-        /* Estilo para el mapa incrustado */
+        /* "Fall-in" animation for AOS (Animate On Scroll) */
+        @keyframes fall-in {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Class applied by AOS.js for animating elements */
+        .aos-animate {
+            animation-name: fall-in;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Responsive styles for Google Maps embed container */
         .map-container {
             position: relative;
-            padding-bottom: 75%; /* Proporción 4:3 */
-            height: 0;
             overflow: hidden;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio (height / width) */
+            height: 0;
         }
+
         .map-container iframe {
             position: absolute;
             top: 0;
@@ -57,40 +125,45 @@
             height: 100%;
         }
 
-        /* Estilos para el menú burbuja */
+        /* --- Styles for the main and secondary spheres (bottom left) --- */
+        /* Main sphere container */
         #main-sphere-container {
             position: fixed;
-            bottom: 20px;
+            bottom: 20px; /* Initial position at bottom left corner */
             left: 20px;
-            z-index: 1000;
+            z-index: 1000; /* Ensure it's above most elements */
         }
 
+        /* Main sphere */
         #main-sphere {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 165, 0, 0.8); /* Translucent orange */
             border-radius: 50%;
-            background-color: var(--byte-accent-orange);
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            overflow: hidden;
-            position: relative; /* Necesario para posicionar las esferas secundarias */
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.9);
+            transition: transform 0.2s ease-in-out; /* Smooth transition for hover */
+            cursor: pointer; /* Indicate it's clickable */
+            position: relative; /* Necessary for positioning secondary spheres */
+            z-index: 100; /* Lowered z-index to allow secondary bubbles to appear above */
+            overflow: hidden; /* Ensures image doesn't overflow the circle */
         }
 
+        /* Styles for the image inside the main sphere */
         #main-sphere img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 50%; /* Asegura que la imagen sea circular */
+            object-fit: cover; /* Cover the bubble area without distorting the image */
+            border-radius: 50%; /* Ensures the image is also circular */
         }
 
         #main-sphere:hover {
-            transform: scale(1.1);
+            transform: scale(1.1); /* Slightly enlarge on hover */
         }
 
+        /* Pulse animation when secondary spheres are open for the main sphere */
         @keyframes pulse-glow-main {
             0% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
             50% { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
@@ -101,38 +174,42 @@
             animation: pulse-glow-main 1.5s infinite alternate ease-in-out;
         }
 
+        /* Base styles for secondary spheres */
         .secondary-sphere-item {
             position: absolute;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+            background-color: rgba(255, 255, 255, 0.9); /* Translucent white */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: hidden; /* For image to respect border-radius */
             opacity: 0;
-            pointer-events: none; /* No interactuable cuando está oculto */
+            pointer-events: none; /* Prevent interaction until visible */
+            /* Transition for bubble effect (opacity and scale) and movement */
             transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect */
-            transform: scale(0); /* Empieza muy pequeño */
+            transform: scale(0); /* Start hidden and small for bubble effect */
+            left: 5px; /* Adjust to align with the main sphere's center */
+            /* Z-index to ensure correct stacking when deployed */
+            z-index: 99; /* Default z-index, will be changed when 'show' */
         }
 
         .secondary-sphere-item.show {
             opacity: 1;
-            pointer-events: auto; /* Interactuable cuando está visible */
-            transform: scale(1); /* Crece a su tamaño normal */
+            pointer-events: auto; /* Allow interaction when visible */
+            transform: scale(1); /* Grow to normal size */
+            z-index: 105; /* Higher than main sphere when visible */
         }
 
-        /* Posiciones específicas para las burbujas secundarias */
-        #secondary-sphere-whatsapp {
-            bottom: 80px; /* Separación vertical de la principal */
-            left: 0px; /* Alineada verticalmente con la principal */
+        /* Specific positions for secondary spheres when shown (deploy upwards) */
+        #secondary-sphere-whatsapp.show {
+            bottom: 85px; /* Positioned 85px from the bottom of its container (main-sphere-container) */
         }
 
-        #secondary-sphere-telegram {
-            bottom: 150px; /* Más arriba, separada de la de WhatsApp */
-            left: 0px; /* Alineada verticalmente con la principal */
+        #secondary-sphere-instagram.show {
+            bottom: 145px; /* Positioned 145px from the bottom of its container, 60px above WhatsApp */
         }
 
         .secondary-sphere-item img {
@@ -156,16 +233,16 @@
 
     <div id="main-sphere-container">
         <div id="main-sphere">
-            <img src="https://placehold.co/60x60/FFA500/FFFFFF?text=Contáctanos" alt="Logo de Contacto">
+            <img src="https://placehold.co/60x60/FFA500/FFFFFF?text=💬" alt="Social Media Icon">
         </div>
         <div id="secondary-sphere-whatsapp" class="secondary-sphere-item">
-            <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank" aria-label="Contactar por WhatsApp">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank" aria-label="Contact via WhatsApp">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
             </a>
         </div>
-        <div id="secondary-sphere-telegram" class="secondary-sphere-item">
-            <a href="https://t.me/TU_USUARIO_TELEGRAM" target="_blank" aria-label="Contactar por Telegram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+        <div id="secondary-sphere-instagram" class="secondary-sphere-item">
+            <a href="https://www.instagram.com/TU_USUARIO_INSTAGRAM" target="_blank" aria-label="Contact via Instagram">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon">
             </a>
         </div>
     </div>
@@ -185,7 +262,7 @@
                     <li><a href="#contacto" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a></li>
                     <li>
                         <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                                    shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
+                                                 shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
                             ¡Empecemos tu Proyecto!
                         </a>
                     </li>
@@ -231,7 +308,7 @@
                 Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                             shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
                data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
                 ¡Hablemos de tu Proyecto!
             </a>
@@ -374,7 +451,7 @@
                 Contacta con nosotros hoy mismo y convierte tus ideas en una realidad digital impactante.
             </p>
             <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                             shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
                 ¡Solicita tu Presupuesto Gratuito!
             </a>
         </div>
@@ -434,66 +511,67 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script>
-        // Inicialización de AOS
+        // Initialize AOS
         AOS.init({
-            once: true,      /* Las animaciones ocurren solo una vez al hacer scroll */
-            duration: 1000, /* Duración de la animación en milisegundos */
-            easing: 'ease-in-out', /* Función de temporización para la animación */
+            once: true,      /* Animations happen only once on scroll */
+            duration: 1000, /* Animation duration in milliseconds */
+            easing: 'ease-in-out', /* Timing function for the animation */
         });
 
-        /* Script para el menú móvil (mostrar/ocultar al hacer clic en el botón de hamburguesa) */
+        /* Mobile menu script (show/hide on hamburger button click) */
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden'); /* Alterna la clase 'hidden' */
+                mobileMenu.classList.toggle('hidden'); /* Toggle 'hidden' class */
             });
 
-            /* Cerrar menú móvil al hacer clic en cualquier enlace del menú */
+            /* Close mobile menu when clicking any menu link */
             const mobileMenuLinks = mobileMenu.querySelectorAll('a');
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    mobileMenu.classList.add('hidden'); /* Oculta el menú */
+                    mobileMenu.classList.add('hidden'); /* Hide the menu */
                 });
             });
         }
 
-        // --- JavaScript para la esfera principal y sus esferas secundarias (inferior izquierda) ---
+        // --- JavaScript for the main sphere and its secondary spheres (bottom left) ---
         const mainSphereContainer = document.getElementById('main-sphere-container');
         const mainSphere = document.getElementById('main-sphere');
         const secondarySphereWhatsapp = document.getElementById('secondary-sphere-whatsapp');
-        const secondarySphereTelegram = document.getElementById('secondary-sphere-telegram');
+        const secondarySphereInstagram = document.getElementById('secondary-sphere-instagram'); // Changed from Telegram to Instagram
 
         let spheresVisible = false;
 
-        // Alternar visibilidad de las esferas secundarias al hacer clic en la principal
+        // Toggle visibility of secondary spheres on main sphere click
         mainSphere.addEventListener('click', (e) => {
             spheresVisible = !spheresVisible;
 
             if (spheresVisible) {
-                // Muestra las esferas una por una con un pequeño retraso
+                // Show spheres one by one with a small delay
                 secondarySphereWhatsapp.classList.add('show');
                 setTimeout(() => {
-                    secondarySphereTelegram.classList.add('show');
-                }, 100); // Retraso de 100ms para la segunda esfera
-                mainSphere.classList.add('active'); // Activa la animación de pulso
+                    secondarySphereInstagram.classList.add('show'); // Changed to Instagram
+                }, 100); // 100ms delay for the second sphere
+                mainSphere.classList.add('active'); // Activate pulse animation
             } else {
-                // Oculta las esferas una por una con un pequeño retraso (en orden inverso para el cierre)
+                // Hide spheres one by one with a small delay (in reverse order for closing)
                 setTimeout(() => {
-                    secondarySphereTelegram.classList.remove('show');
-                }, 50); // Retraso para que la segunda desaparezca primero
+                    secondarySphereInstagram.classList.remove('show'); // Changed to Instagram
+                }, 50); // Delay for the second to disappear first
                 secondarySphereWhatsapp.classList.remove('show');
-                mainSphere.classList.remove('active'); // Desactiva la animación de pulso
+                mainSphere.classList.remove('active'); // Deactivate pulse animation
             }
         });
 
-        // Opcional: Cerrar las esferas secundarias si se hace clic fuera de ellas
+        // Optional: Close secondary spheres if clicked outside them
         document.addEventListener('click', (e) => {
             if (spheresVisible && !mainSphereContainer.contains(e.target)) {
                 setTimeout(() => {
-                    secondarySphereTelegram.classList.remove('show');
+                    secondarySphereInstagram.classList.remove('show'); // Changed to Instagram
                 }, 50);
                 secondarySphereWhatsapp.classList.remove('show');
                 mainSphere.classList.remove('active');
