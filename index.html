@@ -8,6 +8,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script>
         // Tailwind CSS configuration for custom theme colors and fonts
         tailwind.config = {
@@ -36,12 +38,10 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            /* Disable text selection for an "app-like" experience */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            /* Ensure body has no margin for fixed positioning */
             margin: 0;
             padding: 0;
         }
@@ -126,15 +126,13 @@
         }
 
         /* --- Styles for the main and secondary spheres (bottom left) --- */
-        /* Main sphere container */
         #main-sphere-container {
             position: fixed;
-            bottom: 20px; /* Initial position at bottom left corner */
+            bottom: 20px;
             left: 20px;
-            z-index: 1000; /* Ensure it's above most elements */
+            z-index: 1000;
         }
 
-        /* Main sphere */
         #main-sphere {
             width: 60px;
             height: 60px;
@@ -144,26 +142,22 @@
             justify-content: center;
             align-items: center;
             box-shadow: 0 0 10px rgba(255, 165, 0, 0.9);
-            transition: transform 0.2s ease-in-out; /* Smooth transition for hover */
-            cursor: pointer; /* Indicate it's clickable */
-            position: relative; /* Necessary for positioning secondary spheres */
-            z-index: 100; /* Lowered z-index to allow secondary bubbles to appear above */
-            overflow: hidden; /* Ensures image doesn't overflow the circle */
-        }
-
-        /* Styles for the image inside the main sphere */
-        #main-sphere img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Cover the bubble area without distorting the image */
-            border-radius: 50%; /* Ensures the image is also circular */
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+            position: relative;
+            z-index: 100;
         }
 
         #main-sphere:hover {
-            transform: scale(1.1); /* Slightly enlarge on hover */
+            transform: scale(1.1);
         }
 
-        /* Pulse animation when secondary spheres are open for the main sphere */
+        /* Style for the Font Awesome icon inside the main sphere */
+        #main-sphere .fa-phone-alt {
+            color: white; /* Color of the phone icon */
+            font-size: 28px; /* Size of the phone icon */
+        }
+
         @keyframes pulse-glow-main {
             0% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
             50% { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
@@ -174,7 +168,6 @@
             animation: pulse-glow-main 1.5s infinite alternate ease-in-out;
         }
 
-        /* Base styles for secondary spheres */
         .secondary-sphere-item {
             position: absolute;
             width: 50px;
@@ -185,57 +178,51 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* For image to respect border-radius */
+            overflow: hidden;
             opacity: 0;
-            pointer-events: none; /* Prevent interaction until visible */
-            /* Transition for bubble effect (opacity and scale) and movement - only applies when 'show' is added */
-            transform: scale(0); /* Start hidden and small for bubble effect */
-            left: 5px; /* Adjust to align with the main sphere's center */
-            /* Z-index to ensure correct stacking when deployed */
-            z-index: 99; /* Default z-index, will be changed when 'show' */
+            pointer-events: none;
+            transform: scale(0);
+            left: 5px;
+            z-index: 99;
+            transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         .secondary-sphere-item.show {
             opacity: 1;
-            pointer-events: auto; /* Allow interaction when visible */
-            transform: scale(1); /* Grow to normal size */
-            z-index: 105; /* Higher than main sphere when visible */
-            /* Apply transition only when becoming 'show' */
-            transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            pointer-events: auto;
+            transform: scale(1);
+            z-index: 105;
         }
 
         /* Specific positions for secondary spheres when shown (deploy upwards) */
         #secondary-sphere-whatsapp.show {
-            bottom: 85px; /* Positioned 85px from the bottom of its container (main-sphere-container) */
+            bottom: 85px;
         }
 
         #secondary-sphere-instagram.show {
-            bottom: 145px; /* Positioned 145px from the bottom of its container, 60px above WhatsApp */
+            bottom: 145px;
         }
 
-        .secondary-sphere-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
+        /* Style for Font Awesome icons inside secondary spheres */
+        .secondary-sphere-item .fab { /* For brand icons like WhatsApp, Instagram */
+            font-size: 28px;
+            color: #333; /* Default icon color */
         }
 
-        .secondary-sphere-item a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .secondary-sphere-item #whatsapp-icon {
+            color: #25D366; /* WhatsApp brand color */
+        }
+
+        .secondary-sphere-item #instagram-icon {
+            color: #E1306C; /* Instagram brand color */
         }
 
         /* --- Terms and Conditions Modal Styles --- */
         #terms-modal {
-            /* Using Tailwind classes for most properties, custom Z-index */
             background-color: rgba(0, 0, 0, 0.75);
-            z-index: 9999; /* Ensures it's on top of everything */
-            display: flex; /* Overrides hidden */
-            opacity: 0; /* Start hidden for transition */
+            z-index: 9999;
+            display: flex;
+            opacity: 0;
             transition: opacity 0.3s ease-out;
         }
 
@@ -243,13 +230,13 @@
             opacity: 1;
         }
 
-        #terms-modal > div { /* The inner content box */
-            transform: scale(0.9); /* Start slightly smaller for transition */
+        #terms-modal > div {
+            transform: scale(0.9);
             transition: transform 0.3s ease-out;
         }
 
         #terms-modal.show-modal > div {
-            transform: scale(1); /* Grow to normal size */
+            transform: scale(1);
         }
 
         /* Custom scrollbar for terms text */
@@ -284,7 +271,7 @@
                 <h3 class="font-semibold text-xl mb-2">2. Propiedad Intelectual</h3>
                 <p class="mb-4">Este sitio web contiene material que es propiedad nuestra o está licenciado para nosotros. Este material incluye, pero no se limita a, el diseño, la disposición, el aspecto, los gráficos y el texto. La reproducción está prohibida salvo de conformidad con el aviso de derechos de autor, que forma parte de estos términos y condiciones.</p>
                 <h3 class="font-semibold text-xl mb-2">3. Enlaces a Otros Sitios Web</h3>
-                <p class="mb-4">Nuestro sitio web puede contener enlaces a otros sitios web de interés. Sin embargo, una vez que haya utilizado estos enlaces para salir de nuestro sitio, debe tener en cuenta que no tenemos ningún control sobre ese otro sitio web. Por lo tanto, no podemos ser responsables de la protección y privacidad de cualquier información que proporcione mientras visita dichos sitios y dichos sitios no se rigen por esta declaración de privacidad. Debe tener precaución y consultar la declaración de privacidad aplicable al sitio web en cuestión.</p>
+                <p class="mb-4">Nuestro sitio web puede contener enlaces a otros sitios web de interés. Sin embargo, una vez que haya utilizado estos enlaces para salir de nuestro sitio, debe tener en cuenta que no tenemos ningún control sobre ese otro sitio web. Por lo tanto, no podemos ser responsables de la protección y privacidad de cualquier información que proporcione mientras visita dichos sitios y dichos sitios no se rige por esta declaración de privacidad. Debe tener precaución y consultar la declaración de privacidad aplicable al sitio web en cuestión.</p>
                 <h3 class="font-semibold text-xl mb-2">4. Limitación de Responsabilidad</h3>
                 <p class="mb-4">Ni nosotros ni ningún tercero ofrecemos garantía alguna en cuanto a la exactitud, puntualidad, rendimiento, integridad o idoneidad de la información y los materiales encontrados u ofrecidos en este sitio web para cualquier propósito particular. Usted reconoce que dicha información y materiales pueden contener inexactitudes o errores y excluimos expresamente la responsabilidad por tales inexactitudes o errores en la máxima medida permitida por la ley.</p>
                 <h3 class="font-semibold text-xl mb-2">5. Modificaciones de los Términos</h3>
@@ -299,16 +286,16 @@
 
     <div id="main-sphere-container">
         <div id="main-sphere">
-            <img src="images/images.png" alt="Social Media Icon">
+            <i class="fas fa-phone-alt"></i>
         </div>
         <div id="secondary-sphere-whatsapp" class="secondary-sphere-item">
             <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank" aria-label="Contact via WhatsApp">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
+                <i class="fab fa-whatsapp" id="whatsapp-icon"></i>
             </a>
         </div>
         <div id="secondary-sphere-instagram" class="secondary-sphere-item">
             <a href="https://www.instagram.com/TU_USUARIO_INSTAGRAM" target="_blank" aria-label="Contact via Instagram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon">
+                <i class="fab fa-instagram" id="instagram-icon"></i>
             </a>
         </div>
     </div>
@@ -580,120 +567,83 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // Initialize AOS
         AOS.init({
-            once: true,      /* Animations happen only once on scroll */
-            duration: 1000, /* Animation duration in milliseconds */
-            easing: 'ease-in-out', /* Timing function for the animation */
+            once: true,
+            duration: 1000,
+            easing: 'ease-in-out',
         });
 
-        /* Mobile menu script (show/hide on hamburger button click) */
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden'); /* Toggle 'hidden' class */
-            });
-
-            /* Close mobile menu when clicking any menu link */
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenu.classList.add('hidden'); /* Hide the menu */
-                });
-            });
-        }
-
-        // --- JavaScript for the main sphere and its secondary spheres (bottom left) ---
-        const mainSphereContainer = document.getElementById('main-sphere-container');
-        const mainSphere = document.getElementById('main-sphere');
-        const secondarySphereWhatsapp = document.getElementById('secondary-sphere-whatsapp');
-        const secondarySphereInstagram = document.getElementById('secondary-sphere-instagram');
-
-        let spheresVisible = false;
-
-        // Toggle visibility of secondary spheres on main sphere click
-        mainSphere.addEventListener('click', (e) => {
-            spheresVisible = !spheresVisible;
-
-            if (spheresVisible) {
-                // Show spheres: Apply transition first, then add 'show' class
-                secondarySphereWhatsapp.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                secondarySphereInstagram.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-
-                secondarySphereWhatsapp.classList.add('show');
-                setTimeout(() => {
-                    secondarySphereInstagram.classList.add('show');
-                }, 100); // 100ms delay for the second sphere
-                mainSphere.classList.add('active'); // Activate pulse animation
-            } else {
-                // Hide spheres: Remove 'show' class instantly by setting transition to 'none'
-                secondarySphereWhatsapp.style.transition = 'none';
-                secondarySphereInstagram.style.transition = 'none';
-
-                secondarySphereWhatsapp.classList.remove('show');
-                secondarySphereInstagram.classList.remove('show');
-
-                mainSphere.classList.remove('active'); // Deactivate pulse animation
-
-                // Re-apply transition after a small delay to ensure it's ready for the next 'show'
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => { // Double rAF for reliable reflow
-                        secondarySphereWhatsapp.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                        secondarySphereInstagram.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                    });
-                });
-            }
-        });
-
-        // Optional: Close secondary spheres if clicked outside them
-        document.addEventListener('click', (e) => {
-            if (spheresVisible && !mainSphereContainer.contains(e.target)) {
-                // Hide spheres instantly
-                secondarySphereWhatsapp.style.transition = 'none';
-                secondarySphereInstagram.style.transition = 'none';
-
-                secondarySphereWhatsapp.classList.remove('show');
-                secondarySphereInstagram.classList.remove('show');
-
-                mainSphere.classList.remove('active');
-                spheresVisible = false;
-
-                // Re-apply transition after a small delay to ensure it's ready for the next 'show'
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        secondarySphereWhatsapp.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                        secondarySphereInstagram.style.transition = 'opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                    });
-                });
-            }
-        });
-
-        // Terms and Conditions Modal Logic
         document.addEventListener('DOMContentLoaded', () => {
+            /* Mobile menu script */
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+
+            // --- JavaScript for the main sphere and its secondary spheres (bottom left) ---
+            const mainSphereContainer = document.getElementById('main-sphere-container');
+            const mainSphere = document.getElementById('main-sphere');
+            const secondarySphereWhatsapp = document.getElementById('secondary-sphere-whatsapp');
+            const secondarySphereInstagram = document.getElementById('secondary-sphere-instagram');
+
+            let spheresVisible = false;
+
+            function toggleSecondarySpheres() {
+                spheresVisible = !spheresVisible;
+                if (spheresVisible) {
+                    secondarySphereWhatsapp.classList.add('show');
+                    setTimeout(() => {
+                        secondarySphereInstagram.classList.add('show');
+                    }, 100);
+                    mainSphere.classList.add('active');
+                } else {
+                    secondarySphereInstagram.classList.remove('show');
+                    secondarySphereWhatsapp.classList.remove('show');
+                    mainSphere.classList.remove('active');
+                }
+            }
+
+            mainSphere.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevents the click from propagating to the document
+                toggleSecondarySpheres();
+            });
+
+            // Close secondary spheres if clicked outside them
+            document.addEventListener('click', (e) => {
+                if (spheresVisible && !mainSphereContainer.contains(e.target)) {
+                    toggleSecondarySpheres();
+                }
+            });
+
+            // Terms and Conditions Modal Logic
             const termsModal = document.getElementById('terms-modal');
             const acceptTermsButton = document.getElementById('accept-terms-button');
 
-            // Check if terms have already been accepted
             const termsAccepted = localStorage.getItem('termsAccepted');
 
             if (!termsAccepted) {
                 termsModal.classList.remove('hidden');
-                // Use a small timeout to allow CSS transition to apply
                 setTimeout(() => {
                     termsModal.classList.add('show-modal');
-                }, 10); // Small delay to trigger transition
+                }, 10);
             }
 
             if (acceptTermsButton) {
                 acceptTermsButton.addEventListener('click', () => {
                     localStorage.setItem('termsAccepted', 'true');
                     termsModal.classList.remove('show-modal');
-                    // Hide the modal completely after transition
                     setTimeout(() => {
                         termsModal.classList.add('hidden');
-                    }, 300); // Match CSS transition duration
+                    }, 300);
                 });
             }
         });
