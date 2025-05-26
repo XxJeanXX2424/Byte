@@ -4,28 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Byte - Diseño Web que Impulsa tu Negocio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+    <meta name="description" content="Byte - Diseño Web que Impulsa tu Negocio. Creamos sitios web únicos, e-commerce y estrategias de marketing digital para impulsar tu marca.">
+    <meta name="keywords" content="diseño web, desarrollo web, e-commerce, SEO, marketing digital, aplicaciones web, web design, desarrollo de sitios web, creación de páginas web, diseño responsivo, tiendas online, posicionamiento web, consultoría digital">
+    <meta name="author" content="Byte">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tudominio.com/"> <meta property="og:title" content="Byte - Diseño Web que Impulsa tu Negocio">
+    <meta property="og:description" content="Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.">
+    <meta property="og:image" content="https://www.tudominio.com/images/social-share.jpg"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.tudominio.com/"> <meta property="twitter:title" content="Byte - Diseño Web que Impulsa tu Negocio">
+    <meta property="twitter:description" content="Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.">
+    <meta property="twitter:image" content="https://www.tudominio.com/images/social-share.jpg"> <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap"></noscript>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script>
-        // Tailwind CSS configuration for custom theme colors and fonts
+        // Configuración de Tailwind CSS para definir colores y fuentes personalizadas
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Montserrat', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'], // Fuente principal para texto
+                        heading: ['Montserrat', 'sans-serif'], // Fuente para títulos
                     },
                     colors: {
-                        'byte-dark-bg': '#0A0A1A',
-                        'byte-accent-cyan': '#00FFFF',
-                        'byte-light-bg': '#F8FAFC',
-                        'byte-text-dark': '#374151',
-                        'byte-text-light': '#F9FAFB',
-                        'byte-secondary-dark': '#1A202C',
+                        'byte-dark-bg': '#0A0A1A',        // Fondo oscuro principal
+                        'byte-accent-cyan': '#00FFFF',    // Color de acento (cian brillante)
+                        'byte-light-bg': '#F8FAFC',       // Fondo claro para secciones
+                        'byte-text-dark': '#374151',      // Color de texto oscuro
+                        'byte-text-light': '#F9FAFB',     // Color de texto claro
+                        'byte-secondary-dark': '#1A202C', // Fondo oscuro secundario
                     }
                 }
             }
@@ -33,23 +48,19 @@
     </script>
 
     <style>
-        /* Google Fonts Import */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap');
-
+        /* Estilos base para el cuerpo y los títulos, asegurando las fuentes definidas en Tailwind */
         body {
             font-family: 'Inter', sans-serif;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            /* Se eliminó user-select: none; para mejorar la experiencia del usuario al permitir la selección de texto. */
             margin: 0;
             padding: 0;
+            scroll-behavior: smooth; /* Habilita el desplazamiento suave al hacer clic en enlaces de ancla */
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Glow animation for "Byte" logo */
+        /* Animación de resplandor para el logo "Byte" */
         @keyframes glow {
             0% {
                 color: #00FFFF;
@@ -69,7 +80,7 @@
             animation: glow 1.5s infinite alternate ease-in-out;
         }
 
-        /* Softer glow animation for menu links */
+        /* Animación de resplandor más suave para los enlaces del menú de navegación */
         @keyframes menu-glow {
             0% {
                 color: #00FFFF;
@@ -89,7 +100,7 @@
             animation: menu-glow 2s infinite alternate ease-in-out;
         }
 
-        /* "Fall-in" animation for AOS (Animate On Scroll) */
+        /* Animación "Fall-in" personalizada para AOS (Animate On Scroll) */
         @keyframes fall-in {
             0% {
                 opacity: 0;
@@ -101,19 +112,19 @@
             }
         }
 
-        /* Class applied by AOS.js for animating elements */
-        .aos-animate {
+        /* Aplica la animación "fall-in" a elementos con data-aos="fall-down" */
+        .aos-animate[data-aos="fall-down"] {
             animation-name: fall-in;
             animation-duration: 1s;
             animation-fill-mode: forwards;
             animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
-        /* Responsive styles for Google Maps embed container */
+        /* Estilos responsivos para el contenedor de Google Maps embed */
         .map-container {
             position: relative;
             overflow: hidden;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio (height / width) */
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 (altura / anchura) */
             height: 0;
         }
 
@@ -125,137 +136,81 @@
             height: 100%;
         }
 
-        /* --- Styles for the main and secondary spheres (bottom left) --- */
-        #main-sphere-container {
+        /* --- Estilos para el botón flotante de WhatsApp (reemplaza el menú burbuja) --- */
+        #whatsapp-float-button {
             position: fixed;
             bottom: 20px;
             left: 20px;
-            z-index: 1000;
-        }
-
-        #main-sphere {
             width: 60px;
             height: 60px;
-            background-color: rgba(255, 165, 0, 0.8); /* Translucent orange */
+            background-color: #25D366; /* Color de marca de WhatsApp */
+            color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.9);
-            transition: transform 0.2s ease-in-out;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+            z-index: 1000;
             cursor: pointer;
-            position: relative;
-            z-index: 100;
         }
 
-        #main-sphere:hover {
+        #whatsapp-float-button:hover {
             transform: scale(1.1);
+            background-color: #1DA851; /* Un tono más oscuro al pasar el ratón */
         }
 
-        /* Style for the Font Awesome icon inside the main sphere */
-        #main-sphere .fa-phone-alt {
-            color: white; /* Color of the phone icon */
-            font-size: 28px; /* Size of the phone icon */
+        /* Animación de pulso para el botón de WhatsApp */
+        @keyframes whatsapp-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        @keyframes pulse-glow-main {
-            0% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
-            50% { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
-            100% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.9); }
+        #whatsapp-float-button {
+            animation: whatsapp-pulse 2s infinite;
         }
 
-        #main-sphere.active {
-            animation: pulse-glow-main 1.5s infinite alternate ease-in-out;
-        }
-
-        .secondary-sphere-item {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9); /* Translucent white */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0);
-            left: 5px;
-            z-index: 99;
-            transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-
-        .secondary-sphere-item.show {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1);
-            z-index: 105;
-        }
-
-        /* Specific positions for secondary spheres when shown (deploy upwards) */
-        #secondary-sphere-whatsapp.show {
-            bottom: 85px;
-        }
-
-        #secondary-sphere-instagram.show {
-            bottom: 145px;
-        }
-
-        /* Style for Font Awesome icons inside secondary spheres */
-        .secondary-sphere-item .fab { /* For brand icons like WhatsApp, Instagram */
-            font-size: 28px;
-            color: #333; /* Default icon color */
-        }
-
-        .secondary-sphere-item #whatsapp-icon {
-            color: #25D366; /* WhatsApp brand color */
-        }
-
-        .secondary-sphere-item #instagram-icon {
-            color: #E1306C; /* Instagram brand color */
-        }
-
-        /* --- Terms and Conditions Modal Styles --- */
+        /* --- Estilos del Modal de Términos y Condiciones --- */
         #terms-modal {
-            background-color: rgba(0, 0, 0, 0.75);
-            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.75); /* Fondo semitransparente oscuro */
+            z-index: 9999; /* Asegura que esté por encima de todo */
             display: flex;
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
+            opacity: 0; /* Inicialmente oculto */
+            transition: opacity 0.3s ease-out; /* Transición suave para la aparición */
         }
 
         #terms-modal.show-modal {
-            opacity: 1;
+            opacity: 1; /* Hace visible el modal */
         }
 
         #terms-modal > div {
-            transform: scale(0.9);
-            transition: transform 0.3s ease-out;
+            transform: scale(0.9); /* Ligeramente más pequeño al inicio para la transición */
+            transition: transform 0.3s ease-out; /* Transición suave para el contenido del modal */
         }
 
         #terms-modal.show-modal > div {
-            transform: scale(1);
+            transform: scale(1); /* Escala normal al mostrarse */
         }
 
-        /* Custom scrollbar for terms text */
+        /* Scrollbar personalizado para el texto de los términos y condiciones */
         .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
+            width: 8px; /* Ancho del scrollbar */
         }
 
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
+            background: #f1f1f1; /* Color del fondo del track */
+            border-radius: 10px; /* Bordes redondeados del track */
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
+            background: #888; /* Color del "pulgar" del scrollbar */
+            border-radius: 10px; /* Bordes redondeados del pulgar */
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: #555; /* Color del pulgar al pasar el ratón */
         }
     </style>
 </head>
@@ -276,7 +231,7 @@
                 <p class="mb-4">Ni nosotros ni ningún tercero ofrecemos garantía alguna en cuanto a la exactitud, puntualidad, rendimiento, integridad o idoneidad de la información y los materiales encontrados u ofrecidos en este sitio web para cualquier propósito particular. Usted reconoce que dicha información y materiales pueden contener inexactitudes o errores y excluimos expresamente la responsabilidad por tales inexactitudes o errores en la máxima medida permitida por la ley.</p>
                 <h3 class="font-semibold text-xl mb-2">5. Modificaciones de los Términos</h3>
                 <p class="mb-4">Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Cualquier cambio será efectivo inmediatamente después de su publicación en el sitio web. Su uso continuado del sitio web después de la publicación de los cambios constituirá su aceptación de dichos cambios.</p>
-                <p class="mb-4">Al hacer clic en "Aceptar", usted confirma que ha leído, entendido y aceptado nuestros Términos y Condiciones y nuestra Política de Privacidad.</p>
+                <p class="mb-4 text-center font-bold">Al hacer clic en "Aceptar", usted confirma que ha leído, entendido y aceptado nuestros Términos y Condiciones y nuestra <a href="#politica-privacidad" class="text-byte-accent-cyan hover:underline">Política de Privacidad</a>.</p>
             </div>
             <button id="accept-terms-button" class="w-full bg-byte-accent-cyan text-byte-dark-bg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-400 transition duration-300 transform hover:scale-105 text-lg">
                 Aceptar Términos y Condiciones
@@ -284,25 +239,13 @@
         </div>
     </div>
 
-    <div id="main-sphere-container">
-        <div id="main-sphere">
-            <i class="fas fa-phone-alt"></i>
-        </div>
-        <div id="secondary-sphere-whatsapp" class="secondary-sphere-item">
-            <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank" aria-label="Contact via WhatsApp">
-                <i class="fab fa-whatsapp" id="whatsapp-icon"></i>
-            </a>
-        </div>
-        <div id="secondary-sphere-instagram" class="secondary-sphere-item">
-            <a href="https://www.instagram.com/TU_USUARIO_INSTAGRAM" target="_blank" aria-label="Contact via Instagram">
-                <i class="fab fa-instagram" id="instagram-icon"></i>
-            </a>
-        </div>
-    </div>
+    <a href="https://w.app/bytewebdesign" target="_blank" id="whatsapp-float-button" aria-label="Contactar vía WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="#" class="flex items-center">
+            <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
                 <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
             </a>
 
@@ -315,14 +258,14 @@
                     <li><a href="#contacto" class="text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a></li>
                     <li>
                         <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                                 shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
+                                                   shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 ml-8 hover:-translate-y-1">
                             ¡Empecemos tu Proyecto!
                         </a>
                     </li>
                 </ul>
             </nav>
 
-            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-byte-accent-cyan hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan">
+            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-byte-accent-cyan hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -339,7 +282,7 @@
             <li><a href="#contacto" class="block text-byte-accent-cyan text-lg font-semibold hover:text-byte-text-light transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow">Contacto</a></li>
             <li>
                 <a href="#contacto" class="block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                        shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
+                                         shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
                     ¡Empecemos tu Proyecto!
                 </a>
             </li>
@@ -347,10 +290,8 @@
     </nav>
 
     <section id="inicio" class="relative bg-byte-dark-bg text-white py-32 md:py-48 overflow-hidden flex items-center justify-center">
-        <img src="./images/609.jpg" alt="Imagen de fondo de la sección de inicio"
-             class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 brightness-75">
-
-        <div class="container mx-auto px-4 relative z-10 text-center"
+        <img src="./images/609.jpg" alt="Imagen de fondo de la sección de inicio que representa un concepto digital"
+             class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 brightness-75" loading="eager"> <div class="container mx-auto px-4 relative z-10 text-center"
              data-aos="fade-up" data-aos-duration="1000">
             <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-byte-accent-cyan drop-shadow-lg"
                 data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1200">
@@ -542,110 +483,119 @@
                     data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
                     <h3 class="text-3xl font-bold text-center text-byte-dark-bg mb-8">Dónde Encontrarnos</h3>
                     <div class="space-y-6 text-center text-lg">
-                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📍</span> 123 Calle Ficticia, Ciudad, País</p>
-                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📧</span> info@byte.com</p>
-                        <p class="flex items-center justify-center text-byte-accent-cyan mr-3">📞 +123 456 7890</p>
+                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📍</span> Venezuela, Caracas, Plaza Sucre, Calle Bolivia</p>
+                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📧</span> Bytewebdesign1@gmail.com</p>
+                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📞</span> +584125646508</p>
+                        <div class="mt-6 flex justify-center space-x-6 text-2xl">
+                            <a href="https://facebook.com/tupagina" target="_blank" aria-label="Visitar Facebook" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/tucuenta" target="_blank" aria-label="Visitar X (Twitter)" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-x-twitter"></i></a>
+                            <a href="https://instagram.com/tu_usuario_instagram" target="_blank" aria-label="Visitar Instagram" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-instagram"></i></a>
+                            <a href="https://linkedin.com/tuempresa" target="_blank" aria-label="Visitar LinkedIn" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
 
                     <div class="mt-8 map-container rounded-lg shadow-md">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.364421110756!2d-66.8837330852033!3d10.49071599252329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a5814f9c5b2a5%3A0x7d0a6c0c0b0b0b0!2sCaracas%2C%20Distrito%20Capital%2C%20Venezuela!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <!-- Mapa de Google Maps actualizado con la ubicación especificada.
+                             NOTA: Para un mapa interactivo real, necesitarías generar un embed de Google Maps desde Google Maps directamente.
+                             Este es un placeholder con la URL base de Google Maps. -->
+                        <iframe src="https://maps.google.com/maps?q=Venezuela,Caracas,Plaza%20Sucre,Calle%20Bolivia&t=&z=15&ie=UTF8&iwloc=&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                title="Ubicación de Byte en Venezuela, Caracas, Plaza Sucre, Calle Bolivia"></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-byte-dark-bg py-8 text-center text-gray-400">
-        <p>© 2024 Byte. Todos los derechos reservados.</p>
-        <div class="mt-4 flex justify-center space-x-6">
-            <a href="#" class="text-byte-accent-cyan hover:text-white transition duration-300" aria-label="Facebook">Facebook</a>
-            <a href="#" class="text-byte-accent-cyan hover:text-white transition duration-300" aria-label="Twitter">Twitter</a>
-            <a href="#" class="text-byte-accent-cyan hover:text-white transition duration-300" aria-label="LinkedIn">LinkedIn</a>
+    <footer class="bg-byte-dark-bg text-byte-text-light py-10 border-t border-byte-accent-cyan">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <a href="#inicio" class="text-3xl font-extrabold text-byte-accent-cyan mb-4 md:mb-0" aria-label="Ir a inicio de la página">Byte</a>
+                <div class="flex justify-center space-x-4 text-2xl">
+                    <a href="https://facebook.com/tupagina" target="_blank" aria-label="Facebook de Byte" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/tucuenta" target="_blank" aria-label="X (Twitter) de Byte" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://instagram.com/tu_usuario_instagram" target="_blank" aria-label="Instagram de Byte" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/tuempresa" target="_blank" aria-label="LinkedIn de Byte" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <p class="text-sm text-gray-400 mt-6">© <span id="current-year"></span> Byte. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
     <script>
+        // Inicialización de AOS
         AOS.init({
-            once: true,
-            duration: 1000,
-            easing: 'ease-in-out',
+            once: true, // Las animaciones solo se disparan una vez al hacer scroll
+            duration: 1000, // Duración por defecto de la animación
+            easing: 'ease-in-out', // Función de easing por defecto
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            /* Mobile menu script */
+            /* Script para el menú móvil */
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', function() {
+                    const isHidden = mobileMenu.classList.contains('hidden');
                     mobileMenu.classList.toggle('hidden');
+                    // Actualizar aria-expanded para accesibilidad
+                    mobileMenuButton.setAttribute('aria-expanded', !isHidden);
                 });
+                // Cerrar menú móvil al hacer clic en un enlace
                 mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', function() {
                         mobileMenu.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
                     });
                 });
             }
 
-            // --- JavaScript for the main sphere and its secondary spheres (bottom left) ---
-            const mainSphereContainer = document.getElementById('main-sphere-container');
-            const mainSphere = document.getElementById('main-sphere');
-            const secondarySphereWhatsapp = document.getElementById('secondary-sphere-whatsapp');
-            const secondarySphereInstagram = document.getElementById('secondary-sphere-instagram');
-
-            let spheresVisible = false;
-
-            function toggleSecondarySpheres() {
-                spheresVisible = !spheresVisible;
-                if (spheresVisible) {
-                    secondarySphereWhatsapp.classList.add('show');
-                    setTimeout(() => {
-                        secondarySphereInstagram.classList.add('show');
-                    }, 100);
-                    mainSphere.classList.add('active');
-                } else {
-                    secondarySphereInstagram.classList.remove('show');
-                    secondarySphereWhatsapp.classList.remove('show');
-                    mainSphere.classList.remove('active');
-                }
-            }
-
-            mainSphere.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevents the click from propagating to the document
-                toggleSecondarySpheres();
-            });
-
-            // Close secondary spheres if clicked outside them
-            document.addEventListener('click', (e) => {
-                if (spheresVisible && !mainSphereContainer.contains(e.target)) {
-                    toggleSecondarySpheres();
-                }
-            });
-
-            // Terms and Conditions Modal Logic
+            // Lógica del Modal de Términos y Condiciones
             const termsModal = document.getElementById('terms-modal');
             const acceptTermsButton = document.getElementById('accept-terms-button');
 
+            // Comprueba si los términos han sido aceptados (usando localStorage)
             const termsAccepted = localStorage.getItem('termsAccepted');
 
             if (!termsAccepted) {
-                termsModal.classList.remove('hidden');
+                termsModal.classList.remove('hidden'); // Muestra el modal
                 setTimeout(() => {
-                    termsModal.classList.add('show-modal');
-                }, 10);
+                    termsModal.classList.add('show-modal'); // Activa la transición de aparición
+                    document.body.classList.add('overflow-hidden'); // Evita el scroll del body principal
+                }, 10); // Pequeño retardo para que la transición CSS funcione
             }
 
             if (acceptTermsButton) {
                 acceptTermsButton.addEventListener('click', () => {
-                    localStorage.setItem('termsAccepted', 'true');
-                    termsModal.classList.remove('show-modal');
+                    localStorage.setItem('termsAccepted', 'true'); // Marca los términos como aceptados
+                    termsModal.classList.remove('show-modal'); // Desactiva la transición de ocultación
                     setTimeout(() => {
-                        termsModal.classList.add('hidden');
-                    }, 300);
+                        termsModal.classList.add('hidden'); // Oculta el modal después de la transición
+                        document.body.classList.remove('overflow-hidden'); // Permite el scroll del body
+                    }, 300); // Debe coincidir con la duración de la transición CSS
                 });
             }
+
+            // Cierra el modal si el usuario hace clic fuera de su contenido
+            termsModal.addEventListener('click', (event) => {
+                if (event.target === termsModal) {
+                    // Llama a la función para ocultar el modal (se define a continuación)
+                    hideTermsModal();
+                }
+            });
+
+            // Función auxiliar para ocultar el modal (usada también por el click fuera)
+            function hideTermsModal() {
+                termsModal.classList.remove('show-modal');
+                setTimeout(() => {
+                    termsModal.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }, 300);
+            }
+
+            // Actualizar el año en el footer automáticamente
+            document.getElementById('current-year').textContent = new Date().getFullYear();
         });
     </script>
 
