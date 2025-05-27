@@ -9,7 +9,7 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&family=Lora:wght@400;700&display=swap"></noscript>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="module">
         // Importar las funciones necesarias de Firebase
@@ -49,13 +49,15 @@
         // después de iniciar sesión anónimamente y pegarlo aquí.
         const adminUserId = "YOUR_ADMIN_FIREBASE_UID_HERE"; // <--- REEMPLAZA ESTO CON UN UID REAL DE PRUEBA
 
-        // Función para verificar el lenguaje inapropiado usando la API de Gemini
+        // Función para verificar el lenguaje inapropiado usando la API de Gemini para AUTOMODERACIÓN
+        // NOTA: Para producción, es más seguro y eficiente realizar esta llamada a la API desde un servidor
+        // (ej. Firebase Cloud Function) para proteger tu API Key y evitar usos indebidos.
         async function checkForProfanity(text) {
             const prompt = `Analyze the following text for profanity, insults, or inappropriate language. Respond with "CLEAN" if no such language is found, otherwise respond with "FLAGGED". Text: "${text}"`;
             let chatHistory = [];
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
             const payload = { contents: chatHistory };
-            const apiKey = ""; // Dejar como está, Canvas lo proporcionará
+            const apiKey = ""; // Dejar como está, tu entorno (Canvas/Plataforma de despliegue) debería inyectar esto de forma segura
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
             try {
@@ -77,12 +79,15 @@
                 }
             } catch (error) {
                 console.error("Error calling Gemini API for profanity check:", error);
-                return false; // Por defecto, si la llamada a la API falla
+                // Si la API falla, por seguridad, podemos decidir no permitir la reseña o registrarla para revisión manual.
+                // Aquí, por simplicidad, no la flaggeamos si la API falla.
+                return false;
             }
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Inicializar Firebase
+            // Inicializar Firebase.
+            // La variable __firebase_config debería ser definida globalmente o inyectada por tu entorno de despliegue.
             const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
@@ -148,10 +153,10 @@
                     }
 
                     // Mostrar indicador de carga
-                    messageBox.innerHTML = `<p class="text-blue-400">Verificando reseña...</p>`;
+                    messageBox.innerHTML = `<p class="text-blue-400">Verificando reseña para automoderación...</p>`;
                     reviewForm.querySelector('button[type="submit"]').disabled = true;
 
-                    // Verificación de lenguaje inapropiado
+                    // Automoderación: Verificación de lenguaje inapropiado
                     const isFlagged = await checkForProfanity(comment);
 
                     if (isFlagged) {
@@ -162,16 +167,20 @@
                     }
 
                     try {
+                        // La variable __app_id debería ser definida globalmente o inyectada por tu entorno de despliegue.
                         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                        // Ruta de la colección para las reseñas.
+                        // La estructura `artifacts/{appId}/public/data/reviews` es excelente para organizar datos por aplicación.
                         const reviewsCollectionRef = collection(db, `artifacts/${appId}/public/data/reviews`);
 
+                        // Recolección de datos: Se guardan userName, userEmail, rating, comment, userId y timestamp
                         await addDoc(reviewsCollectionRef, {
-                            userId: userId,
+                            userId: userId, // ID único del usuario (anónimo en este caso)
                             userName: userName,
                             userEmail: userEmail,
                             rating: currentRating,
                             comment: comment,
-                            timestamp: serverTimestamp()
+                            timestamp: serverTimestamp() // Marca de tiempo del servidor para ordenar y filtrar
                         });
 
                         messageBox.innerHTML = `<p class="text-green-500">Reseña enviada con éxito!</p>`;
@@ -191,7 +200,7 @@
                 });
             }
 
-            // Función para cargar y mostrar reseñas en tiempo real
+            // Función para cargar y mostrar reseñas en tiempo real (visibilidad para otros)
             function loadReviews() {
                 if (!isAuthReady) {
                     console.warn("Autenticación no lista para cargar reseñas. Esperando...");
@@ -200,10 +209,12 @@
 
                 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
                 const reviewsCollectionRef = collection(db, `artifacts/${appId}/public/data/reviews`);
-                // Firestore no soporta orderBy si no hay un índice compuesto para los campos.
-                // Para evitar errores de índice, cargaremos y ordenaremos en el cliente.
-                // Si tienes un gran volumen de reseñas, considera crear un índice en Firebase Console para 'timestamp'.
-                const q = query(reviewsCollectionRef); // Sin orderBy aquí para evitar errores de índice por defecto
+                
+                // NOTA IMPORTANTE sobre Firestore:
+                // Para grandes volúmenes de reseñas, si necesitas ordenar por 'timestamp' directamente en la consulta,
+                // DEBES crear un índice compuesto en Firebase Console. De lo contrario, Firebase te indicará el índice necesario.
+                // Para este ejemplo, cargamos y ordenamos en el cliente, lo cual es viable para un número limitado de reseñas.
+                const q = query(reviewsCollectionRef); 
 
                 onSnapshot(q, (snapshot) => {
                     reviewsList.innerHTML = '';
@@ -386,7 +397,7 @@
                 <span class="font-vision text-gray-100 text-sm md:text-lg font-light animate-subtle-fade">Tu visión, nuestra misión</span>
             </div>
             <a href="index.html#contacto" class="bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                       shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                                        shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
                 ¡Volver al Inicio!
             </a>
         </div>
@@ -428,7 +439,8 @@
                 <div id="message-box" class="mt-4 text-center text-sm text-gray-400"></div>
             </form>
             <div class="mt-8 p-4 bg-gray-700 rounded-lg text-gray-300 text-center text-sm">
-                <p>⚠️ Por favor, modera tu lenguaje. Todas las reseñas son verificadas para asegurar un ambiente respetuoso.</p>
+                <p>⚠️ **Automoderación Activa**: Todas las reseñas son verificadas con IA para asegurar un ambiente respetuoso. Por favor, modera tu lenguaje.</p>
+                <p>📊 **Recolección de Datos**: Al enviar tu reseña, recopilamos tu nombre, correo electrónico, calificación, comentario, un ID de usuario anónimo y la fecha/hora de envío para mostrar y gestionar las reseñas.</p>
             </div>
         </section>
 
