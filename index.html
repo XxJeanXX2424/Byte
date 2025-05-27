@@ -23,7 +23,7 @@
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script>
         // Configuración de Tailwind CSS para definir colores y fuentes personalizadas
@@ -52,8 +52,11 @@
         /* Estilos base para el cuerpo y los títulos, asegurando las fuentes definidas en Tailwind */
         body {
             font-family: 'Inter', sans-serif;
+            /* Anti-copying configuration */
+            -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Old versions of Firefox */
             -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
             margin: 0;
@@ -100,7 +103,7 @@
             }
         }
 
-        .menu-link-glow {
+        .menu-link-glow:hover { /* Aplica la animación al hacer hover */
             animation: menu-glow 2s infinite alternate ease-in-out;
         }
 
@@ -225,7 +228,8 @@
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4"> <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
+            <div class="flex items-center space-x-4">
+                <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
                     <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
                 </a>
                 <span class="font-vision text-gray-100 text-sm md:text-lg font-light animate-subtle-fade">Tu visión, nuestra misión</span>
@@ -243,37 +247,41 @@
                     <li class="relative group">
                         <a href="#servicios" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Servicios</a>
                         <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.2</a></li>
+                            <li><a href="diseno-web.html" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Diseño Web</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">E-commerce</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Marketing Digital</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Aplicaciones Web</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Mantenimiento</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Consultoría</a></li>
                         </ul>
                     </li>
                     <li class="relative group">
                         <a href="#portafolio" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Portafolio</a>
                         <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.2</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Proyectos Web</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Proyectos E-commerce</a></li>
                         </ul>
                     </li>
                     <li class="relative group">
                         <a href="#proceso" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Proceso</a>
                         <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.2</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Metodología</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Fases de Proyecto</a></li>
                         </ul>
                     </li>
                     <li class="relative group">
-                        <a href="#contacto" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a>
+                        <a href="reseñas.html" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Reseñas</a>
                         <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.2</a></li>
+                            <li><a href="reseñas.html#clientes" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Opiniones de Clientes</a></li>
+                            <li><a href="reseñas.html#caso-estudio" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Casos de Éxito</a></li>
                         </ul>
                     </li>
-                </ul>
+                    </ul>
             </nav>
 
-            <a href="#contacto" class="hidden sm:inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                       shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1">
-                ¡Empecemos tu Proyecto!
+            <a href="reseñas.html" class="hidden sm:inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                           shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1">
+                Ver Reseñas
             </a>
 
             <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-byte-accent-cyan hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
@@ -287,44 +295,48 @@
     <nav id="mobile-menu" class="sm:hidden bg-byte-secondary-dark shadow-lg py-4 px-4 hidden fixed top-20 w-full z-40">
         <ul class="flex flex-col space-y-4">
             <li class="relative">
-                <a href="#inicio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Inicio</a>
+                <a href="#inicio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 mobile-menu-toggle">Inicio</a>
                 <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
                     <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.1</a></li>
                     <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.2</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#servicios" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Servicios</a>
+                <a href="#servicios" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 mobile-menu-toggle">Servicios</a>
                 <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.2</a></li>
+                    <li><a href="diseno-web.html" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Diseño Web</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">E-commerce</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Marketing Digital</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Aplicaciones Web</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Mantenimiento</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Consultoría</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#portafolio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Portafolio</a>
+                <a href="#portafolio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 mobile-menu-toggle">Portafolio</a>
                 <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.2</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Proyectos Web</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Proyectos E-commerce</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#proceso" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Proceso</a>
+                <a href="#proceso" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 mobile-menu-toggle">Proceso</a>
                 <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.2</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Metodología</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Fases de Proyecto</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#contacto" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Contacto</a>
+                <a href="reseñas.html" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 mobile-menu-toggle">Reseñas</a>
                 <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.2</a></li>
+                    <li><a href="reseñas.html#clientes" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Opiniones de Clientes</a></li>
+                    <li><a href="reseñas.html#caso-estudio" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Casos de Éxito</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#contacto" class="block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                         shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
-                    ¡Empecemos tu Proyecto!
+                <a href="reseñas.html" class="block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                             shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1 text-center mt-4">
+                    Ver Reseñas
                 </a>
             </li>
         </ul>
@@ -343,11 +355,16 @@
                data-aos="fade-up" data-aos-delay="400" data-aos-duration="1200">
                 Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.
             </p>
-            <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
-               data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
-                ¡Hablemos de tu Proyecto!
-            </a>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+                   data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
+                   ¡Hablemos de tu Proyecto!
+                </a>
+                <a href="reseñas.html" class="inline-block bg-gray-700 text-white border border-gray-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-600 transition duration-300 transform hover:scale-105"
+                   data-aos="zoom-in" data-aos-delay="700" data-aos-duration="1200">
+                   Reseñas
+                </a>
+            </div>
         </div>
     </section>
 
@@ -436,7 +453,34 @@
                     <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=App+Web+Personalizada" alt="Proyecto Aplicación Web Personalizada" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
                     <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
                         <h3 class="text-2xl font-bold mb-2">Aplicación de Gestión de Proyectos</h3>
-                        <p class="text-gray-300 text-sm mb-4">Desarrollo de una herramienta web interna para optimizar la colaboración del equipo.</p>
+                        <p class="text-gray-300 text-sm mb-4">Desarrollo de una aplicación web a medida para optimizar tus procesos y ofrecer nuevas experiencias.</p>
+                        <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
+                    </div>
+                </div>
+                <div class="bg-byte-secondary-dark rounded-xl shadow-2xl overflow-hidden group"
+                    data-aos="zoom-in" data-aos-delay="400" data-aos-duration="800">
+                    <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=Plataforma+Educativa" alt="Proyecto Plataforma Educativa" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
+                    <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
+                        <h3 class="text-2xl font-bold mb-2">Plataforma Educativa Interactiva</h3>
+                        <p class="text-gray-300 text-sm mb-4">Creación de un portal de e-learning con módulos interactivos y seguimiento de progreso.</p>
+                        <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
+                    </div>
+                </div>
+                <div class="bg-byte-secondary-dark rounded-xl shadow-2xl overflow-hidden group"
+                    data-aos="zoom-in" data-aos-delay="500" data-aos-duration="800">
+                    <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=Web+Salud" alt="Proyecto Web para Clínica de Salud" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
+                    <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
+                        <h3 class="text-2xl font-bold mb-2">Sitio Web para Clínica de Salud</h3>
+                        <p class="text-gray-300 text-sm mb-4">Rediseño completo de la presencia online para una clínica, mejorando la reserva de citas.</p>
+                        <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
+                    </div>
+                </div>
+                 <div class="bg-byte-secondary-dark rounded-xl shadow-2xl overflow-hidden group"
+                    data-aos="zoom-in" data-aos-delay="600" data-aos-duration="800">
+                    <img src="https://placehold.co/600x400/00FFFF/0A0A1A?text=Blog+Personalizado" alt="Proyecto Blog Personalizado" class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500" loading="lazy">
+                    <div class="p-6 bg-byte-secondary-dark text-byte-text-light">
+                        <h3 class="text-2xl font-bold mb-2">Blog de Contenido Interactivo</h3>
+                        <p class="text-gray-300 text-sm mb-4">Desarrollo de un blog optimizado para SEO con funcionalidades interactivas para engagement.</p>
                         <a href="#" class="text-byte-accent-cyan hover:text-byte-text-light text-base font-semibold transition duration-300">Ver Caso de Estudio →</a>
                     </div>
                 </div>
@@ -444,254 +488,293 @@
         </div>
     </section>
 
-    <section id="proceso" class="py-20 bg-byte-light-bg text-byte-text-dark">
+    <section class="py-20 bg-byte-accent-cyan text-byte-dark-bg text-center">
+        <div class="container mx-auto px-4" data-aos="fade-up" data-aos-duration="1000">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">¿Listo para un Impulso Digital?</h2>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+                Déjanos ayudarte a construir la presencia online que tu negocio merece.
+            </p>
+            <a href="#contacto" class="inline-block bg-byte-dark-bg text-byte-accent-cyan font-bold py-3 px-8 rounded-full
+                                           shadow-lg hover:bg-gray-800 transition duration-300 transform hover:scale-105">
+                ¡Solicita tu Cotización Gratuita!
+            </a>
+        </div>
+    </section>
+
+    <section id="proceso" class="py-20 bg-byte-dark-bg text-byte-text-light">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-dark-bg mb-16"
-                data-aos="fade-up" data-aos-duration="800">Nuestro Proceso Creativo</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
-                    data-aos="fall-down" data-aos-delay="100" data-aos-duration="1000">
-                    <div class="text-6xl text-byte-accent-cyan mb-4">1️⃣</div>
-                    <h3 class="text-2xl font-bold text-byte-dark-bg mb-2">Descubrimiento</h3>
-                    <p class="text-byte-text-dark">Entendemos tus objetivos, audiencia y la visión de tu proyecto.</p>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-16"
+                data-aos="fade-up" data-aos-duration="800">Nuestro Proceso</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="flex flex-col items-center text-center p-6 bg-byte-secondary-dark rounded-xl shadow-xl"
+                    data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+                    <div class="text-5xl text-byte-accent-cyan mb-4 font-bold">1</div>
+                    <h3 class="text-2xl font-bold mb-2">Descubrimiento</h3>
+                    <p class="text-gray-300">Entendemos tus necesidades, objetivos y el mercado en el que te mueves.</p>
                 </div>
-                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
-                    data-aos="fall-down" data-aos-delay="200" data-aos-duration="1000">
-                    <div class="text-6xl text-byte-accent-cyan mb-4">2️⃣</div>
-                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-2">Diseño & Planificación</h3>
-                    <p class="text-byte-text-dark">Creamos wireframes, mockups y la estructura visual de tu web.</p>
+                <div class="flex flex-col items-center text-center p-6 bg-byte-secondary-dark rounded-xl shadow-xl"
+                    data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                    <div class="text-5xl text-byte-accent-cyan mb-4 font-bold">2</div>
+                    <h3 class="text-2xl font-bold mb-2">Diseño</h3>
+                    <p class="text-gray-300">Creamos prototipos y maquetas visuales para asegurar la experiencia de usuario perfecta.</p>
                 </div>
-                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
-                    data-aos="fall-down" data-aos-delay="300" data-aos-duration="1000">
-                    <div class="text-6xl text-byte-accent-cyan mb-4">3️⃣</div>
-                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-2">Desarrollo</h3>
-                    <p class="text-byte-text-dark">Convertimos el diseño en un sitio web funcional y optimizado.</p>
+                <div class="flex flex-col items-center text-center p-6 bg-byte-secondary-dark rounded-xl shadow-xl"
+                    data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+                    <div class="text-5xl text-byte-accent-cyan mb-4 font-bold">3</div>
+                    <h3 class="text-2xl font-bold mb-2">Desarrollo</h3>
+                    <p class="text-gray-300">Convertimos el diseño en un sitio web o aplicación funcional y optimizada.</p>
                 </div>
-                <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg border-b-4 border-byte-accent-cyan"
-                    data-aos="fall-down" data-aos-delay="400" data-aos-duration="1000">
-                    <div class="text-6xl text-byte-accent-cyan mb-4">4️⃣</div>
-                    <h3 class="text-2xl font-bold text-center text-byte-dark-bg mb-2">Lanzamiento & Soporte</h3>
-                    <p class="text-center text-byte-text-dark">Publicamos tu web y ofrecemos soporte continuo para su éxito.</p>
+                <div class="flex flex-col items-center text-center p-6 bg-byte-secondary-dark rounded-xl shadow-xl"
+                    data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+                    <div class="text-5xl text-byte-accent-cyan mb-4 font-bold">4</div>
+                    <h3 class="text-2xl font-bold mb-2">Lanzamiento & Soporte</h3>
+                    <p class="text-gray-300">Publicamos tu proyecto y te brindamos soporte continuo para su éxito.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-20 bg-byte-dark-bg text-byte-text-light">
-        <div class="container mx-auto px-4 text-center max-w-4xl"
-             data-aos="fade-up" data-aos-duration="800">
-             <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-10">
-                ¿Listo para despegar?
-            </h2>
-            <p class="text-lg md:text-xl mb-12 text-gray-300">
-                Contacta con nosotros hoy mismo y convierte tus ideas en una realidad digital impactante.
-            </p>
-            <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
-                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
-               data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
-                ¡Solicita tu Presupuesto Gratuito!
-            </a>
+    <section id="reseñas" class="py-20 bg-byte-light-bg text-byte-text-dark">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-dark-bg mb-16"
+                data-aos="fade-up" data-aos-duration="800">Lo que Dicen Nuestros Clientes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
+                    data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+                    <p class="text-lg italic text-gray-700 mb-6">
+                        "Byte transformó completamente nuestra presencia online. El equipo es increíblemente profesional y superó todas nuestras expectativas."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/64" alt="Cliente 1" class="w-16 h-16 rounded-full mr-4 object-cover">
+                        <div>
+                            <p class="font-bold text-byte-dark-bg">María López</p>
+                            <p class="text-gray-600">Directora, Innova Solutions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
+                    data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                    <p class="text-lg italic text-gray-700 mb-6">
+                        "La nueva tienda online que crearon para nosotros es fantástica. Las ventas se han disparado y la experiencia de compra es impecable."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/64" alt="Cliente 2" class="w-16 h-16 rounded-full mr-4 object-cover">
+                        <div>
+                            <p class="font-bold text-byte-dark-bg">Juan Pérez</p>
+                            <p class="text-gray-600">Fundador, Artesanía Local</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
+                    data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+                    <p class="text-lg italic text-gray-700 mb-6">
+                        "Su estrategia de marketing digital nos puso en el mapa. La visibilidad ha crecido exponencialmente y los leads son de alta calidad."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/64" alt="Cliente 3" class="w-16 h-16 rounded-full mr-4 object-cover">
+                        <div>
+                            <p class="font-bold text-byte-dark-bg">Ana Martínez</p>
+                            <p class="text-gray-600">Gerente de Marketing, Global Tech</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="reseñas.html" class="inline-block bg-byte-accent-cyan text-byte-dark-bg font-bold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-400 transition duration-300 transform hover:scale-105">
+                    Ver Más Reseñas
+                </a>
+            </div>
         </div>
     </section>
 
-    <section id="contacto" class="py-20 bg-byte-light-bg text-byte-text-dark">
+    <section id="contacto" class="py-20 bg-byte-dark-bg border-t border-byte-accent-cyan">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-dark-bg mb-16"
-                data-aos="fade-up" data-aos-duration="800">Contáctanos</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
-                    data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
-                    <h3 class="text-3xl font-bold text-center text-byte-dark-bg mb-8">Envíanos un Mensaje</h3>
-                    <form action="#" method="POST" class="space-y-6">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-12"
+                data-aos="fade-up" data-aos-duration="1000">Contáctanos</h2>
+            <p class="text-center text-gray-300 text-xl mb-12 max-w-3xl mx-auto"
+                data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                ¿Listo para llevar tu proyecto al siguiente nivel? ¡Estamos aquí para ayudarte!
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="max-w-2xl mx-auto lg:mx-0 bg-byte-secondary-dark p-8 rounded-xl shadow-2xl"
+                    data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+                    <form class="space-y-6">
                         <div>
-                            <label for="contact-name" class="block text-lg font-semibold text-byte-dark-bg mb-2">Nombre Completo</label>
-                            <input type="text" id="contact-name" name="name" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent text-lg" placeholder="Tu nombre" required>
+                            <label for="name" class="block text-lg font-semibold text-byte-text-light mb-2">Nombre</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent" placeholder="Tu nombre" required>
                         </div>
                         <div>
-                            <label for="contact-email" class="block text-lg font-semibold text-byte-dark-bg mb-2">Correo Electrónico</label>
-                            <input type="email" id="contact-email" name="email" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent text-lg" placeholder="tu.correo@ejemplo.com" required>
+                            <label for="email" class="block text-lg font-semibold text-byte-text-light mb-2">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" class="w-full p-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent" placeholder="tu.correo@ejemplo.com" required>
                         </div>
                         <div>
-                            <label for="contact-message" class="block text-lg font-semibold text-byte-dark-bg mb-2">Tu Mensaje</label>
-                            <textarea id="contact-message" name="message" rows="6" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent text-lg" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+                            <label for="subject" class="block text-lg font-semibold text-byte-text-light mb-2">Asunto</label>
+                            <input type="text" id="subject" name="subject" class="w-full p-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent" placeholder="Asunto de tu mensaje">
                         </div>
-                        <button type="submit" class="w-full bg-byte-accent-cyan text-byte-dark-bg font-bold py-4 px-8 rounded-full shadow-lg hover:bg-yellow-400 transition duration-300 transform hover:scale-105 text-xl">
+                        <div>
+                            <label for="message" class="block text-lg font-semibold text-byte-text-light mb-2">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan focus:border-transparent" placeholder="Describe tu proyecto o consulta..." required></textarea>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="accept-terms" name="accept-terms" class="h-5 w-5 text-byte-accent-cyan rounded border-gray-300 focus:ring-byte-accent-cyan" required>
+                            <label for="accept-terms" class="ml-2 text-byte-text-light">Acepto los <a href="#" id="open-terms-modal" class="text-byte-accent-cyan hover:underline">Términos y Condiciones</a> y la <a href="#politica-privacidad" class="text-byte-accent-cyan hover:underline">Política de Privacidad</a>.</label>
+                        </div>
+                        <button type="submit" class="w-full bg-byte-accent-cyan text-byte-dark-bg font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-400 transition duration-300 transform hover:scale-105 text-lg">
                             Enviar Mensaje
                         </button>
                     </form>
                 </div>
 
-                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan"
-                    data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
-                    <h3 class="text-3xl font-bold text-center text-byte-dark-bg mb-8">Dónde Encontrarnos</h3>
-                    <div class="space-y-6 text-center text-lg">
-                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📍</span> Venezuela, Caracas, Plaza Sucre, Calle Bolivia</p>
-                        <p class="flex items-center justify-center text-byte-dark-bg"><span class="text-byte-accent-cyan mr-3">📧</span> Bytewebdesign1@gmail.com</p>
-                        <p class="flex items-center justify-center text-byte-accent-cyan mr-3">📞 +584125646508</p>
-                        <div class="mt-6 flex justify-center space-x-6 text-2xl">
-                            <a href="https://facebook.com/tupagina" target="_blank" aria-label="Visitar Facebook" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://twitter.com/tucuenta" target="_blank" aria-label="Visitar X (Twitter)" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-x-twitter"></i></a>
-                            <a href="https://instagram.com/tu_usuario_instagram" target="_blank" aria-label="Visitar Instagram" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-instagram"></i></a>
-                            <a href="https://linkedin.com/tuempresa" target="_blank" aria-label="Visitar LinkedIn" class="text-byte-text-dark hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
+                <div class="lg:sticky lg:top-28 space-y-8" data-aos="fade-up" data-aos-delay="600" data-aos-duration="1000">
+                    <div class="bg-byte-secondary-dark p-8 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-byte-accent-cyan mb-4">Información de Contacto</h3>
+                        <p class="text-gray-300 mb-2"><i class="fas fa-map-marker-alt mr-3 text-byte-accent-cyan"></i> 123 Calle Digital, Ciudad Futura, Código Postal 56789</p>
+                        <p class="text-gray-300 mb-2"><i class="fas fa-phone mr-3 text-byte-accent-cyan"></i> +1 (555) 123-4567</p>
+                        <p class="text-gray-300 mb-2"><i class="fas fa-envelope mr-3 text-byte-accent-cyan"></i> info@byte.com</p>
+                        <p class="text-gray-300"><i class="fas fa-clock mr-3 text-byte-accent-cyan"></i> Lunes a Viernes: 9:00 AM - 6:00 PM</p>
                     </div>
 
-                    <div class="mt-8 map-container rounded-lg shadow-md">
-                        <!-- Mapa de Google Maps actualizado con la ubicación especificada.
-                             NOTA: Para un mapa interactivo real, necesitarías generar un embed de Google Maps desde Google Maps directamente.
-                             Este es un placeholder con la URL base de Google Maps. -->
-                        <iframe src="https://maps.google.com/maps?q=Venezuela,Caracas,Plaza%20Sucre,Calle%20Bolivia&t=&z=15&ie=UTF8&iwloc=&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                                title="Ubicación de Byte en Venezuela, Caracas, Plaza Sucre, Calle Bolivia"></iframe>
+                    <div class="bg-byte-secondary-dark p-8 rounded-xl shadow-2xl">
+                        <h3 class="text-2xl font-bold text-byte-accent-cyan mb-4">Encuéntranos en el Mapa</h3>
+                        <div class="map-container rounded-lg overflow-hidden">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.250550478177!2d-122.4194156846824!3d37.77492927975916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808f9f0d0d0d%3A0x4c9f1d2c3e1e2d1d!2sGolden%20Gate%20Bridge!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-byte-dark-bg text-byte-text-light py-10 border-t border-byte-accent-cyan">
+    <footer class="bg-byte-dark-bg text-byte-text-light py-8 border-t border-byte-accent-cyan mt-auto">
         <div class="container mx-auto px-4 text-center">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <a href="#inicio" class="text-3xl font-extrabold text-byte-accent-cyan mb-4 md:mb-0" aria-label="Ir a inicio de la página">Byte</a>
-                <div class="flex justify-center space-x-4 text-2xl">
-                    <a href="https://facebook.com/tupagina" target="_blank" aria-label="Facebook de Byte" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/tucuenta" target="_blank" aria-label="X (Twitter) de Byte" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-x-twitter"></i></a>
-                    <a href="https://instagram.com/tu_usuario_instagram" target="_blank" aria-label="Visitar Instagram" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-instagram"></i></a>
-                    <a href="https://linkedin.com/tuempresa" target="_blank" aria-label="Visitar LinkedIn" class="text-byte-text-light hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                <div class="mb-4 md:mb-0">
+                    <a href="#inicio" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</a>
+                    <span class="font-vision text-gray-100 text-sm font-light mt-1">Tu visión, nuestra misión</span>
                 </div>
+                <div class="flex space-x-6 mb-4 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-byte-accent-cyan transition duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+                <nav class="flex flex-wrap justify-center md:justify-end space-x-4 md:space-x-6 text-sm">
+                    <a href="#inicio" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300">Inicio</a>
+                    <a href="#servicios" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300">Servicios</a>
+                    <a href="#portafolio" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300">Portafolio</a>
+                    <a href="#proceso" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300">Proceso</a>
+                    <a href="#contacto" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300">Contacto</a>
+                    <a href="reseñas.html" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300">Reseñas</a>
+                    <a href="#politica-privacidad" class="text-gray-300 hover:text-byte-accent-cyan transition duration-300" id="footer-privacy-link">Política de Privacidad</a>
+                </nav>
             </div>
-            <p class="text-sm text-gray-400 mt-6">© <span id="current-year"></span> Byte. Todos los derechos reservados.</p>
+            <p class="text-sm text-gray-400">© <span id="current-year-footer"></span> Byte. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Inicialización de AOS
         AOS.init({
-            once: true, // Las animaciones solo se disparan una vez al hacer scroll
-            duration: 1000, // Duración por defecto de la animación
-            easing: 'ease-in-out', // Función de easing por defecto
+            once: true, // Whether animation should happen only once - default
+            duration: 1000, // values from 0 to 3000, with step 50ms
+            easing: 'ease-in-out', // default easing for AOS animations
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            /* Script para el menú móvil */
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-toggle');
 
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Evita que el clic en el botón se propague al documento
-                    const isHidden = mobileMenu.classList.contains('hidden');
-                    mobileMenu.classList.toggle('hidden');
-                    // Actualizar aria-expanded para accesibilidad
-                    mobileMenuButton.setAttribute('aria-expanded', !isHidden);
-                });
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        });
 
-                // Modificar el script para el menú móvil para manejar subcategorías
-                mobileMenu.querySelectorAll('.mobile-menu-toggle').forEach(link => {
-                    link.addEventListener('click', function(event) {
-                        event.stopPropagation(); // Evita que el clic en el enlace se propague al documento
-                        const parentLi = this.closest('li');
-                        const subMenu = parentLi.querySelector('ul');
-
-                        if (subMenu) {
-                            event.preventDefault(); // Prevenir el salto a la sección si hay submenú
-                            subMenu.classList.toggle('hidden');
-                        } else {
-                            // Si no hay submenú, cerrar el menú móvil principal
-                            mobileMenu.classList.add('hidden');
-                            mobileMenuButton.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                });
-
-                // Cerrar el menú móvil si se hace clic en una subcategoría (ya que estas no tienen sub-subcategorías)
-                mobileMenu.querySelectorAll('ul ul a').forEach(subLink => {
-                    subLink.addEventListener('click', function() {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenuButton.setAttribute('aria-expanded', 'false');
-                    });
-                });
-
-                // Nueva función para cerrar el menú móvil al hacer clic fuera
-                document.addEventListener('click', (event) => {
-                    // Si el menú móvil está abierto
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        // Comprobar si el clic fue fuera del menú móvil y fuera del botón del menú
-                        const isClickInsideMenu = mobileMenu.contains(event.target);
-                        const isClickOnButton = mobileMenuButton.contains(event.target);
-
-                        if (!isClickInsideMenu && !isClickOnButton) {
-                            mobileMenu.classList.add('hidden');
-                            mobileMenuButton.setAttribute('aria-expanded', 'false');
-                            // Opcional: cerrar también cualquier submenú abierto
-                            mobileMenu.querySelectorAll('ul ul').forEach(subMenu => {
-                                subMenu.classList.add('hidden');
-                            });
-                        }
-                    }
-                });
-            }
-
-            // Lógica del Modal de Términos y Condiciones
-            const termsModal = document.getElementById('terms-modal');
-            const acceptTermsButton = document.getElementById('accept-terms-button');
-
-            // Comprueba si los términos han sido aceptados (usando localStorage)
-            const termsAccepted = localStorage.getItem('termsAccepted');
-
-            if (!termsAccepted) {
-                termsModal.classList.add('show-modal-active'); // Muestra el modal (display: flex, pointer-events: auto)
-                setTimeout(() => {
-                    termsModal.classList.add('show-modal'); // Activa la transición de opacidad
-                    document.body.classList.add('overflow-hidden'); // Evita el scroll del body principal
-                }, 10); // Pequeño retardo para que la transición CSS funcione
-            }
-
-            if (acceptTermsButton) {
-                acceptTermsButton.addEventListener('click', () => {
-                    localStorage.setItem('termsAccepted', 'true'); // Marca los términos como aceptados
-                    termsModal.classList.remove('show-modal'); // Desactiva la transición de opacidad
-                    document.body.classList.remove('overflow-hidden'); // Permite el scroll del body
-                    setTimeout(() => {
-                        termsModal.classList.remove('show-modal-active'); // Oculta el modal (display: none, pointer-events: none)
-                    }, 300); // Debe coincidir con la duración de la transición CSS
-                });
-            }
-
-            // Cierra el modal si el usuario hace clic fuera de su contenido
-            termsModal.addEventListener('click', (event) => {
-                if (event.target === termsModal) {
-                    // Llama a la función para ocultar el modal (se define a continuación)
-                    hideTermsModal();
+        // Close mobile menu when a link is clicked
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
                 }
             });
-
-            // Función auxiliar para ocultar el modal (usada también por el click fuera)
-            function hideTermsModal() {
-                termsModal.classList.remove('show-modal');
-                document.body.classList.remove('overflow-hidden');
-                setTimeout(() => {
-                    termsModal.classList.remove('show-modal-active');
-                }, 300);
-            }
-
-            // Actualizar el año en el footer automáticamente
-            document.getElementById('current-year').textContent = new Date().getFullYear();
         });
-    </script>
 
-    <script type="text/javascript">
-        window.onload = function(){
-            (function(d, script) {
-                script = d.createElement('script');
-                script.type = 'text/javascript';
-                script.async = true;
-                script.src = 'https://w.app/widget-v1/qwZ6ka.js';
-                d.getElementsByTagName('head')[0].appendChild(script);
-            }(document));
-        };
-    </script>
+        // Handle dropdowns for mobile menu
+        document.querySelectorAll('#mobile-menu > ul > li.relative > a').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const submenu = this.nextElementSibling;
+                // Only toggle if there IS a submenu (an adjacent UL)
+                if (submenu && submenu.tagName === 'UL') {
+                    e.preventDefault(); // Prevent default link behavior if it has a submenu
+                    submenu.classList.toggle('hidden');
+                }
+                // If it's a simple link without a submenu, let the default behavior happen (navigate)
+            });
+        });
 
-    <chat-bot platform_id="832d1607-677c-4411-a2b7-d106e7204294" user_id="d57dd191-a963-4fc7-80fc-354ee9f53d5c" chatbot_id="e360cb16-3faf-411a-a5d4-6076d42ae79d"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">chatsimple</a></chat-bot><script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
+
+        // Modal Logic
+        const termsModal = document.getElementById('terms-modal');
+        const acceptTermsButton = document.getElementById('accept-terms-button');
+        const openTermsModalLink = document.getElementById('open-terms-modal');
+        const footerPrivacyLink = document.getElementById('footer-privacy-link');
+
+        // Function to show modal with animation
+        function showModal() {
+            termsModal.classList.add('show-modal-active'); // Makes it display: flex
+            setTimeout(() => {
+                termsModal.classList.add('show-modal'); // Starts opacity and transform animation
+            }, 10); // Small delay for CSS transition to apply
+        }
+
+        // Function to hide modal with animation
+        function hideModal() {
+            termsModal.classList.remove('show-modal'); // Reverses opacity and transform animation
+            setTimeout(() => {
+                termsModal.classList.remove('show-modal-active'); // Hides it completely after animation
+            }, 300); // Match this with your CSS transition duration
+        }
+
+        // Show modal when "Términos y Condiciones" link is clicked
+        if (openTermsModalLink) {
+            openTermsModalLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showModal();
+            });
+        }
+        if (footerPrivacyLink) {
+            footerPrivacyLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showModal(); // For privacy, show the same terms for now
+            });
+        }
+
+
+        // Hide modal when accept button is clicked
+        if (acceptTermsButton) {
+            acceptTermsButton.addEventListener('click', () => {
+                hideModal();
+                // Opcional: Marcar el checkbox si existe y el modal es para aceptación
+                const acceptCheckbox = document.getElementById('accept-terms');
+                if (acceptCheckbox) {
+                    acceptCheckbox.checked = true;
+                }
+            });
+        }
+
+        // Hide modal when clicking outside of it
+        if (termsModal) {
+            termsModal.addEventListener('click', (e) => {
+                if (e.target === termsModal) {
+                    hideModal();
+                }
+            });
+        }
+
+        // Update current year in footer
+        document.getElementById('current-year-footer').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
