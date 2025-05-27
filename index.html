@@ -38,19 +38,32 @@
         .text-byte-text-dark { color: var(--byte-text-dark); }
         .border-byte-accent-cyan { border-color: var(--byte-accent-cyan); }
 
-        /* Estilos para el texto de la marca con efecto de brillo */
+        /* Animación de resplandor para el logo "Byte" */
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 5px var(--byte-accent-cyan), 0 0 10px var(--byte-accent-cyan); }
+            50% { text-shadow: 0 0 10px var(--byte-accent-cyan), 0 0 20px var(--byte-accent-cyan); }
+            100% { text-shadow: 0 0 5px var(--byte-accent-cyan), 0 0 10px var(--byte-accent-cyan); }
+        }
         #byte-logo-text {
             animation: text-glow 2s infinite alternate ease-in-out;
         }
 
-        @keyframes text-glow {
-            0% { text-shadow: 0 0 5px var(--byte-accent-cyan), 0 0 10px var(--byte-accent-cyan); }
-            100% { text-shadow: 0 0 10px var(--byte-accent-cyan), 0 0 20px var(--byte-accent-cyan); }
+        /* Animación de resplandor más sutil para los enlaces del menú */
+        @keyframes menu-link-glow-subtle {
+            0% { text-shadow: 0 0 1px var(--byte-accent-cyan), 0 0 2px var(--byte-accent-cyan); }
+            50% { text-shadow: 0 0 3px var(--byte-accent-cyan), 0 0 6px var(--byte-accent-cyan); }
+            100% { text-shadow: 0 0 1px var(--byte-accent-cyan), 0 0 2px var(--byte-accent-cyan); }
         }
 
-        /* Efecto de brillo para enlaces del menú */
+        /* Aplicar animación de brillo sutil y transformación en hover a los enlaces del menú principal */
+        .menu-link-glow {
+            animation: menu-link-glow-subtle 2s infinite alternate ease-in-out;
+            transition: all 0.3s ease-in-out; /* Transición para transformaciones */
+        }
         .menu-link-glow:hover {
-            text-shadow: 0 0 5px var(--byte-accent-cyan), 0 0 10px var(--byte-accent-cyan);
+            /* Efecto de "salto hacia adelante" más pronunciado */
+            transform: scale(1.1) translateY(-10px);
+            text-shadow: 0 0 10px var(--byte-accent-cyan), 0 0 20px var(--byte-accent-cyan); /* Brillo más intenso en hover */
         }
 
         /* Estilo para el mapa de Google Maps */
@@ -128,6 +141,39 @@
         .animate-subtle-fade {
             animation: subtle-fade 3s infinite alternate ease-in-out;
         }
+
+        /* Estilos para subcategorías en el menú de escritorio */
+        .desktop-submenu-content { /* Nueva clase para los submenús de escritorio */
+            transform-origin: top;
+            transform: scaleY(0);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        .desktop-submenu-content:not(.hidden) { /* Cuando no tiene la clase hidden, se muestra */
+            transform: scaleY(1);
+            opacity: 1;
+        }
+
+        /* Estilos para subcategorías en el menú móvil (desplegable) */
+        .mobile-menu-toggle + ul {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .mobile-menu-toggle.active + ul {
+            max-height: 200px; /* Ajusta según la altura máxima esperada del submenú */
+        }
+
+        /* Rotación del icono de flecha cuando el submenú está activo/abierto */
+        .menu-link-toggle .fa-chevron-down {
+            transform: rotate(0deg);
+            transition: transform 0.3s ease-in-out;
+        }
+        .menu-link-toggle.active .fa-chevron-down {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
@@ -167,38 +213,41 @@
             <nav class="hidden sm:block flex-grow">
                 <ul class="flex justify-center space-x-8 items-center">
                     <li class="relative group">
-                        <a href="#inicio" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Inicio</a>
-                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.2</a></li>
+                        <a href="#inicio" class="text-white text-lg font-semibold menu-link-glow desktop-menu-toggle menu-link-toggle">Inicio <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                        <ul class="absolute top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20 desktop-submenu-content hidden">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                         </ul>
                     </li>
                     <li class="relative group">
-                        <a href="#servicios" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Servicios</a>
-                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.2</a></li>
+                        <a href="#servicios" class="text-white text-lg font-semibold menu-link-glow desktop-menu-toggle menu-link-toggle">Servicios <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                        <ul class="absolute top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20 desktop-submenu-content hidden">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                         </ul>
                     </li>
                     <li class="relative group">
-                        <a href="#portafolio" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Portafolio</a>
-                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.2</a></li>
+                        <a href="#portafolio" class="text-white text-lg font-semibold menu-link-glow desktop-menu-toggle menu-link-toggle">Portafolio <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                        <ul class="absolute top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20 desktop-submenu-content hidden">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                         </ul>
                     </li>
                     <li class="relative group">
-                        <a href="#proceso" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Proceso</a>
-                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.2</a></li>
+                        <a href="#proceso" class="text-white text-lg font-semibold menu-link-glow desktop-menu-toggle menu-link-toggle">Proceso <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                        <ul class="absolute top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20 desktop-submenu-content hidden">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="reseñas.html" class="text-white text-lg font-semibold menu-link-glow">Reseñas</a>
+                    </li>
                     <li class="relative group">
-                        <a href="#contacto" class="text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-glow">Contacto</a>
-                        <ul class="absolute hidden group-hover:block top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20">
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.1</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.2</a></li>
+                        <a href="#contacto" class="text-white text-lg font-semibold menu-link-glow desktop-menu-toggle menu-link-toggle">Contacto <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                        <ul class="absolute top-full left-0 mt-2 bg-byte-secondary-dark rounded-md shadow-lg min-w-[160px] py-2 z-20 desktop-submenu-content hidden">
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -220,38 +269,41 @@
     <nav id="mobile-menu" class="sm:hidden bg-byte-secondary-dark shadow-lg py-4 px-4 hidden fixed top-20 w-full z-40">
         <ul class="flex flex-col space-y-4">
             <li class="relative">
-                <a href="#inicio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Inicio</a>
-                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 1.2</a></li>
+                <a href="#inicio" class="block text-white text-lg font-semibold py-2 menu-link-glow mobile-menu-toggle menu-link-toggle">Inicio <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                <ul class="mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#servicios" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Servicios</a>
-                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 2.2</a></li>
+                <a href="#servicios" class="block text-white text-lg font-semibold py-2 menu-link-glow mobile-menu-toggle menu-link-toggle">Servicios <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                <ul class="mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#portafolio" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Portafolio</a>
-                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 3.2</a></li>
+                <a href="#portafolio" class="block text-white text-lg font-semibold py-2 menu-link-glow mobile-menu-toggle menu-link-toggle">Portafolio <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                <ul class="mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                 </ul>
             </li>
             <li class="relative">
-                <a href="#proceso" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Proceso</a>
-                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 4.2</a></li>
+                <a href="#proceso" class="block text-white text-lg font-semibold py-2 menu-link-glow mobile-menu-toggle menu-link-toggle">Proceso <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                <ul class="mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="reseñas.html" class="block text-white text-lg font-semibold py-2 menu-link-glow mobile-menu-toggle">Reseñas</a>
+            </li>
             <li class="relative">
-                <a href="#contacto" class="block text-white text-lg font-semibold hover:text-byte-accent-cyan transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 py-2 menu-link-glow mobile-menu-toggle">Contacto</a>
-                <ul class="hidden mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.1</a></li>
-                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200">Subcategoría 5.2</a></li>
+                <a href="#contacto" class="block text-white text-lg font-semibold py-2 menu-link-glow mobile-menu-toggle menu-link-toggle">Contacto <i class="fas fa-chevron-down ml-2 transform transition-transform duration-300"></i></a>
+                <ul class="mt-2 bg-byte-dark-bg rounded-md shadow-inner py-2 pl-4">
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 1</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 hover:text-byte-accent-cyan transition duration-200 transform hover:scale-105">Sub 2</a></li>
                 </ul>
             </li>
             <li>
@@ -414,6 +466,23 @@
         <div class="container mx-auto px-4 text-center max-w-4xl"
              data-aos="fade-up" data-aos-duration="800">
              <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-10">
+                ¿Qué dicen nuestros clientes?
+            </h2>
+            <p class="text-lg md:text-xl mb-12 text-gray-300">
+                Descubre las experiencias de quienes ya han confiado en Byte para sus proyectos digitales.
+            </p>
+            <a href="reseñas.html" class="inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-full
+                                         shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
+               data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1200">
+                Ver Todas las Reseñas
+            </a>
+        </div>
+    </section>
+
+    <section class="py-20 bg-byte-dark-bg text-byte-text-light">
+        <div class="container mx-auto px-4 text-center max-w-4xl"
+             data-aos="fade-up" data-aos-duration="800">
+             <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-10">
                 ¿Listo para despegar?
             </h2>
             <p class="text-lg md:text-xl mb-12 text-gray-300">
@@ -514,31 +583,42 @@
                     mobileMenu.classList.toggle('hidden');
                     // Actualizar aria-expanded para accesibilidad
                     mobileMenuButton.setAttribute('aria-expanded', !isHidden);
+                    // Cerrar todos los submenús móviles cuando el menú principal se cierra/abre
+                    mobileMenu.querySelectorAll('.mobile-menu-toggle.active').forEach(activeLink => {
+                        activeLink.classList.remove('active');
+                    });
                 });
 
-                // Modificar el script para el menú móvil para manejar subcategorías
                 mobileMenu.querySelectorAll('.mobile-menu-toggle').forEach(link => {
                     link.addEventListener('click', function(event) {
-                        event.stopPropagation(); // Evita que el clic en el enlace se propague al documento
-                        const parentLi = this.closest('li');
-                        const subMenu = parentLi.querySelector('ul');
+                        const subMenu = this.nextElementSibling; // Obtener el UL hermano (el submenú)
 
-                        if (subMenu) {
-                            event.preventDefault(); // Prevenir el salto a la sección si hay submenú
-                            subMenu.classList.toggle('hidden');
+                        // Si el enlace tiene un submenú (es un UL y no un enlace directo a sección)
+                        if (subMenu && subMenu.tagName === 'UL') {
+                            event.preventDefault(); // Prevenir el salto a la sección
+                            this.classList.toggle('active'); // Alternar la clase 'active' en el enlace
+                            // El CSS manejará la animación de max-height
                         } else {
-                            // Si no hay submenú, cerrar el menú móvil principal
+                            // Si es un enlace directo a una sección (sin submenú), cerrar el menú principal móvil
                             mobileMenu.classList.add('hidden');
                             mobileMenuButton.setAttribute('aria-expanded', 'false');
+                            // Cerrar cualquier submenú abierto
+                            mobileMenu.querySelectorAll('.mobile-menu-toggle.active').forEach(activeLink => {
+                                activeLink.classList.remove('active');
+                            });
                         }
                     });
                 });
 
-                // Cerrar el menú móvil si se hace clic en una subcategoría (ya que estas no tienen sub-subcategorías)
-                mobileMenu.querySelectorAll('ul ul a').forEach(subLink => {
+                // Cerrar el menú móvil si se hace clic en una subcategoría
+                mobileMenu.querySelectorAll('ul li a:not(.mobile-menu-toggle)').forEach(subLink => {
                     subLink.addEventListener('click', function() {
                         mobileMenu.classList.add('hidden');
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        // Cerrar cualquier submenú abierto
+                        mobileMenu.querySelectorAll('.mobile-menu-toggle.active').forEach(activeLink => {
+                            activeLink.classList.remove('active');
+                        });
                     });
                 });
 
@@ -553,14 +633,54 @@
                         if (!isClickInsideMenu && !isClickOnButton) {
                             mobileMenu.classList.add('hidden');
                             mobileMenuButton.setAttribute('aria-expanded', 'false');
-                            // Opcional: cerrar también cualquier submenú abierto
-                            mobileMenu.querySelectorAll('ul ul').forEach(subMenu => {
-                                subMenu.classList.add('hidden');
+                            // Cerrar también cualquier submenú abierto
+                            mobileMenu.querySelectorAll('.mobile-menu-toggle.active').forEach(activeLink => {
+                                activeLink.classList.remove('active');
                             });
                         }
                     }
                 });
             }
+
+            /* Lógica del Menú de Escritorio (Click para desplegar subcategorías) */
+            const desktopMenuToggles = document.querySelectorAll('.desktop-menu-toggle');
+
+            desktopMenuToggles.forEach(toggleLink => {
+                toggleLink.addEventListener('click', function(event) {
+                    const subMenu = this.nextElementSibling; // Obtener el UL hermano (el submenú)
+
+                    // Verificar si el enlace tiene un submenú y si es un UL
+                    if (subMenu && subMenu.classList.contains('desktop-submenu-content')) {
+                        event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+
+                        // Cerrar todos los demás submenús de escritorio abiertos
+                        document.querySelectorAll('.desktop-submenu-content:not(.hidden)').forEach(openSubmenu => {
+                            if (openSubmenu !== subMenu) { // No cerrar el submenú en el que se hizo clic
+                                openSubmenu.classList.add('hidden');
+                                openSubmenu.previousElementSibling.classList.remove('active'); // Remover 'active' del toggle
+                            }
+                        });
+
+                        // Alternar la visibilidad del submenú actual y la clase 'active' en el toggle
+                        subMenu.classList.toggle('hidden');
+                        this.classList.toggle('active');
+                    }
+                    // Si el enlace no tiene un submenú, o no es un UL, se permite el comportamiento predeterminado (navegar a la sección)
+                });
+            });
+
+            // Cerrar submenús de escritorio cuando se hace clic en cualquier otro lugar del documento
+            document.addEventListener('click', (event) => {
+                const desktopNav = document.querySelector('header nav.sm\\:block'); // Contenedor de la navegación de escritorio
+                // Si el clic no fue dentro de la navegación de escritorio
+                if (desktopNav && !desktopNav.contains(event.target)) {
+                    document.querySelectorAll('.desktop-submenu-content:not(.hidden)').forEach(openSubmenu => {
+                        openSubmenu.classList.add('hidden');
+                        openSubmenu.previousElementSibling.classList.remove('active'); // Remover 'active' del toggle
+                    });
+                }
+            });
+
 
             // Lógica del Modal de Términos y Condiciones
             const termsModal = document.getElementById('terms-modal');
