@@ -80,6 +80,13 @@
         // window.appId ya está definido arriba en el script normal para que sea accesible
 
         document.addEventListener('DOMContentLoaded', async () => {
+            // Inicializar AOS aquí, después de que la librería se haya cargado
+            AOS.init({
+                once: true,
+                duration: 1000,
+                easing: 'ease-in-out',
+            });
+
             const submitButton = document.getElementById('submitReviewButton');
             if (submitButton) {
                 submitButton.disabled = true; // Deshabilitar inicialmente
@@ -90,9 +97,12 @@
                 const firebaseConfig = typeof __firebase_config !== 'undefined' ? __firebase_config : {};
                 if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
                     console.error("Firebase config is missing or incomplete. Cannot initialize Firebase.");
-                    document.getElementById('status-message').textContent = 'Error: Configuración de Firebase faltante.';
-                    document.getElementById('status-message').classList.remove('hidden', 'text-green-500');
-                    document.getElementById('status-message').classList.add('text-red-500');
+                    const statusMessageElement = document.getElementById('status-message'); // Asegura que el elemento existe
+                    if(statusMessageElement) {
+                        statusMessageElement.textContent = 'Error: Configuración de Firebase faltante.';
+                        statusMessageElement.classList.remove('hidden', 'text-green-500');
+                        statusMessageElement.classList.add('text-red-500');
+                    }
                     if (submitButton) {
                         submitButton.textContent = 'Error de Configuración';
                     }
@@ -134,9 +144,12 @@
 
             } catch (error) {
                 console.error("Error initializing Firebase or signing in:", error);
-                document.getElementById('status-message').textContent = 'Error al cargar las reseñas. Inténtalo de nuevo más tarde.';
-                document.getElementById('status-message').classList.remove('hidden', 'text-green-500');
-                document.getElementById('status-message').classList.add('text-red-500');
+                const statusMessageElement = document.getElementById('status-message'); // Asegura que el elemento existe
+                if(statusMessageElement) {
+                    statusMessageElement.textContent = 'Error al cargar las reseñas. Inténtalo de nuevo más tarde.';
+                    statusMessageElement.classList.remove('hidden', 'text-green-500');
+                    statusMessageElement.classList.add('text-red-500');
+                }
                 if (submitButton) {
                     submitButton.disabled = true;
                     submitButton.textContent = 'Error al cargar Firebase';
@@ -151,15 +164,17 @@
             }
 
             const reviewsCollectionRef = collection(window.db, `artifacts/${window.appId}/public/data/reviews`);
-            const q = query(reviewsCollectionRef); // Se eliminó orderBy para evitar posibles problemas de índice; se ordenará en el cliente.
+            const q = query(reviewsCollectionRef);
 
             // onSnapshot para actualizaciones en tiempo real
             onSnapshot(q, (snapshot) => {
                 const reviewsContainer = document.getElementById('reviews-list');
-                const statusMessage = document.getElementById('status-message');
+                const statusMessage = document.getElementById('status-message'); // Ahora está fuera de reviews-list
+
                 reviewsContainer.innerHTML = ''; // Limpiar reseñas existentes
-                statusMessage.classList.remove('hidden');
-                statusMessage.textContent = 'Cargando reseñas...';
+                // El statusMessage ya no se borra con reviewsContainer.innerHTML = '';
+                statusMessage.classList.remove('hidden', 'text-red-500', 'text-green-500');
+                statusMessage.textContent = 'Cargando reseñas...'; // Mostrar mensaje de carga
 
                 if (snapshot.empty) {
                     statusMessage.textContent = 'Aún no hay reseñas. ¡Sé el primero en dejar una!';
@@ -180,7 +195,6 @@
 
                 reviews.forEach((review) => {
                     const reviewElement = document.createElement('div');
-                    // Fondo blanco para los cuadros de reseña y texto oscuro para contraste
                     reviewElement.className = 'bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan flex flex-col items-center text-center';
                     reviewElement.setAttribute('data-aos', 'zoom-in');
                     reviewElement.setAttribute('data-aos-duration', '800');
@@ -331,16 +345,9 @@
             }
         };
 
-        // --- Inicialización y Eventos Generales ---
-        AOS.init({
-            once: true,
-            duration: 1000,
-            easing: 'ease-in-out',
-        });
-
+        // El pie de página se inicializa aquí
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            // loadReviews() ahora se llama dentro de onAuthStateChanged de Firebase cuando el usuario está autenticado.
         });
     </script>
 
