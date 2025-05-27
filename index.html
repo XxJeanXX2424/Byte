@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --byte-dark-bg: #0A0A1A;
@@ -80,12 +81,23 @@
         }
 
         #terms-modal > div {
+            background-color: var(--byte-dark-bg); /* Fondo oscuro para el modal */
+            color: var(--byte-text-light); /* Texto claro para el modal */
             transform: scale(0.9); /* Ligeramente más pequeño al inicio para la transición */
             transition: transform 0.3s ease-out; /* Transición suave para el contenido del modal */
+            border: 1px solid var(--byte-accent-cyan); /* Borde cian para el modal */
         }
 
         #terms-modal.show-modal > div {
             transform: scale(1); /* Escala normal al mostrarse */
+        }
+
+        #terms-modal h2, #terms-modal h3 {
+            color: var(--byte-accent-cyan); /* Títulos en cian */
+        }
+
+        #terms-modal p {
+            color: var(--byte-text-light); /* Párrafos en texto claro */
         }
 
         /* Scrollbar personalizado para el texto de los términos y condiciones */
@@ -94,17 +106,17 @@
         }
 
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1; /* Color del fondo del track */
+            background: var(--byte-secondary-dark); /* Color del fondo del track */
             border-radius: 10px; /* Bordes redondeados del track */
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #888; /* Color del "pulgar" del scrollbar */
+            background: var(--byte-accent-cyan); /* Color del "pulgar" del scrollbar */
             border-radius: 10px; /* Bordes redondeados del pulgar */
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #555; /* Color del pulgar al pasar el ratón */
+            background: #00BFFF; /* Color del pulgar al pasar el ratón (un cian más claro) */
         }
 
         /* Animación para el texto "Tu visión, nuestra misión" */
@@ -121,9 +133,9 @@
 <body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
 
     <div id="terms-modal" class="fixed inset-0 flex items-center justify-center">
-        <div class="bg-white p-8 rounded-lg shadow-xl max-w-2xl mx-4 my-8 relative transform transition-all sm:w-full sm:mx-auto">
-            <h2 class="text-3xl font-bold text-byte-dark-bg mb-6 text-center">Términos y Condiciones</h2>
-            <div class="max-h-96 overflow-y-auto text-byte-text-dark mb-6 pr-4 custom-scrollbar">
+        <div class="p-8 rounded-lg shadow-xl max-w-2xl mx-4 my-8 relative transform transition-all sm:w-full sm:mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center">Términos y Condiciones</h2>
+            <div class="max-h-96 overflow-y-auto mb-6 pr-4 custom-scrollbar">
                 <p class="mb-4">Bienvenido a Byte. Al acceder y utilizar nuestro sitio web, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso. Si no está de acuerdo con alguna parte de estos términos, por favor, no utilice nuestro sitio web.</p>
                 <h3 class="font-semibold text-xl mb-2">1. Uso del Sitio Web</h3>
                 <p class="mb-4">El contenido de las páginas de este sitio web es para su información general y uso exclusivo. Está sujeto a cambios sin previo aviso.</p>
@@ -145,7 +157,8 @@
 
     <header class="bg-byte-dark-bg shadow-lg py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
         <div class="container mx-auto px-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4"> <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
+            <div class="flex items-center space-x-4">
+                <a href="#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
                     <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
                 </a>
                 <span class="font-vision text-gray-100 text-sm md:text-lg font-light animate-subtle-fade">Tu visión, nuestra misión</span>
@@ -457,9 +470,6 @@
                     </div>
 
                     <div class="mt-8 map-container rounded-lg shadow-md">
-                        <!-- Mapa de Google Maps actualizado con la ubicación especificada.
-                             NOTA: Para un mapa interactivo real, necesitarías generar un embed de Google Maps desde Google Maps directamente.
-                             Este es un placeholder con la URL base de Google Maps. -->
                         <iframe src="https://maps.google.com/maps?q=Venezuela,Caracas,Plaza%20Sucre,Calle%20Bolivia&t=&z=15&ie=UTF8&iwloc=&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                                 title="Ubicación de Byte en Venezuela, Caracas, Plaza Sucre, Calle Bolivia"></iframe>
                     </div>
