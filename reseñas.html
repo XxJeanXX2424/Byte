@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" class="bg-byte-dark-bg"> <head>
+<html lang="es" class="bg-byte-dark-bg">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Byte - Reseñas de Clientes</title>
@@ -49,6 +50,23 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script>
+        const __firebase_config = {
+          apiKey: "AIzaSyB8qwijdw2_3EZlzQPi_q0IXH6-zhghgOo",
+          authDomain: "byte-9ba70.firebaseapp.com",
+          projectId: "byte-9ba70",
+          storageBucket: "byte-9ba70.firebasestorage.app",
+          messagingSenderId: "543252841310",
+          appId: "1:543252841310:web:0f3ec403874d417ab785cf",
+          measurementId: "G-KRBD48V2FW"
+        };
+
+        // Si no usas autenticación personalizada con tokens, déjalo en null
+        const __initial_auth_token = null;
+
+        // Define __app_id con el ID de tu proyecto. Es el mismo que tu 'projectId'.
+        window.__app_id = "byte-9ba70"; // ¡Este debe ser el mismo que tu projectId de arriba!
+    </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -59,13 +77,25 @@
         window.db = null;
         window.auth = null;
         window.currentUserId = null;
-        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // window.appId ya está definido arriba en el script normal para que sea accesible
 
         document.addEventListener('DOMContentLoaded', async () => {
+            const submitButton = document.getElementById('submitReviewButton');
+            if (submitButton) {
+                submitButton.disabled = true; // Deshabilitar inicialmente
+                submitButton.textContent = 'Cargando Firebase...';
+            }
+
             try {
-                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-                if (Object.keys(firebaseConfig).length === 0) {
-                    console.error("Firebase config is missing. Cannot initialize Firebase.");
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? __firebase_config : {};
+                if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
+                    console.error("Firebase config is missing or incomplete. Cannot initialize Firebase.");
+                    document.getElementById('status-message').textContent = 'Error: Configuración de Firebase faltante.';
+                    document.getElementById('status-message').classList.remove('hidden', 'text-green-500');
+                    document.getElementById('status-message').classList.add('text-red-500');
+                    if (submitButton) {
+                        submitButton.textContent = 'Error de Configuración';
+                    }
                     return;
                 }
 
@@ -84,13 +114,10 @@
 
                 // Listen for auth state changes
                 onAuthStateChanged(window.auth, (user) => {
-                    const submitButton = document.getElementById('submitReviewButton');
                     if (user) {
                         window.currentUserId = user.uid;
-                        // El ID de usuario se mantiene en el console.log para depuración, pero se oculta en el HTML.
                         console.log("Firebase initialized and user signed in:", user.uid);
-                        loadReviews();
-                        // Habilitar el botón de envío una vez que Firebase esté listo y el usuario autenticado
+                        loadReviews(); // Cargar reseñas una vez autenticado
                         if (submitButton) {
                             submitButton.disabled = false;
                             submitButton.textContent = 'Enviar Reseña';
@@ -98,10 +125,9 @@
                     } else {
                         window.currentUserId = null;
                         console.log("No user signed in.");
-                        // Mantener el botón deshabilitado si no hay usuario autenticado o si hay un error
                         if (submitButton) {
                             submitButton.disabled = true;
-                            submitButton.textContent = 'Cargando Firebase...'; // Mensaje de estado
+                            submitButton.textContent = 'Inicia sesión para reseñar'; // O un mensaje adecuado
                         }
                     }
                 });
@@ -111,8 +137,6 @@
                 document.getElementById('status-message').textContent = 'Error al cargar las reseñas. Inténtalo de nuevo más tarde.';
                 document.getElementById('status-message').classList.remove('hidden', 'text-green-500');
                 document.getElementById('status-message').classList.add('text-red-500');
-                // Asegurarse de que el botón de envío esté deshabilitado en caso de error de inicialización
-                const submitButton = document.getElementById('submitReviewButton');
                 if (submitButton) {
                     submitButton.disabled = true;
                     submitButton.textContent = 'Error al cargar Firebase';
@@ -129,11 +153,16 @@
             const reviewsCollectionRef = collection(window.db, `artifacts/${window.appId}/public/data/reviews`);
             const q = query(reviewsCollectionRef); // Se eliminó orderBy para evitar posibles problemas de índice; se ordenará en el cliente.
 
+            // onSnapshot para actualizaciones en tiempo real
             onSnapshot(q, (snapshot) => {
                 const reviewsContainer = document.getElementById('reviews-list');
+                const statusMessage = document.getElementById('status-message');
                 reviewsContainer.innerHTML = ''; // Limpiar reseñas existentes
+                statusMessage.classList.remove('hidden');
+                statusMessage.textContent = 'Cargando reseñas...';
+
                 if (snapshot.empty) {
-                    reviewsContainer.innerHTML = '<p class="text-center text-gray-400 text-xl col-span-full">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>';
+                    statusMessage.textContent = 'Aún no hay reseñas. ¡Sé el primero en dejar una!';
                     return;
                 }
 
@@ -143,7 +172,11 @@
                 });
 
                 // Ordenar reseñas por marca de tiempo (más reciente primero) en el lado del cliente
-                reviews.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0));
+                reviews.sort((a, b) => {
+                    const dateA = a.timestamp && typeof a.timestamp.toDate === 'function' ? a.timestamp.toDate() : new Date(0);
+                    const dateB = b.timestamp && typeof b.timestamp.toDate === 'function' ? b.timestamp.toDate() : new Date(0);
+                    return dateB - dateA;
+                });
 
                 reviews.forEach((review) => {
                     const reviewElement = document.createElement('div');
@@ -157,6 +190,8 @@
                     `).join('');
 
                     const reviewerInitial = review.name ? review.name.charAt(0).toUpperCase() : '?';
+                    const reviewDate = review.timestamp && typeof review.timestamp.toDate === 'function' ? review.timestamp.toDate() : new Date(); // Fallback
+                    const formattedDate = reviewDate.toLocaleString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
                     reviewElement.innerHTML = `
                         <div class="w-24 h-24 rounded-full mb-4 flex items-center justify-center bg-byte-accent-cyan text-byte-dark-bg font-extrabold text-4xl border-2 border-byte-accent-cyan">
@@ -169,16 +204,17 @@
                             </div>
                         </div>
                         <p class="font-bold text-byte-text-dark">- ${review.name}</p>
-                        ${review.timestamp ? `<p class="text-sm text-gray-500 mt-2">${new Date(review.timestamp.toDate()).toLocaleString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>` : ''}
+                        <p class="text-sm text-gray-500 mt-2">${formattedDate}</p>
                     `;
                     reviewsContainer.appendChild(reviewElement);
                 });
+                statusMessage.classList.add('hidden'); // Ocultar el mensaje de estado si hay reseñas
                 AOS.refresh(); // Refrescar AOS para detectar nuevos elementos
             }, (error) => {
                 console.error("Error fetching reviews:", error);
-                document.getElementById('status-message').textContent = 'Error al cargar las reseñas. Inténtalo de nuevo.';
-                document.getElementById('status-message').classList.remove('hidden', 'text-green-500');
-                document.getElementById('status-message').classList.add('text-red-500');
+                statusMessage.textContent = 'Error al cargar las reseñas. Inténtalo de nuevo.';
+                statusMessage.classList.remove('hidden', 'text-green-500');
+                statusMessage.classList.add('text-red-500');
             });
         }
 
@@ -265,7 +301,7 @@
                 return;
             }
 
-            const submitButton = form.querySelector('button[type="submit"]');
+            const submitButton = document.getElementById('submitReviewButton');
             const loadingSpinner = document.getElementById('review-loading-spinner');
             submitButton.disabled = true;
             submitButton.textContent = 'Enviando...';
@@ -284,6 +320,7 @@
                 });
                 showMessageBox('¡Gracias por tu reseña! Se ha enviado correctamente.', 'success');
                 form.reset(); // Limpiar el formulario
+                // loadReviews() no es necesario aquí porque onSnapshot ya actualizará la UI automáticamente
             } catch (error) {
                 console.error("Error adding document: ", error);
                 showMessageBox('Error al enviar tu reseña. Por favor, inténtalo de nuevo.', 'error');
@@ -293,305 +330,17 @@
                 loadingSpinner.classList.add('hidden');
             }
         };
-    </script>
 
-    <style>
-        /* Estilos base para el cuerpo y los títulos, asegurando las fuentes definidas en Tailwind */
-        html {
-            /* Asegura que el fondo de la página sea oscuro */
-            background-color: var(--byte-dark-bg);
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth; /* Habilita el desplazamiento suave al hacer clic en enlaces de ancla */
-            background-color: var(--byte-dark-bg); /* Fondo azul oscuro */
-            color: var(--byte-text-light); /* Letras blancas */
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* Animación de resplandor para el logo "Byte" (menos fuerte) */
-        @keyframes glow {
-            0% {
-                color: #00FFFF;
-                text-shadow: 0 0 0.02px #00FFFF, 0 0 0.05px #00FFFF; /* Valores aún más reducidos para un brillo muy sutil */
-            }
-            50% {
-                color: #A0FFFF;
-                text-shadow: 0 0 0.05px #00FFFF, 0 0 0.1px #00FFFF; /* Valores aún más reducidos */
-            }
-            100% {
-                color: #00FFFF;
-                text-shadow: 0 0 0.02px #00FFFF, 0 0 0.05px #00FFFF; /* Valores aún más reducidos */
-            }
-        }
-
-        #byte-logo-text {
-            animation: glow 2s infinite alternate ease-in-out; /* Duración ligeramente más larga para mayor suavidad */
-        }
-
-        /* Animación de resplandor más suave para los enlaces del menú de navegación */
-        @keyframes menu-glow {
-            0% {
-                color: #00FFFF;
-                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
-            }
-            50% {
-                color: #80FFFF;
-                text-shadow: 0 0 5px #00FFFF, 0 0 8px #00FFFF;
-            }
-            100% {
-                color: #00FFFF;
-                text-shadow: 0 0 1px #00FFFF, 0 0 3px #00FFFF;
-            }
-        }
-
-        .menu-link-glow {
-            animation: menu-glow 2s infinite alternate ease-in-out;
-        }
-
-        /* Animación "Fall-in" personalizada para AOS (Animate On Scroll) */
-        @keyframes fall-in {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* Aplica la animación "fall-in" a elementos con data-aos="fall-down" */
-        .aos-animate[data-aos="fall-down"] {
-            animation-name: fall-in;
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-
-        /* Estilos responsivos para el contenedor de Google Maps embed */
-        .map-container {
-            position: relative;
-            overflow: hidden;
-            padding-bottom: 56.25%; /* Relación de aspecto 16:9 (altura / anchura) */
-            height: 0;
-        }
-
-        .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* --- Estilos del Modal de Términos y Condiciones --- */
-        #terms-modal {
-            background-color: rgba(0, 0, 0, 0.75); /* Fondo semitransparente oscuro */
-            z-index: 9999; /* Asegura que esté por encima de todo */
-            display: none; /* Inicialmente oculto por defecto */
-            opacity: 0; /* Inicialmente oculto */
-            transition: opacity 0.3s ease-out; /* Transición suave para la aparición */
-            pointer-events: none; /* No permite interacciones cuando está oculto */
-        }
-
-        #terms-modal.show-modal {
-            opacity: 1; /* Hace visible el modal */
-        }
-
-        #terms-modal.show-modal-active {
-            display: flex; /* Muestra el modal */
-            pointer-events: auto; /* Permite interacciones cuando está activo */
-        }
-
-        #terms-modal > div {
-            transform: scale(0.9); /* Ligeramente más pequeño al inicio para la transición */
-            transition: transform 0.3s ease-out; /* Transición suave para el contenido del modal */
-        }
-
-        #terms-modal.show-modal > div {
-            transform: scale(1); /* Escala normal al mostrarse */
-        }
-
-        /* Scrollbar personalizado para el texto de los términos y condiciones */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px; /* Ancho del scrollbar */
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1; /* Color del fondo del track */
-            border-radius: 10px; /* Bordes redondeados del track */
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #888; /* Color del "pulgar" del scrollbar */
-            border-radius: 10px; /* Bordes redondeados del pulgar */
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #555; /* Color del pulgar al pasar el ratón */
-        }
-
-        /* Animación para el texto "Tu visión, nuestra misión" */
-        @keyframes subtle-fade {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
-        }
-        .animate-subtle-fade {
-            animation: subtle-fade 3s infinite alternate ease-in-out;
-        }
-
-        /* Animación de "salto" para los enlaces del menú principal */
-        .menu-link-jump:hover {
-            transform: translateY(-10px) scale(1.05); /* Ajusta estos valores para un salto más o menos pronunciado */
-            transition: transform 0.3s ease-out;
-        }
-
-        /* Estilos para el mensaje de estado (éxito/error) */
-        #message-box {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px); /* Comienza fuera de la pantalla */
-            padding: 15px 30px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
-
-        #message-box.show-message {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0); /* Desliza hacia adentro */
-        }
-
-        #message-box.hide-message {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-100px); /* Desliza hacia afuera */
-        }
-
-        /* Spinner de carga para el formulario de reseña */
-        .loading-spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #00FFFF;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
-</head>
-<body class="bg-byte-dark-bg text-byte-text-light min-h-screen flex flex-col">
-
-    <div id="message-box" class="hidden">
-        <span id="message-text"></span>
-    </div>
-
-    <header class="py-4 sticky top-0 z-50 border-b border-byte-accent-cyan">
-        <div class="container mx-auto px-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <a href="index.html#inicio" class="flex items-center" aria-label="Ir a inicio de la página">
-                    <span id="byte-logo-text" class="text-4xl font-extrabold text-byte-accent-cyan block">Byte</span>
-                </a>
-                <span class="font-vision text-gray-100 text-sm md:text-lg font-light animate-subtle-fade">Tu visión, nuestra misión</span>
-            </div>
-
-            <a href="index.html#inicio" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
-                                       shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hover:-translate-y-1">
-                Volver al Inicio
-            </a>
-            </div>
-    </header>
-
-    <main class="flex-grow py-20 bg-byte-dark-bg text-byte-text-light">
-        <div class="container mx-auto px-4">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-center text-byte-accent-cyan mb-8"
-                data-aos="fade-up" data-aos-duration="1000">La opinión de nuestros clientes</h1>
-            <p id="user-id-display" class="text-center text-gray-400 text-sm mb-12 hidden" data-aos="fade-up" data-aos-delay="200">ID de Usuario: Cargando...</p>
-
-            <section class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-byte-accent-cyan mb-16 max-w-2xl mx-auto"
-                data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
-                <h2 class="text-3xl font-bold text-center text-byte-accent-cyan mb-8">Deja tu Reseña</h2>
-                <form id="review-form" onsubmit="submitReview(event)" class="space-y-6">
-                    <div>
-                        <label for="reviewer-name" class="block text-lg font-semibold text-byte-text-dark mb-2">Tu Nombre</label>
-                        <input type="text" id="reviewer-name" name="reviewer-name" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan" placeholder="Tu nombre" required>
-                    </div>
-                    <div>
-                        <label for="reviewer-email" class="block text-lg font-semibold text-byte-text-dark mb-2">Tu Correo Electrónico</label>
-                        <input type="email" id="reviewer-email" name="reviewer-email" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan" placeholder="tu.correo@ejemplo.com" required>
-                    </div>
-                    <div>
-                        <label for="reviewer-rating" class="block text-lg font-semibold text-byte-text-dark mb-2">Tu Calificación</label>
-                        <select id="reviewer-rating" name="reviewer-rating" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan" required>
-                            <option value="">Selecciona una calificación</option>
-                            <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
-                            <option value="4">⭐⭐⭐⭐ Buena</option>
-                            <option value="3">⭐⭐⭐ Regular</option>
-                            <option value="2">⭐⭐ Mala</option>
-                            <option value="1">⭐ Muy Mala</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="reviewer-opinion" class="block text-lg font-semibold text-byte-text-dark mb-2">Tu Opinión</label>
-                        <textarea id="reviewer-opinion" name="reviewer-opinion" rows="5" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan" placeholder="Comparte tu experiencia con Byte..." required></textarea>
-                        <p class="text-sm text-gray-600 mt-1">
-                            *Nota: Tu opinión será moderada automáticamente para evitar lenguaje inapropiado.
-                            Para una moderación robusta, se requeriría un sistema de backend.
-                        </p>
-                    </div>
-                    <button type="submit" id="submitReviewButton" class="w-full bg-yellow-500 text-black font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center" disabled>
-                        Cargando Firebase... <span id="review-loading-spinner" class="loading-spinner hidden"></span>
-                    </button>
-                </form>
-            </section>
-
-            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-byte-accent-cyan mb-12"
-                data-aos="fade-up" data-aos-duration="1000">Reseñas de Nuestros Clientes</h2>
-
-            <div id="reviews-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <p class="text-center text-gray-400 text-xl col-span-full" id="status-message">Cargando reseñas...</p>
-            </div>
-
-        </div>
-    </main>
-
-    <footer class="bg-byte-dark-bg text-byte-text-light py-10 border-t border-byte-accent-cyan">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-sm text-gray-400 mt-6">© <span id="current-year"></span> Byte. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Inicialización de AOS
+        // --- Inicialización y Eventos Generales ---
         AOS.init({
-            once: true, // Las animaciones solo se disparan una vez al hacer scroll
-            duration: 1000, // Duración por defecto de la animación
-            easing: 'ease-in-out', // Función de easing por defecto
+            once: true,
+            duration: 1000,
+            easing: 'ease-in-out',
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Actualizar el año en el footer automáticamente
             document.getElementById('current-year').textContent = new Date().getFullYear();
+            // loadReviews() ahora se llama dentro de onAuthStateChanged de Firebase cuando el usuario está autenticado.
         });
     </script>
 
