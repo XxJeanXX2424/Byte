@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="bg-byte-dark-bg">
-<head>
+<html lang="es" class="bg-byte-dark-bg"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Byte - Reseñas de Clientes</title>
@@ -85,14 +84,25 @@
 
                 // Listen for auth state changes
                 onAuthStateChanged(window.auth, (user) => {
+                    const submitButton = document.getElementById('submitReviewButton');
                     if (user) {
                         window.currentUserId = user.uid;
                         // El ID de usuario se mantiene en el console.log para depuración, pero se oculta en el HTML.
                         console.log("Firebase initialized and user signed in:", user.uid);
                         loadReviews();
+                        // Habilitar el botón de envío una vez que Firebase esté listo y el usuario autenticado
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Enviar Reseña';
+                        }
                     } else {
                         window.currentUserId = null;
                         console.log("No user signed in.");
+                        // Mantener el botón deshabilitado si no hay usuario autenticado o si hay un error
+                        if (submitButton) {
+                            submitButton.disabled = true;
+                            submitButton.textContent = 'Cargando Firebase...'; // Mensaje de estado
+                        }
                     }
                 });
 
@@ -101,6 +111,12 @@
                 document.getElementById('status-message').textContent = 'Error al cargar las reseñas. Inténtalo de nuevo más tarde.';
                 document.getElementById('status-message').classList.remove('hidden', 'text-green-500');
                 document.getElementById('status-message').classList.add('text-red-500');
+                // Asegurarse de que el botón de envío esté deshabilitado en caso de error de inicialización
+                const submitButton = document.getElementById('submitReviewButton');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Error al cargar Firebase';
+                }
             }
         });
 
@@ -219,8 +235,9 @@
         window.submitReview = async (event) => {
             event.preventDefault(); // Prevenir el envío predeterminado del formulario
 
+            // Asegurarse de que Firebase esté inicializado antes de intentar enviar
             if (!window.db || !window.currentUserId) {
-                showMessageBox('Error: Firebase no está inicializado o el usuario no está autenticado.', 'error');
+                showMessageBox('Error: Firebase no está inicializado o el usuario no está autenticado. Por favor, espera un momento e inténtalo de nuevo.', 'error');
                 console.error('Firebase not initialized or user not authenticated.');
                 return;
             }
@@ -304,15 +321,15 @@
         @keyframes glow {
             0% {
                 color: #00FFFF;
-                text-shadow: 0 0 0.05px #00FFFF, 0 0 0.1px #00FFFF; /* Valores aún más reducidos para un brillo muy sutil */
+                text-shadow: 0 0 0.02px #00FFFF, 0 0 0.05px #00FFFF; /* Valores aún más reducidos para un brillo muy sutil */
             }
             50% {
                 color: #A0FFFF;
-                text-shadow: 0 0 0.1px #00FFFF, 0 0 0.2px #00FFFF; /* Valores aún más reducidos */
+                text-shadow: 0 0 0.05px #00FFFF, 0 0 0.1px #00FFFF; /* Valores aún más reducidos */
             }
             100% {
                 color: #00FFFF;
-                text-shadow: 0 0 0.05px #00FFFF, 0 0 0.1px #00FFFF; /* Valores aún más reducidos */
+                text-shadow: 0 0 0.02px #00FFFF, 0 0 0.05px #00FFFF; /* Valores aún más reducidos */
             }
         }
 
@@ -541,9 +558,8 @@
                             Para una moderación robusta, se requeriría un sistema de backend.
                         </p>
                     </div>
-                    <button type="submit" class="w-full bg-yellow-500 text-black font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center">
-                        Enviar Reseña
-                        <span id="review-loading-spinner" class="loading-spinner hidden"></span>
+                    <button type="submit" id="submitReviewButton" class="w-full bg-yellow-500 text-black font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center" disabled>
+                        Cargando Firebase... <span id="review-loading-spinner" class="loading-spinner hidden"></span>
                     </button>
                 </form>
             </section>
